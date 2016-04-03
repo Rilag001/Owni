@@ -1,9 +1,24 @@
 <resources>
     <string name="app_name">Owni</string>
     <string name="action_settings">Settings</string>
-    <string name="section_format">Hello World from section: %1$d</string>
-
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="title_activity_create_account">CreateAccountActivity</string>
+    <string name="button_create_account">Create account</string>
+    <string name="button_signin_with_password">Sign in</string>
+    <string name="hint_enter_password">Enter password…</string>
+    <string name="hint_enter_email">Enter email…</string>
+    <string name="progress_dialog_loading">Loading…</string>
+    <string name="progress_dialog_authenticating_with_firebase">Authenticating with firebase…</string>
+    <string name="error_cannot_be_empty">Cannot be empty</string>
+    <string name="log_message_auth_successful">Login successful</string>
+    <string name="error_message_failed_sign_in_no_network">No network connection</string>
+    <string name="error_message_email_issue">Email issues</string>
+    <string name="hint_enter_username">Enter username…</string>
+    <string name="text_already_have_account">Already have an account?</string>
+    <string name="button_sign_in">Sign in</string>
+    <string name="progress_dialog_creating_user_with_firebase">Creating user with Firebase</string>
+    <string name="error_invalid_email_not_valid">Invalid email</string>
+    <string name="error_invalid_password_not_valid">Password must be at least 6 characters</string>
+    <string name="log_error_occurred">error</string>
+    <string name="error_email_taken">Email already taken</string>
+    <string name="title_activity_login">Login</string>
 </resources>

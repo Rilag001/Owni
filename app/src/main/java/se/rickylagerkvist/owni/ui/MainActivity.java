@@ -35,7 +35,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        // Set Firebase Context
+        // Set Firebase Context and connection String
         Firebase.setAndroidContext(this);
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);

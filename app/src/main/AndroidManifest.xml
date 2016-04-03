@@ -14,18 +14,23 @@
             android:name=".ui.MainActivity"
             android:label="@string/app_name"
             android:theme="@style/AppTheme.NoActionBar">
+        </activity>
+        <activity
+            android:name=".ui.loginAndCreateUser.LoginActivity"
+            android:label="@string/title_activity_login"
+            android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
-
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
-        </activity>
-        <activity android:name=".ui.loginAndCreateUser.LoginActivity">
         </activity>
         <activity
             android:name=".ui.loginAndCreateUser.CreateAccountActivity"
             android:label="@string/title_activity_create_account"
             android:theme="@style/AppTheme.NoActionBar">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="se.rickylagerkvist.owni.ui.loginAndCreateUser.LoginActivity"/>
         </activity>
     </application>
 
