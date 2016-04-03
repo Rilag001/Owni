@@ -1,5 +1,6 @@
 package se.rickylagerkvist.owni.ui;
 
+import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
@@ -24,6 +25,7 @@ import com.firebase.client.Firebase;
 import se.rickylagerkvist.owni.R;
 import se.rickylagerkvist.owni.ui.ActivityFragment.ActivitiesFragment;
 import se.rickylagerkvist.owni.ui.PeopleFragment.PeopleFragment;
+import se.rickylagerkvist.owni.ui.loginAndCreateUser.LoginActivity;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -133,24 +135,16 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
 
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
+        if (id == R.id.log_out) {
+            Intent intent = new Intent(MainActivity.this, LoginActivity.class);
+            startActivity(intent);
         }
 
         return super.onOptionsItemSelected(item);
     }
 
-
-    /**
-     * A {@link FragmentPagerAdapter} that returns a fragment corresponding to
-     * one of the sections/tabs/pages.
-     */
     public class SectionsPagerAdapter extends FragmentPagerAdapter {
 
         public SectionsPagerAdapter(FragmentManager fm) {
@@ -198,7 +192,7 @@ public class MainActivity extends AppCompatActivity {
                 }
 
                 // Scale up animation
-                ScaleAnimation expand =  new ScaleAnimation(0.2f, 1f, 0.2f, 1f, Animation.RELATIVE_TO_SELF, 0.5f, Animation.RELATIVE_TO_SELF, 0.5f);
+                ScaleAnimation expand = new ScaleAnimation(0.2f, 1f, 0.2f, 1f, Animation.RELATIVE_TO_SELF, 0.5f, Animation.RELATIVE_TO_SELF, 0.5f);
                 expand.setDuration(100);     // animation duration in milliseconds
                 expand.setInterpolator(new AccelerateInterpolator());
                 fab.startAnimation(expand);
