@@ -5,4 +5,6 @@ package se.rickylagerkvist.owni.utils;
  * Here there will be constans relating to Firebase
  */
 public class Constants {
+
+    public static final String FIREBASE_URL = "https://owniapp.firebaseio.com/";
 }
