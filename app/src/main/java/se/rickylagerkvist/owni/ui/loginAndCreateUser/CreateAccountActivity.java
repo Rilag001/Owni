@@ -21,6 +21,8 @@ import se.rickylagerkvist.owni.R;
 import se.rickylagerkvist.owni.model.FireBaseUser;
 import se.rickylagerkvist.owni.utils.Constants;
 
+// Background from: https://unsplash.com/photos/8mqOw4DBBSg (licensed under Creative Commons Zero)
+
 public class CreateAccountActivity extends AppCompatActivity {
 
     private static final String LOG_TAG = CreateAccountActivity.class.getSimpleName();
@@ -89,6 +91,11 @@ public class CreateAccountActivity extends AppCompatActivity {
 
                 String uid = (String) result.get("uid");
                 createUserInFirebaseHelper(uid);
+
+                Intent intent = new Intent(CreateAccountActivity.this, LoginActivity.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                startActivity(intent);
+                finish();
             }
 
             @Override
@@ -108,7 +115,7 @@ public class CreateAccountActivity extends AppCompatActivity {
         });
     }
 
-    // Creates a new user in Firebase from the Java FirebaseUser
+    // Creates a new user in Firebase with the Java FirebaseUser
     private void createUserInFirebaseHelper(String uid) {
 
         final Firebase userLocation = new Firebase(Constants.FIREBASE_URL_USERS).child(uid);

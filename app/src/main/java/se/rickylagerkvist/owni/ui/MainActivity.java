@@ -1,5 +1,6 @@
 package se.rickylagerkvist.owni.ui;
 
+import android.os.Build;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -13,6 +14,10 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.animation.AccelerateInterpolator;
+import android.view.animation.Animation;
+import android.view.animation.DecelerateInterpolator;
+import android.view.animation.ScaleAnimation;
 
 import com.firebase.client.Firebase;
 
@@ -24,11 +29,13 @@ public class MainActivity extends AppCompatActivity {
 
 
     private SectionsPagerAdapter mSectionsPagerAdapter;
-
-    /**
-     * The {@link ViewPager} that will host the section contents.
-     */
     private ViewPager mViewPager;
+    private FloatingActionButton fab;
+    private TabLayout tabLayout;
+    private Toolbar toolbar;
+
+    // icon for fab on tab changes
+    int[] iconIntArray = {R.drawable.ic_people_white_24dp, R.drawable.ic_local_dining_white_24dp};
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,7 +45,7 @@ public class MainActivity extends AppCompatActivity {
         // Set Firebase Context and connection String
         Firebase.setAndroidContext(this);
 
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         // Create the adapter that will return a fragment for each of the three
         // primary sections of the activity.
@@ -48,18 +55,72 @@ public class MainActivity extends AppCompatActivity {
         mViewPager = (ViewPager) findViewById(R.id.container);
         mViewPager.setAdapter(mSectionsPagerAdapter);
 
-        TabLayout tabLayout = (TabLayout) findViewById(R.id.tabs);
+        // set icons for tabs (with two states: seletcted and unselected)
+        tabLayout = (TabLayout) findViewById(R.id.tabs);
         tabLayout.setupWithViewPager(mViewPager);
+        tabLayout.getTabAt(0).setIcon(R.drawable.ic_people_material);
+        tabLayout.getTabAt(1).setIcon(R.drawable.ic_activities_material);
 
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
+        fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
+                FABClickOpenDialog(view);
             }
         });
 
+        // set initial fab icon
+        fab.setImageResource(R.drawable.ic_people_white_24dp);
+
+        // change toolbar title, fab color, icon on tab selected with animation
+        tabLayout.setOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
+            @Override
+            public void onTabSelected(TabLayout.Tab tab) {
+                mViewPager.setCurrentItem(tab.getPosition());
+                animateFab(tab.getPosition());
+
+                int position = tabLayout.getSelectedTabPosition();
+                if (position == 0){
+                    toolbar.setTitle("People");
+                } else if (position == 1) {
+                    toolbar.setTitle("Activities");
+                }
+            }
+
+            @Override
+            public void onTabUnselected(TabLayout.Tab tab) {
+
+            }
+
+            @Override
+            public void onTabReselected(TabLayout.Tab tab) {
+
+            }
+        });
+
+    }
+
+    // Checks witch tab is active and selects method
+    private void FABClickOpenDialog(View view) {
+        int position = tabLayout.getSelectedTabPosition();
+
+        if (position == 0){
+            showAddPeopleCardDialog(view);
+        } else if (position == 1) {
+            showAddActivityCardDialog(view);
+        }
+    }
+
+    // Open dialog to add new PeopleCard
+    public void showAddPeopleCardDialog(View view) {
+        Snackbar.make(view, "Add PeopleCard", Snackbar.LENGTH_LONG)
+                .setAction("Action", null).show();
+    }
+
+    // Open dialog to add new ActivityCard
+    public void showAddActivityCardDialog(View view) {
+        Snackbar.make(view, "AddActivity Card", Snackbar.LENGTH_LONG)
+                .setAction("Action", null).show();
     }
 
 
@@ -114,16 +175,40 @@ public class MainActivity extends AppCompatActivity {
             // Show 2 total pages.
             return 2;
         }
+    }
 
-        @Override
-        public CharSequence getPageTitle(int position) {
-            switch (position) {
-                case 0:
-                    return "People";
-                case 1:
-                    return "Activities";
+    // fab animation, shrink fab and scale up again
+    protected void animateFab(final int position) {
+        fab.clearAnimation();
+        // Scale down animation
+        ScaleAnimation shrink =  new ScaleAnimation(1f, 0.2f, 1f, 0.2f, Animation.RELATIVE_TO_SELF, 0.5f, Animation.RELATIVE_TO_SELF, 0.5f);
+        shrink.setDuration(100);     // animation duration in milliseconds
+        shrink.setInterpolator(new DecelerateInterpolator());
+        shrink.setAnimationListener(new Animation.AnimationListener() {
+            @Override
+            public void onAnimationStart(Animation animation) {
+
             }
-            return null;
-        }
+
+            @Override
+            public void onAnimationEnd(Animation animation) {
+                // Change FAB color and icon
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                    fab.setImageDrawable(getResources().getDrawable(iconIntArray[position], null));
+                }
+
+                // Scale up animation
+                ScaleAnimation expand =  new ScaleAnimation(0.2f, 1f, 0.2f, 1f, Animation.RELATIVE_TO_SELF, 0.5f, Animation.RELATIVE_TO_SELF, 0.5f);
+                expand.setDuration(100);     // animation duration in milliseconds
+                expand.setInterpolator(new AccelerateInterpolator());
+                fab.startAnimation(expand);
+            }
+
+            @Override
+            public void onAnimationRepeat(Animation animation) {
+
+            }
+        });
+        fab.startAnimation(shrink);
     }
 }
