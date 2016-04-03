@@ -33,7 +33,6 @@ public class MainActivity extends AppCompatActivity {
     private FloatingActionButton fab;
     private TabLayout tabLayout;
     private Toolbar toolbar;
-
     // icon for fab on tab changes
     int[] iconIntArray = {R.drawable.ic_people_white_24dp, R.drawable.ic_local_dining_white_24dp};
 
@@ -65,14 +64,14 @@ public class MainActivity extends AppCompatActivity {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                // will select method depending on tab position
                 FABClickOpenDialog(view);
             }
         });
-
         // set initial fab icon
         fab.setImageResource(R.drawable.ic_people_white_24dp);
 
-        // change toolbar title, fab color, icon on tab selected with animation
+        // change toolbar title and tab icon with animation
         tabLayout.setOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override
             public void onTabSelected(TabLayout.Tab tab) {
@@ -139,7 +138,7 @@ public class MainActivity extends AppCompatActivity {
         int id = item.getItemId();
 
         //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
+        if (id == R.id.logout) {
             return true;
         }
 
@@ -147,10 +146,6 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
-    /**
-     * A {@link FragmentPagerAdapter} that returns a fragment corresponding to
-     * one of the sections/tabs/pages.
-     */
     public class SectionsPagerAdapter extends FragmentPagerAdapter {
 
         public SectionsPagerAdapter(FragmentManager fm) {
