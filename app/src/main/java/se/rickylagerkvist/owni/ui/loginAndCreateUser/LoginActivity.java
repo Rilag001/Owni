@@ -3,6 +3,8 @@ package se.rickylagerkvist.owni.ui.loginAndCreateUser;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 
+import com.firebase.client.Firebase;
+
 import se.rickylagerkvist.owni.R;
 
 public class LoginActivity extends AppCompatActivity {
@@ -11,5 +13,8 @@ public class LoginActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+
+        // Set Firebase Context
+        Firebase.setAndroidContext(this);
     }
 }

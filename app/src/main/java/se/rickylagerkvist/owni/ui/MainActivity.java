@@ -1,4 +1,4 @@
-package se.rickylagerkvist.owni;
+package se.rickylagerkvist.owni.ui;
 
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
@@ -14,6 +14,9 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 
+import com.firebase.client.Firebase;
+
+import se.rickylagerkvist.owni.R;
 import se.rickylagerkvist.owni.ui.ActivityFragment.ActivitiesFragment;
 import se.rickylagerkvist.owni.ui.PeopleFragment.PeopleFragment;
 
@@ -31,6 +34,9 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        // Set Firebase Context
+        Firebase.setAndroidContext(this);
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
