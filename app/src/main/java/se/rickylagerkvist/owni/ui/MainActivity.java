@@ -67,6 +67,7 @@ public class MainActivity extends AppCompatActivity {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                // will select method depending on tab position
                 FABClickOpenDialog(view);
             }
         });

@@ -14,64 +14,74 @@
     android:background="@drawable/green_background"
     tools:context=".ui.login.CreateAccountActivity">
 
-
-    <android.support.design.widget.TextInputLayout
-        android:id="@+id/til_username_create"
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:background="@android:color/white"
+        android:padding="16dp"
+        android:layout_margin="8dp">
 
-        <EditText
-            android:id="@+id/edit_text_username_create"
+        <android.support.design.widget.TextInputLayout
+            android:id="@+id/til_username_create"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@android:color/white"
-            android:hint="@string/hint_enter_username"
-            android:inputType="textCapWords"
-            android:padding="8dp"
-            android:layout_margin="8dp"
-            android:textColor="@android:color/black"
-            android:textColorHint="@android:color/darker_gray"
-            android:textSize="15sp" />
-    </android.support.design.widget.TextInputLayout>
+            android:layout_height="wrap_content">
 
-    <android.support.design.widget.TextInputLayout
-        android:id="@+id/til_email_create"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+            <EditText
+                android:id="@+id/edit_text_username_create"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@android:color/white"
+                android:hint="@string/hint_enter_username"
+                android:inputType="textCapWords"
+                android:padding="8dp"
+                android:textColor="@android:color/black"
+                android:textColorHint="@android:color/darker_gray"
+                android:textSize="15sp" />
+        </android.support.design.widget.TextInputLayout>
 
-        <EditText
-            android:id="@+id/edit_text_email_create"
+        <android.support.design.widget.TextInputLayout
+            android:id="@+id/til_email_create"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@android:color/white"
-            android:hint="@string/hint_enter_email"
-            android:inputType="textEmailAddress"
-            android:padding="8dp"
-            android:layout_margin="8dp"
-            android:textColor="@android:color/black"
-            android:textColorHint="@android:color/darker_gray"
-            android:textSize="15sp" />
-    </android.support.design.widget.TextInputLayout>
+            android:layout_height="wrap_content">
+
+            <EditText
+                android:id="@+id/edit_text_email_create"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@android:color/white"
+                android:hint="@string/hint_enter_email"
+                android:inputType="textEmailAddress"
+                android:padding="8dp"
+                android:textColor="@android:color/black"
+                android:textColorHint="@android:color/darker_gray"
+                android:textSize="15sp" />
+        </android.support.design.widget.TextInputLayout>
 
 
-    <android.support.design.widget.TextInputLayout
-        android:id="@+id/til_password_create"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-
-        <EditText
-            android:id="@+id/edit_text_password_create"
+        <android.support.design.widget.TextInputLayout
+            android:id="@+id/til_password_create"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@android:color/white"
-            android:hint="@string/hint_enter_password"
-            android:inputType="textPassword"
-            android:padding="8dp"
-            android:layout_margin="8dp"
-            android:textColor="@android:color/black"
-            android:textColorHint="@android:color/darker_gray"
-            android:textSize="15sp" />
-    </android.support.design.widget.TextInputLayout>
+            android:layout_height="wrap_content">
+
+            <EditText
+                android:id="@+id/edit_text_password_create"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@android:color/white"
+                android:hint="@string/hint_enter_password"
+                android:inputType="textPassword"
+                android:padding="8dp"
+                android:textColor="@android:color/black"
+                android:textColorHint="@android:color/darker_gray"
+                android:textSize="15sp" />
+        </android.support.design.widget.TextInputLayout>
+
+
+    </LinearLayout>
+
+
+
 
     <Button
         android:id="@+id/btn_create_account_final"
