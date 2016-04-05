@@ -10,6 +10,7 @@ import android.widget.ListView;
 import com.firebase.client.Firebase;
 
 import se.rickylagerkvist.owni.R;
+import se.rickylagerkvist.owni.model.PeopleCard;
 import se.rickylagerkvist.owni.utils.Constants;
 
 /**
@@ -19,18 +20,11 @@ public class PeopleFragment extends Fragment {
 
     private Firebase mFirebaseRef;
     private ListView mListView;
+    private PeopleCardAdapter mPeopleCardAdapter;
 
 
     public PeopleFragment() {
         // Required empty public constructor
-    }
-
-
-    public static PeopleFragment newInstance() {
-        PeopleFragment fragment = new PeopleFragment();
-        Bundle args = new Bundle();
-        fragment.setArguments(args);
-        return fragment;
     }
 
     @Override
@@ -46,14 +40,21 @@ public class PeopleFragment extends Fragment {
         mListView = (ListView) rootView.findViewById(R.id.peopleCardList);
 
         // firebase ref
-        mFirebaseRef = new Firebase(Constants.FIREBASE_URL_USERS + "/" + Constants.KEY_ENCODED_EMAIL);
+        mFirebaseRef = new Firebase(Constants.FIREBASE_URL_PEOPLE + "/" + Constants.KEY_ENCODED_EMAIL);
+
+        // set adapter for listView
+        mPeopleCardAdapter = new PeopleCardAdapter(getActivity(), PeopleCard.class,
+                R.layout.card_people, mFirebaseRef);
+        mListView.setAdapter(mPeopleCardAdapter);
 
         return rootView;
     }
 
+    // clean adapter
     @Override
     public void onDestroy() {
         super.onDestroy();
+        mPeopleCardAdapter.cleanup();
     }
 
 }

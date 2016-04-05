@@ -1,5 +1,6 @@
 package se.rickylagerkvist.owni.ui;
 
+import android.app.DialogFragment;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
@@ -28,6 +29,7 @@ import com.firebase.client.ValueEventListener;
 import se.rickylagerkvist.owni.R;
 import se.rickylagerkvist.owni.model.FireBaseUser;
 import se.rickylagerkvist.owni.ui.ActivityFragment.ActivitiesFragment;
+import se.rickylagerkvist.owni.ui.PeopleFragment.AddPeopleCardDialog;
 import se.rickylagerkvist.owni.ui.PeopleFragment.PeopleFragment;
 import se.rickylagerkvist.owni.ui.loginAndCreateUser.LoginActivity;
 import se.rickylagerkvist.owni.utils.Constants;
@@ -143,6 +145,9 @@ public class MainActivity extends AppCompatActivity {
 
     // Open dialog to add new PeopleCard
     public void showAddPeopleCardDialog(View view) {
+        DialogFragment dialog = AddPeopleCardDialog.newInstance();
+        dialog.show(MainActivity.this.getFragmentManager(), "AddPeopleCardDialog");
+
         Snackbar.make(view, "Add PeopleCard", Snackbar.LENGTH_LONG)
                 .setAction("Action", null).show();
     }

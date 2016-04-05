@@ -186,7 +186,7 @@ public class LoginActivity extends AppCompatActivity {
         final String unprocessedEmail = authData.getProviderData().get(Constants.FIREBASE_PROPERTY_EMAIL).toString().toLowerCase();
 
         // Encode user email replacing "." with "," to be able to use it as a Firebase db key
-        mEncodedEmail = Utils.encodeEmail(unprocessedEmail);
+        mEncodedEmail = Utils.replaceDotWithSemiColon(unprocessedEmail);
     }
 
     private void initializeScreen() {

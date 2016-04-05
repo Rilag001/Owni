@@ -90,7 +90,7 @@ public class CreateAccountActivity extends AppCompatActivity {
                 Log.i(LOG_TAG, getString(R.string.log_message_auth_successful));
 
                 //String uid = (String) result.get("uid");
-                String email = Utils.encodeEmail(mUserEmail);
+                String email = Utils.replaceDotWithSemiColon(mUserEmail);
                 //createUserInFirebaseHelper(uid);
                 createUserInFirebaseHelper(email);
 

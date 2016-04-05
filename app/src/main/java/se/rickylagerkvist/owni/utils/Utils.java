@@ -5,7 +5,8 @@ package se.rickylagerkvist.owni.utils;
  */
 public class Utils {
 
-    public static String encodeEmail(String userEmail) {
+    // Firebase URL cant contain ".", replace with ","
+    public static String replaceDotWithSemiColon(String userEmail) {
         return userEmail.replace(".", ",");
     }
 
