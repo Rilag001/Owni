@@ -41,6 +41,8 @@ public class LoginActivity extends AppCompatActivity {
     private EditText mEditTextEmailInput, mEditTextPasswordInput;
     protected String mEncodedEmail;
 
+    protected String mKey;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -113,7 +115,7 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     // Helper method that makes sure a user is created if the use logs in with Firebase's email/password provider.
-    private class MyAuthResultHandler implements  Firebase.AuthResultHandler {
+    private class MyAuthResultHandler implements Firebase.AuthResultHandler {
 
         private final String provider;
 
@@ -138,11 +140,16 @@ public class LoginActivity extends AppCompatActivity {
                 /* Save provider name and encodedEmail for later use and start MainActivity */
                 spe.putString(Constants.KEY_PROVIDER, authData.getProvider()).apply();
                 spe.putString(Constants.KEY_ENCODED_EMAIL, mEncodedEmail).apply();
+                //spe.putString(Constants.KEY_PROVIDER, authData.getUid()).apply();
+
+                Constants.KEY_ENCODED_EMAIL = mEncodedEmail;
 
 
-                /* Go to main activity */
+                // Go to main activity and sends mEncodedEmail.
                 Intent intent = new Intent(LoginActivity.this, MainActivity.class);
                 intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                //intent.putExtra("email", mEncodedEmail);
+
                 startActivity(intent);
                 finish();
             }

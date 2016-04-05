@@ -20,9 +20,9 @@ import java.util.Map;
 import se.rickylagerkvist.owni.R;
 import se.rickylagerkvist.owni.model.FireBaseUser;
 import se.rickylagerkvist.owni.utils.Constants;
+import se.rickylagerkvist.owni.utils.Utils;
 
-// Background from: https://unsplash.com/photos/8mqOw4DBBSg (licensed under Creative Commons Zero)
-
+// Background in xml from: https://unsplash.com/photos/8mqOw4DBBSg (licensed under Creative Commons Zero)
 public class CreateAccountActivity extends AppCompatActivity {
 
     private static final String LOG_TAG = CreateAccountActivity.class.getSimpleName();
@@ -49,7 +49,7 @@ public class CreateAccountActivity extends AppCompatActivity {
         mEditTextEmailCreate = (EditText) findViewById(R.id.edit_text_email_create);
         mEditTextPasswordCreate = (EditText) findViewById(R.id.edit_text_password_create);
 
-        /* Setup the progress dialog that is displayed later when authenticating with Firebase */
+        // Setup the progress dialog that is displayed later when authenticating with Firebase
         mAuthProgressDialog = new ProgressDialog(this);
         mAuthProgressDialog.setTitle(getResources().getString(R.string.progress_dialog_loading));
         mAuthProgressDialog.setMessage(getResources().getString(R.string.progress_dialog_creating_user_with_firebase));
@@ -71,7 +71,7 @@ public class CreateAccountActivity extends AppCompatActivity {
         mUserEmail = mEditTextEmailCreate.getText().toString().toLowerCase();
         mPassword = mEditTextPasswordCreate.getText().toString();
 
-        // Check that email and user name are okay
+        // Check that email and user name are valid
         boolean validEmail = isEmailValid(mUserEmail);
         boolean validUserName = isUserNameValid(mUserName);
         boolean validPassword = isPasswordValid(mPassword);
@@ -89,8 +89,10 @@ public class CreateAccountActivity extends AppCompatActivity {
                 mAuthProgressDialog.dismiss();
                 Log.i(LOG_TAG, getString(R.string.log_message_auth_successful));
 
-                String uid = (String) result.get("uid");
-                createUserInFirebaseHelper(uid);
+                //String uid = (String) result.get("uid");
+                String email = Utils.encodeEmail(mUserEmail);
+                //createUserInFirebaseHelper(uid);
+                createUserInFirebaseHelper(email);
 
                 Intent intent = new Intent(CreateAccountActivity.this, LoginActivity.class);
                 intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
@@ -110,15 +112,20 @@ public class CreateAccountActivity extends AppCompatActivity {
                 } else {
                     showErrorToast(firebaseError.getMessage());
                 }
-
             }
         });
     }
 
     // Creates a new user in Firebase with the Java FirebaseUser
-    private void createUserInFirebaseHelper(String uid) {
+    private void createUserInFirebaseHelper(String email) {
 
-        final Firebase userLocation = new Firebase(Constants.FIREBASE_URL_USERS).child(uid);
+        // Unique locations for new user
+        final Firebase userLocation = new Firebase(Constants.FIREBASE_URL_USERS).child(email);
+        final Firebase peopleLocation = new Firebase(Constants.FIREBASE_URL_PEOPLE).child(email);
+        final Firebase activitiesLocation = new Firebase(Constants.FIREBASE_URL_ACTIVITIES).child(email);
+        final Firebase peopleItemsLocation = new Firebase(Constants.FIREBASE_URL_PEOPLE_ITEMS).child(email);
+        final Firebase activitiesItemsLocation = new Firebase(Constants.FIREBASE_URL_ACTIVITIES_ITEMS).child(email);
+
 
         userLocation.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
@@ -129,11 +136,14 @@ public class CreateAccountActivity extends AppCompatActivity {
                     HashMap<String, Object> timestampJoined = new HashMap<>();
                     timestampJoined.put(Constants.FIREBASE_PROPERTY_TIMESTAMP, ServerValue.TIMESTAMP);
 
-                    // New user
+                    // Create and populate locations for new user
                     FireBaseUser newUser = new FireBaseUser(mUserName, mUserEmail, timestampJoined);
                     userLocation.setValue(newUser);
+                    peopleLocation.setValue("null");
+                    activitiesLocation.setValue("null");
+                    peopleItemsLocation.setValue("null");
+                    activitiesItemsLocation.setValue("null");
                 }
-
             }
 
             @Override
@@ -178,5 +188,4 @@ public class CreateAccountActivity extends AppCompatActivity {
     private void showErrorToast(String message) {
         Toast.makeText(CreateAccountActivity.this, message, Toast.LENGTH_LONG).show();
     }
-
 }

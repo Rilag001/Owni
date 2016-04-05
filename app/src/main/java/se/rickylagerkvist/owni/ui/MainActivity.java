@@ -20,12 +20,17 @@ import android.view.animation.Animation;
 import android.view.animation.DecelerateInterpolator;
 import android.view.animation.ScaleAnimation;
 
+import com.firebase.client.DataSnapshot;
 import com.firebase.client.Firebase;
+import com.firebase.client.FirebaseError;
+import com.firebase.client.ValueEventListener;
 
 import se.rickylagerkvist.owni.R;
+import se.rickylagerkvist.owni.model.FireBaseUser;
 import se.rickylagerkvist.owni.ui.ActivityFragment.ActivitiesFragment;
 import se.rickylagerkvist.owni.ui.PeopleFragment.PeopleFragment;
 import se.rickylagerkvist.owni.ui.loginAndCreateUser.LoginActivity;
+import se.rickylagerkvist.owni.utils.Constants;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -35,9 +40,13 @@ public class MainActivity extends AppCompatActivity {
     private FloatingActionButton fab;
     private TabLayout tabLayout;
     private Toolbar toolbar;
+    private Firebase mFirebaseRef;
+    private Menu menu;
 
     // icon for fab on tab changes
     int[] iconIntArray = {R.drawable.ic_people_white_24dp, R.drawable.ic_local_dining_white_24dp};
+    int[] colorIntArray = {R.color.colorAccent, R.color.blueColor};
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,12 +55,30 @@ public class MainActivity extends AppCompatActivity {
 
         // Set Firebase Context and connection String
         Firebase.setAndroidContext(this);
+        mFirebaseRef = new Firebase(Constants.FIREBASE_URL_USERS + "/" + Constants.KEY_ENCODED_EMAIL);
 
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         // Create the adapter that will return a fragment for each of the three
         // primary sections of the activity.
         mSectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager());
+
+
+        // set menu item to display name of user
+        mFirebaseRef.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                FireBaseUser mUser = dataSnapshot.getValue(FireBaseUser.class);
+                MenuItem m = menu.findItem(R.id.log_out);
+                m.setTitle("Log out " + mUser.getName());
+            }
+
+            @Override
+            public void onCancelled(FirebaseError firebaseError) {
+
+            }
+        });
+
 
         // Set up the ViewPager with the sections adapter.
         mViewPager = (ViewPager) findViewById(R.id.container);
@@ -82,12 +109,12 @@ public class MainActivity extends AppCompatActivity {
                 mViewPager.setCurrentItem(tab.getPosition());
                 animateFab(tab.getPosition());
 
-                int position = tabLayout.getSelectedTabPosition();
+                /*int position = tabLayout.getSelectedTabPosition();
                 if (position == 0){
                     toolbar.setTitle("People");
                 } else if (position == 1) {
                     toolbar.setTitle("Activities");
-                }
+                }*/
             }
 
             @Override
@@ -130,6 +157,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
+        this.menu = menu;
         getMenuInflater().inflate(R.menu.menu_main, menu);
         return true;
     }
@@ -173,6 +201,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     // fab animation, shrink fab and scale up again
+    // from: http://stackoverflow.com/questions/31415742/how-to-change-floatingactionbutton-between-tabs/31418573
     protected void animateFab(final int position) {
         fab.clearAnimation();
         // Scale down animation
@@ -189,6 +218,7 @@ public class MainActivity extends AppCompatActivity {
             public void onAnimationEnd(Animation animation) {
                 // Change FAB color and icon
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                    fab.setBackgroundTintList(getResources().getColorStateList(colorIntArray[position]));
                     fab.setImageDrawable(getResources().getDrawable(iconIntArray[position], null));
                 }
 

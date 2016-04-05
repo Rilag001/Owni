@@ -22,4 +22,6 @@
     <string name="error_email_taken">Email already taken</string>
     <string name="title_activity_login">Login</string>
     <string name="log_out">Log out</string>
+    <string name="title_activity_people_card_item">PeopleCardItemActivity</string>
+    <string name="title_activity_avtivities_card_item">AvtivitiesCardItemActivity</string>
 </resources>

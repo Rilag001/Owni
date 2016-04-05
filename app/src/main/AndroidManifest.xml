@@ -21,6 +21,7 @@
             android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
+
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
@@ -31,6 +32,24 @@
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="se.rickylagerkvist.owni.ui.loginAndCreateUser.LoginActivity"/>
+        </activity>
+        <activity
+            android:name=".ui.PeopleFragment.PeopleCardItemActivity"
+            android:label="@string/title_activity_people_card_item"
+            android:parentActivityName=".ui.MainActivity"
+            android:theme="@style/AppTheme">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="se.rickylagerkvist.owni.ui.MainActivity"/>
+        </activity>
+        <activity
+            android:name=".ui.ActivityFragment.AvtivitiesCardItemActivity"
+            android:label="@string/title_activity_avtivities_card_item"
+            android:parentActivityName=".ui.MainActivity"
+            android:theme="@style/AppTheme">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="se.rickylagerkvist.owni.ui.MainActivity"/>
         </activity>
     </application>
 
