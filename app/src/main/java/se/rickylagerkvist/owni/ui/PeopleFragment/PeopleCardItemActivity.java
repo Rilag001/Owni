@@ -9,7 +9,10 @@ import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.Toast;
 
+import com.firebase.client.DataSnapshot;
 import com.firebase.client.Firebase;
+import com.firebase.client.FirebaseError;
+import com.firebase.client.ValueEventListener;
 
 import se.rickylagerkvist.owni.R;
 import se.rickylagerkvist.owni.model.PeopleCard;
@@ -24,7 +27,7 @@ public class PeopleCardItemActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_people_card_item);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        final Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
         Intent intent = this.getIntent();
@@ -34,9 +37,26 @@ public class PeopleCardItemActivity extends AppCompatActivity {
             return;
         }
 
-        Firebase mPeopleCardRef = new Firebase(Constants.FIREBASE_URL_PEOPLE).child(mPeopleCardId);
-        Firebase mPeopleCardListItemRef = new Firebase(Constants.FIREBASE_URL_PEOPLE_ITEMS).child(mPeopleCardId);
+        Firebase mPeopleCardRef = new Firebase(Constants.FIREBASE_URL_PEOPLE + "/" + Constants.KEY_ENCODED_EMAIL).child(mPeopleCardId);
+        Firebase mPeopleCardListItemRef = new Firebase(Constants.FIREBASE_URL_PEOPLE_ITEMS + "/" + Constants.KEY_ENCODED_EMAIL).child(mPeopleCardId);
 
+        // set toolbar titel to peoplecard.getName()
+        mPeopleCardRef.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                // get Peoplecard
+                PeopleCard peopleCard = dataSnapshot.getValue(PeopleCard.class);
+                // set mPeopleCard to peoplecard for ev later use
+                mPeopleCard = peopleCard;
+                // set toolbar titel to PeopleCards name
+                toolbar.setTitle(peopleCard.getName());
+            }
+
+            @Override
+            public void onCancelled(FirebaseError firebaseError) {
+
+            }
+        });
 
         Toast.makeText(PeopleCardItemActivity.this, mPeopleCardId, Toast.LENGTH_SHORT).show();
 
