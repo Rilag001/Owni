@@ -65,23 +65,6 @@ public class MainActivity extends AppCompatActivity {
         // primary sections of the activity.
         mSectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager());
 
-
-        // set menu item to display name of user
-        mFirebaseRef.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                FireBaseUser mUser = dataSnapshot.getValue(FireBaseUser.class);
-                MenuItem m = menu.findItem(R.id.log_out);
-                m.setTitle("Log out " + mUser.getName());
-            }
-
-            @Override
-            public void onCancelled(FirebaseError firebaseError) {
-
-            }
-        });
-
-
         // Set up the ViewPager with the sections adapter.
         mViewPager = (ViewPager) findViewById(R.id.container);
         mViewPager.setAdapter(mSectionsPagerAdapter);
@@ -160,10 +143,26 @@ public class MainActivity extends AppCompatActivity {
 
 
     @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
+    public boolean onCreateOptionsMenu(final Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         this.menu = menu;
         getMenuInflater().inflate(R.menu.menu_main, menu);
+
+        // set menu item to display name of user
+        mFirebaseRef.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                FireBaseUser mUser = dataSnapshot.getValue(FireBaseUser.class);
+                MenuItem m = menu.findItem(R.id.log_out);
+                m.setTitle("Log out " + mUser.getName());
+            }
+
+            @Override
+            public void onCancelled(FirebaseError firebaseError) {
+
+            }
+        });
+
         return true;
     }
 

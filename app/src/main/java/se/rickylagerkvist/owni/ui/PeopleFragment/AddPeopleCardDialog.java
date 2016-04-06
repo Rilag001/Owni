@@ -57,7 +57,7 @@ public class AddPeopleCardDialog extends DialogFragment {
         // Inflate and set the layout for the dialog
         // Pass null as the parent view because its going in the dialog layout
         builder.setView(rootView)
-                .setTitle("Edit People debt card")
+                .setTitle("Create new Peoplecard")
                 .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
@@ -66,7 +66,7 @@ public class AddPeopleCardDialog extends DialogFragment {
                     }
                 })
                         // Add action buttons
-                .setPositiveButton("Create", new DialogInterface.OnClickListener() {
+                .setPositiveButton("Add", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int id) {
                         addPeopleCardToList();

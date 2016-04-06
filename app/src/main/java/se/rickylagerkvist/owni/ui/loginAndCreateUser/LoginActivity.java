@@ -137,7 +137,7 @@ public class LoginActivity extends AppCompatActivity {
                     setAuthenticatedUserPasswordProvider(authData);
                 }
 
-                /* Save provider name and encodedEmail for later use and start MainActivity */
+                // Save provider name and encodedEmail for later use and start MainActivity
                 spe.putString(Constants.KEY_PROVIDER, authData.getProvider()).apply();
                 spe.putString(Constants.KEY_ENCODED_EMAIL, mEncodedEmail).apply();
                 //spe.putString(Constants.KEY_PROVIDER, authData.getUid()).apply();
