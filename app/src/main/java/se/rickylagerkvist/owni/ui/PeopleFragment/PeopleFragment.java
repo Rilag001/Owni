@@ -1,10 +1,12 @@
 package se.rickylagerkvist.owni.ui.PeopleFragment;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ListView;
 
 import com.firebase.client.Firebase;
@@ -46,6 +48,20 @@ public class PeopleFragment extends Fragment {
         mPeopleCardAdapter = new PeopleCardAdapter(getActivity(), PeopleCard.class,
                 R.layout.card_people, mFirebaseRef);
         mListView.setAdapter(mPeopleCardAdapter);
+
+        mListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                PeopleCard peopleCard = mPeopleCardAdapter.getItem(position);
+
+                if (peopleCard != null) {
+                    Intent intent = new Intent(getContext(), PeopleCardItemActivity.class);
+                    String peopleCardId = mPeopleCardAdapter.getRef(position).getKey();
+                    intent.putExtra("PEOPLECARD_ITEM_ID", peopleCardId);
+                    startActivity(intent);
+                }
+            }
+        });
 
         return rootView;
     }
