@@ -40,11 +40,11 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="R"
+                        android:text=""
                         android:layout_centerInParent="true"
                         android:textColor="@android:color/white"
                         android:textSize="30sp"
-                        android:id="@+id/initials"/>
+                        android:id="@+id/nrOfItems"/>
                 </RelativeLayout>
 
                 <RelativeLayout
@@ -64,7 +64,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:id="@+id/i_or_you_owe_person_x"
+                        android:id="@+id/name"
                         android:text="Ricky Lagerkvist"
                         android:textSize="18sp"
                         android:layout_alignBottom="@+id/line"
@@ -73,7 +73,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:id="@+id/description"
+                        android:id="@+id/balance"
                         android:text="Balance: "
                         android:textSize="15sp"
                         android:layout_below="@+id/line"
@@ -83,18 +83,18 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:id="@+id/amount"
-                        android:text="-100 "
+                        android:text=""
                         android:textSize="15sp"
                         android:layout_marginTop="4dp"
                         android:layout_below="@+id/line"
-                        android:layout_toRightOf="@id/description"
-                        android:layout_toEndOf="@id/description"/>
+                        android:layout_toRightOf="@id/balance"
+                        android:layout_toEndOf="@id/balance"/>
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:id="@+id/currency"
-                        android:text="kr"
+                        android:text=" kr"
                         android:textSize="15sp"
                         android:layout_marginTop="4dp"
                         android:layout_below="@+id/line"

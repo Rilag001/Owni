@@ -2,6 +2,7 @@ package se.rickylagerkvist.owni.ui.PeopleFragment;
 
 import android.app.Activity;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.firebase.client.Query;
@@ -25,11 +26,23 @@ public class PeopleCardAdapter
     @Override
     protected void populateView(View view, PeopleCard list) {
 
-        TextView textViewName = (TextView) view.findViewById(R.id.i_or_you_owe_person_x);
+        TextView textViewName = (TextView) view.findViewById(R.id.name);
+        TextView textViewNrOfItems = (TextView) view.findViewById(R.id.nrOfItems);
+        TextView textViewBalance = (TextView) view.findViewById(R.id.balance);
+        ImageView round = (ImageView) view.findViewById(R.id.round);
 
 
-        /* Set the var */
+        // Set the var
         textViewName.setText(list.getName());
+        textViewNrOfItems.setText("" + list.getNumberOfItems());
+        textViewBalance.setText("" + list.getBalance());
 
+        if (list.getBalance() == 0){
+            round.setImageResource(R.drawable.round_blue);
+        } else if (list.getBalance() > 0) {
+            round.setImageResource(R.drawable.round_red);
+        } else if (list.getBalance() < 0) {
+            round.setImageResource(R.drawable.round_green);
+        }
     }
 }

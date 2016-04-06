@@ -9,11 +9,20 @@
                 android:paddingTop="@dimen/activity_vertical_margin"
                 tools:context="com.udacity.firebase.shoppinglistplusplus.ui.MainActivity">
 
-    <EditText
-        android:id="@+id/edit_text_list_name"
-        android:layout_width="match_parent"
+    <android.support.design.widget.TextInputLayout
         android:layout_height="wrap_content"
-        android:hint="name of person"
-        android:inputType="textCapWords"/>
+        android:layout_width="match_parent">
+
+        <EditText
+            android:id="@+id/edit_text_list_name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Name of person"
+            android:textColorHint="@android:color/darker_gray"
+            android:textSize="15sp"
+            android:inputType="textCapWords"/>
+
+    </android.support.design.widget.TextInputLayout>
+
 
 </RelativeLayout>

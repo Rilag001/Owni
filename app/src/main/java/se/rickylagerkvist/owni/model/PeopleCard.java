@@ -7,6 +7,7 @@ public class PeopleCard {
     
     public String name;
     public int numberOfItems;
+    public int balance;
 
     public PeopleCard() {
     }
@@ -14,6 +15,7 @@ public class PeopleCard {
     public PeopleCard(String name) {
         this.name = name;
         this.numberOfItems = 0;
+        this.balance = 0;
     }
 
     // getters
@@ -25,6 +27,10 @@ public class PeopleCard {
         return numberOfItems;
     }
 
+    public int getBalance() {
+        return balance;
+    }
+
     // setters
     public void setName(String name) {
         this.name = name;
@@ -32,5 +38,9 @@ public class PeopleCard {
 
     public void setNumberOfItems(int numberOfItems) {
         this.numberOfItems = numberOfItems;
+    }
+
+    public void setBalance(int balance) {
+        this.balance = balance;
     }
 }
