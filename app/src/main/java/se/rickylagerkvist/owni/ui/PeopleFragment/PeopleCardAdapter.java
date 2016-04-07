@@ -24,7 +24,7 @@ public class PeopleCardAdapter
     }
 
     @Override
-    protected void populateView(View view, PeopleCard list) {
+    protected void populateView(View view, PeopleCard peopleCard) {
 
         TextView textViewName = (TextView) view.findViewById(R.id.name);
         TextView textViewNrOfItems = (TextView) view.findViewById(R.id.nrOfItems);
@@ -33,15 +33,15 @@ public class PeopleCardAdapter
 
 
         // Set the var
-        textViewName.setText(list.getName());
-        textViewNrOfItems.setText("" + list.getNumberOfItems());
-        textViewBalance.setText("" + list.getBalance());
+        textViewName.setText(peopleCard.getName());
+        textViewNrOfItems.setText("" + peopleCard.getNumberOfItems());
+        textViewBalance.setText("" + peopleCard.getBalance());
 
-        if (list.getBalance() == 0){
+        if (peopleCard.getBalance() == 0){
             round.setImageResource(R.drawable.round_blue);
-        } else if (list.getBalance() > 0) {
+        } else if (peopleCard.getBalance() > 0) {
             round.setImageResource(R.drawable.round_red);
-        } else if (list.getBalance() < 0) {
+        } else if (peopleCard.getBalance() < 0) {
             round.setImageResource(R.drawable.round_green);
         }
     }

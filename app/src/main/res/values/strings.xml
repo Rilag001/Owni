@@ -24,4 +24,7 @@
     <string name="log_out">Log out</string>
     <string name="title_activity_people_card_item">PeopleCardItemActivity</string>
     <string name="title_activity_avtivities_card_item">AvtivitiesCardItemActivity</string>
+    <string name="i_owe_person">I owe person</string>
+    <string name="person_owes_me">owes me</string>
+    <string name="content_people_card_item_balance">Balance:</string>
 </resources>

@@ -8,16 +8,15 @@ public class PeopleCardItem {
     public String description;
     public int amount;
     public String typeOfValue;
-    public boolean iOwePersonX;
+
 
     public PeopleCardItem() {
     }
 
-    public PeopleCardItem(String description, int amount, String typeOfValue, boolean iOwePersonX) {
+    public PeopleCardItem(String description, int amount, String typeOfValue) {
         this.description = description;
         this.amount = amount;
         this.typeOfValue = typeOfValue;
-        this.iOwePersonX = iOwePersonX;
     }
 
     // getters
@@ -33,9 +32,7 @@ public class PeopleCardItem {
         return typeOfValue;
     }
 
-    public boolean isiOwePersonX() {
-        return iOwePersonX;
-    }
+
 
     // setters
     public void setDescription(String description) {
@@ -50,8 +47,5 @@ public class PeopleCardItem {
         this.typeOfValue = typeOfValue;
     }
 
-    public void setiOwePersonX(boolean iOwePersonX) {
-        this.iOwePersonX = iOwePersonX;
-    }
 }
 

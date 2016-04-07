@@ -94,12 +94,12 @@ public class MainActivity extends AppCompatActivity {
                 mViewPager.setCurrentItem(tab.getPosition());
                 animateFab(tab.getPosition());
 
-                /*int position = tabLayout.getSelectedTabPosition();
+                int position = tabLayout.getSelectedTabPosition();
                 if (position == 0){
                     toolbar.setTitle("People");
                 } else if (position == 1) {
                     toolbar.setTitle("Activities");
-                }*/
+                }
             }
 
             @Override
@@ -130,9 +130,6 @@ public class MainActivity extends AppCompatActivity {
     public void showAddPeopleCardDialog(View view) {
         DialogFragment dialog = AddPeopleCardDialog.newInstance();
         dialog.show(MainActivity.this.getFragmentManager(), "AddPeopleCardDialog");
-
-        Snackbar.make(view, "Add PeopleCard", Snackbar.LENGTH_LONG)
-                .setAction("Action", null).show();
     }
 
     // Open dialog to add new ActivityCard

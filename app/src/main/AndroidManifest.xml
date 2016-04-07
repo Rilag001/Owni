@@ -34,10 +34,10 @@
                 android:value="se.rickylagerkvist.owni.ui.loginAndCreateUser.LoginActivity"/>
         </activity>
         <activity
-            android:name=".ui.PeopleFragment.PeopleCardItemActivity"
+            android:name=".ui.PeopleCardItemActivity.PeopleCardItemActivity"
             android:label="@string/title_activity_people_card_item"
             android:parentActivityName=".ui.MainActivity"
-            android:theme="@style/AppTheme">
+            android:theme="@style/AppTheme.NoActionBar">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="se.rickylagerkvist.owni.ui.MainActivity"/>
@@ -46,7 +46,7 @@
             android:name=".ui.ActivityFragment.AvtivitiesCardItemActivity"
             android:label="@string/title_activity_avtivities_card_item"
             android:parentActivityName=".ui.MainActivity"
-            android:theme="@style/AppTheme">
+            android:theme="@style/AppTheme.NoActionBar">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="se.rickylagerkvist.owni.ui.MainActivity"/>
