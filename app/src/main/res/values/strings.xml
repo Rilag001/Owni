@@ -27,4 +27,5 @@
     <string name="i_owe_person">I owe person</string>
     <string name="person_owes_me">owes me</string>
     <string name="content_people_card_item_balance">Balance:</string>
+    <string name="currency">kr</string>
 </resources>

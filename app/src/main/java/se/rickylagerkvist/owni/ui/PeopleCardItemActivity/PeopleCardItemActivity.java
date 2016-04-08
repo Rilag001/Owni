@@ -23,14 +23,20 @@ import se.rickylagerkvist.owni.utils.Constants;
 public class PeopleCardItemActivity extends AppCompatActivity {
 
     private String mPeopleCardId;
-    private String mPeopleCardName;
+    private String mPeopleCardFirstName;
     private PeopleCard mPeopleCard;
     private FloatingActionButton fab;
 
     private ListView mIOweListView, mXOwesListView;
-    private TextView mIoweTitle, mXOwesTitle;
+    private TextView mIoweTitle, mXOwesTitle, mBalance;
 
     private PeopleCardItemAdapter mIoweXAdapter, mXowesMeAdapter;
+
+    private int iOweSum;
+    private int xOwesSum;
+    private int iOweAndXOwesBalance;
+
+    private int nrOfItems;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,6 +52,7 @@ public class PeopleCardItemActivity extends AppCompatActivity {
         //TextView
         mIoweTitle = (TextView) findViewById(R.id.i_owe_people_list_title);
         mXOwesTitle = (TextView) findViewById(R.id.people_owe_me_list_title);
+        mBalance = (TextView) findViewById(R.id.people_card_items_balance);
 
         Intent intent = this.getIntent();
         mPeopleCardId = intent.getStringExtra("PEOPLECARD_ITEM_ID");
@@ -71,8 +78,58 @@ public class PeopleCardItemActivity extends AppCompatActivity {
                 R.layout.card_people_item, mPeopleCardListItemXOwesRef);
         mXOwesListView.setAdapter(mXowesMeAdapter);
 
+        // how many items and the sum of getAmount if getValue == "Kr"
+        mPeopleCardListItemIOweRef.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
 
-        // set toolbar titel and color
+                // loop all PeopleCardItems
+                for (DataSnapshot postSnapshot: dataSnapshot.getChildren()) {
+                    PeopleCardItem item = postSnapshot.getValue(PeopleCardItem.class);
+
+                    if (item.getTypeOfValue().equalsIgnoreCase("kr")){
+                        iOweSum = iOweSum + item.getAmount();
+                    }
+
+                    nrOfItems = nrOfItems + 1;
+                }
+            }
+
+            @Override
+            public void onCancelled(FirebaseError firebaseError) {
+
+            }
+        });
+
+        // how many items and the sum of getAmount if getValue == "Kr"
+        mPeopleCardListItemXOwesRef.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+
+                // loop all PeopleCardItems
+                for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
+                    PeopleCardItem item = postSnapshot.getValue(PeopleCardItem.class);
+
+                    if (item.getTypeOfValue().equalsIgnoreCase("kr")) {
+                        xOwesSum = xOwesSum + item.getAmount();
+                    }
+
+                    nrOfItems = nrOfItems + 1;
+
+                    iOweAndXOwesBalance = iOweSum - xOwesSum;
+                    mBalance.setText("" + iOweAndXOwesBalance);
+                }
+
+            }
+
+            @Override
+            public void onCancelled(FirebaseError firebaseError) {
+
+            }
+        });
+
+
+        // set toolbar titel and textView titel
         mPeopleCardRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
@@ -81,31 +138,13 @@ public class PeopleCardItemActivity extends AppCompatActivity {
                 // set mPeopleCard to peoplecard for ev later use
                 mPeopleCard = peopleCard;
                 // first name of peoplecard
-                mPeopleCardName = peopleCard.getName().split (" ", 2) [0];
+                mPeopleCardFirstName = peopleCard.getName().split(" ", 2)[0];
                 // set toolbar titel to PeopleCards name
                 toolbar.setTitle(peopleCard.getName());
 
-
-
-
-                /* and color
-                int balanceColor = 0;
-                if (peopleCard.getBalance() == 0) {
-                    balanceColor = getResources().getColor(R.color.blueColor);
-                } else if (peopleCard.getBalance() > 0) {
-                    balanceColor = getResources().getColor(R.color.colorAccent);
-                } else if (peopleCard.getBalance() < 0) {
-                    balanceColor = getResources().getColor(R.color.colorPrimary);
-                }
-                toolbar.setBackgroundColor(balanceColor);
-
-                if (Build.VERSION.SDK_INT >= 21) {
-                    getWindow().setStatusBarColor(balanceColor);
-                }*/
-
                 // set title to include name
-                mIoweTitle.setText(getResources().getString(R.string.i_owe_person) + " " +  mPeopleCardName);
-                mXOwesTitle.setText(mPeopleCardName + " " + getResources().getString(R.string.person_owes_me));
+                mIoweTitle.setText(getResources().getString(R.string.i_owe_person) + " " + mPeopleCardFirstName);
+                mXOwesTitle.setText(mPeopleCardFirstName + " " + getResources().getString(R.string.person_owes_me));
             }
 
             @Override
@@ -128,7 +167,7 @@ public class PeopleCardItemActivity extends AppCompatActivity {
 
     // Open dialog to add new PeopleCard
     public void showAddPeopleCardItemDialog(View view) {
-        DialogFragment dialog = AddPeopleCardItemDialog.newInstance(mPeopleCardId, mPeopleCardName);
+        DialogFragment dialog = AddPeopleCardItemDialog.newInstance(mPeopleCardId, mPeopleCardFirstName);
         dialog.show(PeopleCardItemActivity.this.getFragmentManager(), "AddPeopleCardItemDialog");
     }
 

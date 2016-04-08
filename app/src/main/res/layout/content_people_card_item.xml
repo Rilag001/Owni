@@ -107,9 +107,10 @@
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
             android:layout_toRightOf="@id/round_balance"
+            android:layout_toEndOf="@id/round_balance"
             android:layout_margin="8dp"
             android:id="@+id/people_card_items_balance"
-            android:text="@string/content_people_card_item_balance"
+            android:text=""
             android:textSize="18sp"/>
 
         <TextView
@@ -118,10 +119,11 @@
             android:layout_toRightOf="@+id/people_card_items_balance"
             android:layout_toEndOf="@+id/people_card_items_balance"
             android:layout_centerVertical="true"
+            android:id="@+id/people_card_item_balance_type"
             android:textColor="@color/colorPrimary"
             android:textSize="18sp"
             android:layout_margin="8dp"
-            android:text="100"/>
+            android:text="@string/currency"/>
 
     </RelativeLayout>
 
