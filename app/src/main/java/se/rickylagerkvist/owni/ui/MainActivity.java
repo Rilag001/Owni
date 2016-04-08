@@ -2,6 +2,7 @@ package se.rickylagerkvist.owni.ui;
 
 import android.app.DialogFragment;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
@@ -74,6 +75,8 @@ public class MainActivity extends AppCompatActivity {
         tabLayout.setupWithViewPager(mViewPager);
         tabLayout.getTabAt(0).setIcon(R.drawable.ic_people_material);
         tabLayout.getTabAt(1).setIcon(R.drawable.ic_activities_material);
+        // set tint color
+        tabLayout.setSelectedTabIndicatorColor(Color.parseColor("#FFFFFF"));
 
         fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {

@@ -23,6 +23,7 @@ import se.rickylagerkvist.owni.utils.Constants;
 public class PeopleCardItemActivity extends AppCompatActivity {
 
     private String mPeopleCardId;
+    private String mPeopleCardName;
     private PeopleCard mPeopleCard;
     private FloatingActionButton fab;
 
@@ -79,8 +80,12 @@ public class PeopleCardItemActivity extends AppCompatActivity {
                 PeopleCard peopleCard = dataSnapshot.getValue(PeopleCard.class);
                 // set mPeopleCard to peoplecard for ev later use
                 mPeopleCard = peopleCard;
+                // first name of peoplecard
+                mPeopleCardName = peopleCard.getName().split (" ", 2) [0];
                 // set toolbar titel to PeopleCards name
                 toolbar.setTitle(peopleCard.getName());
+
+
 
 
                 /* and color
@@ -99,8 +104,8 @@ public class PeopleCardItemActivity extends AppCompatActivity {
                 }*/
 
                 // set title to include name
-                mIoweTitle.setText(getResources().getString(R.string.i_owe_person) + " " +  peopleCard.getName());
-                mXOwesTitle.setText(peopleCard.getName() + " " + getResources().getString(R.string.person_owes_me));
+                mIoweTitle.setText(getResources().getString(R.string.i_owe_person) + " " +  mPeopleCardName);
+                mXOwesTitle.setText(mPeopleCardName + " " + getResources().getString(R.string.person_owes_me));
             }
 
             @Override
@@ -123,7 +128,7 @@ public class PeopleCardItemActivity extends AppCompatActivity {
 
     // Open dialog to add new PeopleCard
     public void showAddPeopleCardItemDialog(View view) {
-        DialogFragment dialog = AddPeopleCardItemDialog.newInstance(mPeopleCardId);
+        DialogFragment dialog = AddPeopleCardItemDialog.newInstance(mPeopleCardId, mPeopleCardName);
         dialog.show(PeopleCardItemActivity.this.getFragmentManager(), "AddPeopleCardItemDialog");
     }
 

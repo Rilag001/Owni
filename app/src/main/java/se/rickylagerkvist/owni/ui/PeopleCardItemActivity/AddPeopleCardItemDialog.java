@@ -27,11 +27,12 @@ public class AddPeopleCardItemDialog extends DialogFragment {
 
     private String id;
 
-    public static AddPeopleCardItemDialog newInstance(String peopleCardId) {
+    public static AddPeopleCardItemDialog newInstance(String peopleCardId, String name) {
         AddPeopleCardItemDialog addListDialogFragment
                 = new AddPeopleCardItemDialog();
         Bundle bundle = new Bundle();
         bundle.putString("id", peopleCardId);
+        bundle.putString("name", name);
         addListDialogFragment.setArguments(bundle);
         return addListDialogFragment;
     }
@@ -60,6 +61,8 @@ public class AddPeopleCardItemDialog extends DialogFragment {
         Bundle bundle = this.getArguments();
         final String peopleCardId = bundle.getString("id");
 
+        String name = bundle.getString("name");
+
         // Views
         mEditTextDescription = (EditText) rootView.findViewById(R.id.edit_description);
         mEditTextAmount = (EditText) rootView.findViewById(R.id.edit_amount);
@@ -67,11 +70,14 @@ public class AddPeopleCardItemDialog extends DialogFragment {
         mRadioButtonIowe = (RadioButton) rootView.findViewById(R.id.i_owe_radiobutton);
         mRadioButtonSomeoneOwesMe = (RadioButton) rootView.findViewById(R.id.someone_owes_me_radiobutton);
 
+        // set text with correct name
+        mRadioButtonIowe.setText("I Owe " + name);
+        mRadioButtonSomeoneOwesMe.setText(name + " owes me");
 
         // Inflate and set the layout for the dialog
         // Pass null as the parent view because its going in the dialog layout
         builder.setView(rootView)
-                .setTitle("Create new Peoplecard item")
+                .setTitle("Create new PeopleCard item")
                 .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
