@@ -7,6 +7,7 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -30,11 +31,13 @@ public class PeopleCardItemActivity extends AppCompatActivity {
     private ListView mIOweListView, mXOwesListView;
     private TextView mIoweTitle, mXOwesTitle, mBalance;
 
+    private ImageView mRoundBalance;
+
     private PeopleCardItemAdapter mIoweXAdapter, mXowesMeAdapter;
 
-    private int iOweSum;
-    private int xOwesSum;
-    private int iOweAndXOwesBalance;
+    private int iOweSum = 0;
+    private int xOwesSum = 0;
+    private int iOweAndXOwesBalance = 0;
 
     private int nrOfItems;
 
@@ -54,6 +57,9 @@ public class PeopleCardItemActivity extends AppCompatActivity {
         mXOwesTitle = (TextView) findViewById(R.id.people_owe_me_list_title);
         mBalance = (TextView) findViewById(R.id.people_card_items_balance);
 
+        // Round ImageVier mRoundBalance
+        mRoundBalance = (ImageView) findViewById(R.id.round_balance);
+
         Intent intent = this.getIntent();
         mPeopleCardId = intent.getStringExtra("PEOPLECARD_ITEM_ID");
         if (mPeopleCardId == null) {
@@ -61,22 +67,27 @@ public class PeopleCardItemActivity extends AppCompatActivity {
             return;
         }
 
-        // PeopleCard
-        Firebase mPeopleCardRef = new Firebase(Constants.FIREBASE_URL_PEOPLE + "/" + Constants.KEY_ENCODED_EMAIL).child(mPeopleCardId);
-        // PeopleCard items
-        Firebase mPeopleCardListItemIOweRef = new Firebase(Constants.FIREBASE_URL_PEOPLE_ITEMS + "/" + Constants.KEY_ENCODED_EMAIL).child(mPeopleCardId).child("iowe");
-        Firebase mPeopleCardListItemXOwesRef = new Firebase(Constants.FIREBASE_URL_PEOPLE_ITEMS + "/" + Constants.KEY_ENCODED_EMAIL).child(mPeopleCardId).child("xowes");
+        // PeopleCard ref
+        Firebase mPeopleCardRef = new Firebase(Constants.FIREBASE_URL_PEOPLE + "/"
+                + Constants.KEY_ENCODED_EMAIL).child(mPeopleCardId);
+
+        // PeopleCard items refs
+        Firebase mPeopleCardListItemIOweRef = new Firebase(Constants.FIREBASE_URL_PEOPLE_ITEMS
+                + "/" + Constants.KEY_ENCODED_EMAIL).child(mPeopleCardId).child("iowe");
+        Firebase mPeopleCardListItemXOwesRef = new Firebase(Constants.FIREBASE_URL_PEOPLE_ITEMS
+                + "/" + Constants.KEY_ENCODED_EMAIL).child(mPeopleCardId).child("xowes");
 
 
-        // I owe
+        // I owe List adapter
         mIoweXAdapter = new PeopleCardItemAdapter(PeopleCardItemActivity.this, PeopleCardItem.class,
                 R.layout.card_people_item, mPeopleCardListItemIOweRef);
         mIOweListView.setAdapter(mIoweXAdapter);
 
-        // Other owe
+        // Other list owe adapter
         mXowesMeAdapter = new PeopleCardItemAdapter(PeopleCardItemActivity.this, PeopleCardItem.class,
                 R.layout.card_people_item, mPeopleCardListItemXOwesRef);
         mXOwesListView.setAdapter(mXowesMeAdapter);
+
 
         // how many items and the sum of getAmount if getValue == "Kr"
         mPeopleCardListItemIOweRef.addValueEventListener(new ValueEventListener() {
@@ -92,7 +103,22 @@ public class PeopleCardItemActivity extends AppCompatActivity {
                     }
 
                     nrOfItems = nrOfItems + 1;
+
+                    iOweAndXOwesBalance = iOweSum - xOwesSum;
+                    mBalance.setText("" + iOweAndXOwesBalance);
+
+                    // set round balance image
+                    if (iOweAndXOwesBalance == 0){
+                        mRoundBalance.setImageResource(R.drawable.round_blue);
+                    } else if (iOweAndXOwesBalance < 0) {
+                        mRoundBalance.setImageResource(R.drawable.round_green);
+                    } else if (iOweAndXOwesBalance > 0) {
+                        mRoundBalance.setImageResource(R.drawable.round_red);
+                    } else {
+                        mRoundBalance.setImageResource(R.drawable.round_blue);
+                    }
                 }
+
             }
 
             @Override
@@ -118,6 +144,17 @@ public class PeopleCardItemActivity extends AppCompatActivity {
 
                     iOweAndXOwesBalance = iOweSum - xOwesSum;
                     mBalance.setText("" + iOweAndXOwesBalance);
+
+                    // set round balance image
+                    if (iOweAndXOwesBalance == 0){
+                        mRoundBalance.setImageResource(R.drawable.round_blue);
+                    } else if (iOweAndXOwesBalance < 0) {
+                        mRoundBalance.setImageResource(R.drawable.round_green);
+                    } else if (iOweAndXOwesBalance > 0) {
+                        mRoundBalance.setImageResource(R.drawable.round_red);
+                    } else {
+                        mRoundBalance.setImageResource(R.drawable.round_blue);
+                    }
                 }
 
             }
@@ -127,6 +164,8 @@ public class PeopleCardItemActivity extends AppCompatActivity {
 
             }
         });
+
+
 
 
         // set toolbar titel and textView titel
@@ -170,5 +209,7 @@ public class PeopleCardItemActivity extends AppCompatActivity {
         DialogFragment dialog = AddPeopleCardItemDialog.newInstance(mPeopleCardId, mPeopleCardFirstName);
         dialog.show(PeopleCardItemActivity.this.getFragmentManager(), "AddPeopleCardItemDialog");
     }
+
+
 
 }

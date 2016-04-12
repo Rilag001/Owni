@@ -25,6 +25,8 @@ public class PeopleFragment extends Fragment {
     private ListView mListView;
     private PeopleCardAdapter mPeopleCardAdapter;
 
+    private int nrOfItems;
+
 
     public PeopleFragment() {
         // Required empty public constructor
@@ -63,6 +65,67 @@ public class PeopleFragment extends Fragment {
                 }
             }
         });
+
+        // set nr of item and balance for every Peoplecard by matching it to its corresponding PeoplecRadItems
+        /*mFirebaseRef.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+
+                for (DataSnapshot postSnapshot : dataSnapshot.getChildren()){
+                    PeopleCard peopleCard = postSnapshot.getValue(PeopleCard.class);
+                    String PeopleCardItemKey = postSnapshot.getKey();
+
+                    Firebase mPeopleCardListItemIOweRef = new Firebase(Constants.FIREBASE_URL_PEOPLE_ITEMS
+                            + "/" + Constants.KEY_ENCODED_EMAIL).child(PeopleCardItemKey).child("iowe");
+                    Firebase mPeopleCardListItemXOwesRef = new Firebase(Constants.FIREBASE_URL_PEOPLE_ITEMS
+                            + "/" + Constants.KEY_ENCODED_EMAIL).child(PeopleCardItemKey).child("xowes");
+
+                    mPeopleCardListItemIOweRef.addValueEventListener(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(DataSnapshot dataSnapshot) {
+                            PeopleCardItem item = dataSnapshot.getValue(PeopleCardItem.class);
+
+                            if (item != null){
+                                nrOfItems = nrOfItems + 1;
+                            }
+                        }
+
+                        @Override
+                        public void onCancelled(FirebaseError firebaseError) {
+
+                        }
+                    });
+
+                    mPeopleCardListItemXOwesRef.addValueEventListener(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(DataSnapshot dataSnapshot) {
+                            PeopleCardItem item = dataSnapshot.getValue(PeopleCardItem.class);
+
+                            if (item != null){
+                                nrOfItems = nrOfItems + 1;
+                            }
+                        }
+
+                        @Override
+                        public void onCancelled(FirebaseError firebaseError) {
+                            nrOfItems = nrOfItems + 1;
+                        }
+                    });
+
+                    peopleCard.setNumberOfItems(nrOfItems);
+                    //peopleCard.setBalance();
+
+                }
+
+
+
+            }
+
+            @Override
+            public void onCancelled(FirebaseError firebaseError) {
+
+            }
+        });*/
 
         return rootView;
     }
