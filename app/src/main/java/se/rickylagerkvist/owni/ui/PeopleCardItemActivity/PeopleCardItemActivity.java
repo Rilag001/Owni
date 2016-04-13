@@ -6,6 +6,8 @@ import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.ListView;
@@ -26,13 +28,11 @@ public class PeopleCardItemActivity extends AppCompatActivity {
     private String mPeopleCardId, mPeopleCardFirstName;
     private PeopleCard mPeopleCard;
     private FloatingActionButton fab;
-
     private ListView mIOweListView, mXOwesListView;
     private TextView mIoweTitle, mXOwesTitle, mBalance;
-
     private ImageView mRoundBalance;
-
     private PeopleCardItemAdapter mIoweXAdapter, mXowesMeAdapter;
+    private Menu menu;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -60,6 +60,7 @@ public class PeopleCardItemActivity extends AppCompatActivity {
             finish();
             return;
         }
+
 
         // PeopleCard ref
         final Firebase mPeopleCardRef = new Firebase(Constants.FIREBASE_URL_PEOPLE + "/"
@@ -94,7 +95,13 @@ public class PeopleCardItemActivity extends AppCompatActivity {
                 // set mPeopleCard to peoplecard for ev later use
                 mPeopleCard = peopleCard;
                 // first name of peoplecard
-                mPeopleCardFirstName = peopleCard.getName().split(" ", 2)[0];
+                if (peopleCard != null){
+                    mPeopleCardFirstName = peopleCard.getName().split(" ", 2)[0];
+                } else {
+                    finish();
+                    return;
+                }
+
                 // set toolbar titel to PeopleCards name
                 toolbar.setTitle(peopleCard.getName());
 
@@ -191,6 +198,23 @@ public class PeopleCardItemActivity extends AppCompatActivity {
         dialog.show(PeopleCardItemActivity.this.getFragmentManager(), "AddPeopleCardItemDialog");
     }
 
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        this.menu = menu;
+        getMenuInflater().inflate(R.menu.menu_people_item, menu);
 
+        return true;
+    }
 
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
+
+        if (id == R.id.delete_card_and_items) {
+            DialogFragment dialog = DeleteCardAndItemsDialog.newInstance(mPeopleCardId);
+            dialog.show(PeopleCardItemActivity.this.getFragmentManager(), "DeleteCardAndItemsDialog");
+        }
+
+        return super.onOptionsItemSelected(item);
+    }
 }

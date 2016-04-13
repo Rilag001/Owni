@@ -52,11 +52,13 @@ public class MainActivity extends AppCompatActivity {
     int[] colorIntArray = {R.color.colorAccent, R.color.blueColor};
 
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        // set bottom margin equal to navBarHeight
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             int navBarHeight = getNavigationBarHeight();
             findViewById(R.id.container).setPadding(0, 0, 0, navBarHeight);

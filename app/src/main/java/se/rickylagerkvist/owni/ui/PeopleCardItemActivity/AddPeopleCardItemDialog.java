@@ -40,7 +40,6 @@ public class AddPeopleCardItemDialog extends DialogFragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
     }
 
     // Open the keyboard automatically when the dialog fragment is opened
@@ -100,7 +99,6 @@ public class AddPeopleCardItemDialog extends DialogFragment {
         String userEnteredDescription = mEditTextDescription.getText().toString().trim();
         int userEnteredAmount = Integer.valueOf(mEditTextAmount.getText().toString().trim());
         String userEnteredValue = mEditTextValue.getText().toString().trim();
-
 
         if (mRadioButtonIowe.isChecked() && !userEnteredDescription.equals("") && userEnteredAmount >= 0 && !userEnteredValue.equals("")){
 

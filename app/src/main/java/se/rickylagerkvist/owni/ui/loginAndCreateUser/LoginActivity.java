@@ -144,11 +144,9 @@ public class LoginActivity extends AppCompatActivity {
 
                 Constants.KEY_ENCODED_EMAIL = mEncodedEmail;
 
-
-                // Go to main activity and sends mEncodedEmail.
+                // Go to main activity
                 Intent intent = new Intent(LoginActivity.this, MainActivity.class);
                 intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-                //intent.putExtra("email", mEncodedEmail);
 
                 startActivity(intent);
                 finish();

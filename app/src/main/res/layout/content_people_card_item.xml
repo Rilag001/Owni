@@ -10,20 +10,15 @@
     android:background="@android:color/white"
     android:orientation="vertical">
 
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:layout_marginBottom="55dp">
-
-        <RelativeLayout
-            android:layout_margin="8dp"
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_marginBottom="55dp">
 
             <RelativeLayout
                 android:layout_width="match_parent"
+                android:layout_margin="8dp"
                 android:layout_height="wrap_content"
                 android:id="@+id/round_and_title_i_owe">
 
@@ -46,21 +41,22 @@
                     android:id="@+id/i_owe_people_list_title"/>
             </RelativeLayout>
 
-            <ListView
+            <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/round_and_title_i_owe"
-                android:id="@+id/i_owe_people_list"/>
-        </RelativeLayout>
+                android:layout_height="match_parent"
+                android:layout_weight="1">
 
-        <RelativeLayout
-            android:layout_margin="8dp"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+                <ListView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:id="@+id/i_owe_people_list"/>
+            </RelativeLayout>
+
 
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_margin="8dp"
                 android:id="@+id/round_and_title_somone_owe">
 
                 <ImageView
@@ -82,13 +78,18 @@
                     android:id="@+id/people_owe_me_list_title"/>
             </RelativeLayout>
 
-            <ListView
+            <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_below="@id/round_and_title_somone_owe"
-                android:id="@+id/people_owe_me_list"/>
-        </RelativeLayout>
-    </LinearLayout>
+                android:layout_height="match_parent"
+                android:layout_weight="1">
+
+                <ListView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:id="@+id/people_owe_me_list"/>
+            </RelativeLayout>
+
+        </LinearLayout>
 
 
     <RelativeLayout
@@ -96,7 +97,7 @@
         android:layout_height="55dp"
         android:background="@android:color/white"
         android:elevation="8dp"
-        android:paddingLeft="8dp"
+        android:paddingEnd="8dp"
         android:paddingStart="8dp"
         android:id="@+id/balance_bar"
         android:layout_alignParentBottom = "true">
@@ -108,7 +109,6 @@
             android:layout_centerVertical="true"
             android:id="@+id/round_balance"
             android:src="@drawable/round_blue"/>
-
 
         <TextView
             android:layout_width="wrap_content"
