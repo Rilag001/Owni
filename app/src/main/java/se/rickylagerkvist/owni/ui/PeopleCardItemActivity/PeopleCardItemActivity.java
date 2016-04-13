@@ -23,8 +23,7 @@ import se.rickylagerkvist.owni.utils.Constants;
 
 public class PeopleCardItemActivity extends AppCompatActivity {
 
-    private String mPeopleCardId;
-    private String mPeopleCardFirstName;
+    private String mPeopleCardId, mPeopleCardFirstName;
     private PeopleCard mPeopleCard;
     private FloatingActionButton fab;
 
@@ -34,12 +33,6 @@ public class PeopleCardItemActivity extends AppCompatActivity {
     private ImageView mRoundBalance;
 
     private PeopleCardItemAdapter mIoweXAdapter, mXowesMeAdapter;
-
-    private int iOweSum = 0;
-    private int xOwesSum = 0;
-    private int iOweAndXOwesBalance = 0;
-
-    private int nrOfItems;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -60,6 +53,7 @@ public class PeopleCardItemActivity extends AppCompatActivity {
         // Round ImageVier mRoundBalance
         mRoundBalance = (ImageView) findViewById(R.id.round_balance);
 
+
         Intent intent = this.getIntent();
         mPeopleCardId = intent.getStringExtra("PEOPLECARD_ITEM_ID");
         if (mPeopleCardId == null) {
@@ -72,11 +66,14 @@ public class PeopleCardItemActivity extends AppCompatActivity {
                 + Constants.KEY_ENCODED_EMAIL).child(mPeopleCardId);
 
         // PeopleCard items refs
+        final Firebase mPeopleCardListItemRef = new Firebase(Constants.FIREBASE_URL_PEOPLE_ITEMS
+                + "/" + Constants.KEY_ENCODED_EMAIL).child(mPeopleCardId);
+            // iowe child
         Firebase mPeopleCardListItemIOweRef = new Firebase(Constants.FIREBASE_URL_PEOPLE_ITEMS
                 + "/" + Constants.KEY_ENCODED_EMAIL).child(mPeopleCardId).child("iowe");
+            // xowes child
         Firebase mPeopleCardListItemXOwesRef = new Firebase(Constants.FIREBASE_URL_PEOPLE_ITEMS
                 + "/" + Constants.KEY_ENCODED_EMAIL).child(mPeopleCardId).child("xowes");
-
 
         // I owe List adapter
         mIoweXAdapter = new PeopleCardItemAdapter(PeopleCardItemActivity.this, PeopleCardItem.class,
@@ -87,86 +84,6 @@ public class PeopleCardItemActivity extends AppCompatActivity {
         mXowesMeAdapter = new PeopleCardItemAdapter(PeopleCardItemActivity.this, PeopleCardItem.class,
                 R.layout.card_people_item, mPeopleCardListItemXOwesRef);
         mXOwesListView.setAdapter(mXowesMeAdapter);
-
-
-        // how many items and the sum of getAmount if getValue == "Kr"
-        mPeopleCardListItemIOweRef.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-
-                // loop all PeopleCardItems
-                for (DataSnapshot postSnapshot: dataSnapshot.getChildren()) {
-                    PeopleCardItem item = postSnapshot.getValue(PeopleCardItem.class);
-
-                    if (item.getTypeOfValue().equalsIgnoreCase("kr")){
-                        iOweSum = iOweSum + item.getAmount();
-                    }
-
-                    nrOfItems = nrOfItems + 1;
-
-                    iOweAndXOwesBalance = iOweSum - xOwesSum;
-                    mBalance.setText("" + iOweAndXOwesBalance);
-
-                    // set round balance image
-                    if (iOweAndXOwesBalance == 0){
-                        mRoundBalance.setImageResource(R.drawable.round_blue);
-                    } else if (iOweAndXOwesBalance < 0) {
-                        mRoundBalance.setImageResource(R.drawable.round_green);
-                    } else if (iOweAndXOwesBalance > 0) {
-                        mRoundBalance.setImageResource(R.drawable.round_red);
-                    } else {
-                        mRoundBalance.setImageResource(R.drawable.round_blue);
-                    }
-                }
-
-            }
-
-            @Override
-            public void onCancelled(FirebaseError firebaseError) {
-
-            }
-        });
-
-        // how many items and the sum of getAmount if getValue == "Kr"
-        mPeopleCardListItemXOwesRef.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-
-                // loop all PeopleCardItems
-                for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
-                    PeopleCardItem item = postSnapshot.getValue(PeopleCardItem.class);
-
-                    if (item.getTypeOfValue().equalsIgnoreCase("kr")) {
-                        xOwesSum = xOwesSum + item.getAmount();
-                    }
-
-                    nrOfItems = nrOfItems + 1;
-
-                    iOweAndXOwesBalance = iOweSum - xOwesSum;
-                    mBalance.setText("" + iOweAndXOwesBalance);
-
-                    // set round balance image
-                    if (iOweAndXOwesBalance == 0){
-                        mRoundBalance.setImageResource(R.drawable.round_blue);
-                    } else if (iOweAndXOwesBalance < 0) {
-                        mRoundBalance.setImageResource(R.drawable.round_green);
-                    } else if (iOweAndXOwesBalance > 0) {
-                        mRoundBalance.setImageResource(R.drawable.round_red);
-                    } else {
-                        mRoundBalance.setImageResource(R.drawable.round_blue);
-                    }
-                }
-
-            }
-
-            @Override
-            public void onCancelled(FirebaseError firebaseError) {
-
-            }
-        });
-
-
-
 
         // set toolbar titel and textView titel
         mPeopleCardRef.addValueEventListener(new ValueEventListener() {
@@ -191,6 +108,55 @@ public class PeopleCardItemActivity extends AppCompatActivity {
 
             }
         });
+
+        // balance, the sum of getAmount if getValue == "Kr"
+        mPeopleCardListItemRef.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+
+                int iOweSum = 0;
+                int xOwesSum = 0;
+                int iOweAndXOwesBalance = 0;
+
+                for (DataSnapshot snapshot: dataSnapshot.getChildren()){
+                    for (DataSnapshot peopleCardItem: snapshot.getChildren()){
+
+                        PeopleCardItem item = peopleCardItem.getValue(PeopleCardItem.class);
+
+                        if (item.isiOwe() && item.getTypeOfValue().equalsIgnoreCase("kr")){
+                            iOweSum = iOweSum + item.getAmount();
+                        } else if (!item.isiOwe() && item.getTypeOfValue().equalsIgnoreCase("kr")) {
+                            xOwesSum = xOwesSum + item.getAmount();
+                        }
+
+                        iOweAndXOwesBalance = iOweSum - xOwesSum;
+
+                        // set mBalance text and round balance image
+                        if (iOweAndXOwesBalance == 0){
+                            mBalance.setText(getString(R.string.you_are_squared) + 0 + " " + getString(R.string.currency));
+                            mRoundBalance.setImageResource(R.drawable.round_blue);
+                        } else if (iOweAndXOwesBalance < 0) {
+                            mBalance.setText(mPeopleCardFirstName + getString(R.string.owes_you) + iOweAndXOwesBalance + " " + getString(R.string.currency));
+                            mRoundBalance.setImageResource(R.drawable.round_green);
+                        } else if (iOweAndXOwesBalance > 0) {
+                            mBalance.setText(getString(R.string.you_owe) + mPeopleCardFirstName + " " + iOweAndXOwesBalance + " " + getString(R.string.currency));
+                            mRoundBalance.setImageResource(R.drawable.round_red);
+                        } else {
+                            mBalance.setText(getString(R.string.you_are_squared) + iOweAndXOwesBalance);
+                            mRoundBalance.setImageResource(R.drawable.round_blue);
+                        }
+                    }
+                }
+
+
+            }
+
+            @Override
+            public void onCancelled(FirebaseError firebaseError) {
+
+            }
+        });
+
 
 
         fab = (FloatingActionButton) findViewById(R.id.fab);

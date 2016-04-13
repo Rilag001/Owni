@@ -8,15 +8,17 @@ public class PeopleCardItem {
     public String description;
     public int amount;
     public String typeOfValue;
+    public boolean iOwe;
 
 
     public PeopleCardItem() {
     }
 
-    public PeopleCardItem(String description, int amount, String typeOfValue) {
+    public PeopleCardItem(String description, int amount, String typeOfValue, Boolean iOwe) {
         this.description = description;
         this.amount = amount;
         this.typeOfValue = typeOfValue;
+        this.iOwe = iOwe;
     }
 
     // getters
@@ -32,7 +34,9 @@ public class PeopleCardItem {
         return typeOfValue;
     }
 
-
+    public boolean isiOwe() {
+        return iOwe;
+    }
 
     // setters
     public void setDescription(String description) {
@@ -47,5 +51,8 @@ public class PeopleCardItem {
         this.typeOfValue = typeOfValue;
     }
 
+    public void setiOwe(boolean iOwe) {
+        this.iOwe = iOwe;
+    }
 }
 

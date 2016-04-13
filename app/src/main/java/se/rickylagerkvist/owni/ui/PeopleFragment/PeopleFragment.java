@@ -9,10 +9,14 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListView;
 
+import com.firebase.client.DataSnapshot;
 import com.firebase.client.Firebase;
+import com.firebase.client.FirebaseError;
+import com.firebase.client.ValueEventListener;
 
 import se.rickylagerkvist.owni.R;
 import se.rickylagerkvist.owni.model.PeopleCard;
+import se.rickylagerkvist.owni.model.PeopleCardItem;
 import se.rickylagerkvist.owni.ui.PeopleCardItemActivity.PeopleCardItemActivity;
 import se.rickylagerkvist.owni.utils.Constants;
 
@@ -26,6 +30,7 @@ public class PeopleFragment extends Fragment {
     private PeopleCardAdapter mPeopleCardAdapter;
 
     private int nrOfItems;
+    private int iOweAndXOwesBalance;
 
 
     public PeopleFragment() {
@@ -66,27 +71,49 @@ public class PeopleFragment extends Fragment {
             }
         });
 
-        // set nr of item and balance for every Peoplecard by matching it to its corresponding PeoplecRadItems
-        /*mFirebaseRef.addValueEventListener(new ValueEventListener() {
+        // set nr of item and balance for every Peoplecard by matching it to its corresponding PeopleCardItems
+
+        mFirebaseRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
 
                 for (DataSnapshot postSnapshot : dataSnapshot.getChildren()){
-                    PeopleCard peopleCard = postSnapshot.getValue(PeopleCard.class);
+                    final PeopleCard peopleCard = postSnapshot.getValue(PeopleCard.class);
                     String PeopleCardItemKey = postSnapshot.getKey();
 
-                    Firebase mPeopleCardListItemIOweRef = new Firebase(Constants.FIREBASE_URL_PEOPLE_ITEMS
-                            + "/" + Constants.KEY_ENCODED_EMAIL).child(PeopleCardItemKey).child("iowe");
-                    Firebase mPeopleCardListItemXOwesRef = new Firebase(Constants.FIREBASE_URL_PEOPLE_ITEMS
-                            + "/" + Constants.KEY_ENCODED_EMAIL).child(PeopleCardItemKey).child("xowes");
+                    Firebase mPeopleCardListItemRef = new Firebase(Constants.FIREBASE_URL_PEOPLE_ITEMS
+                            + "/" + Constants.KEY_ENCODED_EMAIL).child(PeopleCardItemKey);
 
-                    mPeopleCardListItemIOweRef.addValueEventListener(new ValueEventListener() {
+                    mPeopleCardListItemRef.addValueEventListener(new ValueEventListener() {
                         @Override
                         public void onDataChange(DataSnapshot dataSnapshot) {
-                            PeopleCardItem item = dataSnapshot.getValue(PeopleCardItem.class);
 
-                            if (item != null){
-                                nrOfItems = nrOfItems + 1;
+                            int iOweSum = 0;
+                            int xOwesSum = 0;
+                            iOweAndXOwesBalance = 0;
+                            int nrOfItems = 0;
+
+                            for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+                                for (DataSnapshot peopleCardItem : snapshot.getChildren()) {
+
+                                    PeopleCardItem item = peopleCardItem.getValue(PeopleCardItem.class);
+
+                                    if (item.isiOwe() && item.getTypeOfValue().equalsIgnoreCase("kr")) {
+                                        iOweSum = iOweSum + item.getAmount();
+                                    } else if (!item.isiOwe() && item.getTypeOfValue().equalsIgnoreCase("kr")) {
+                                        xOwesSum = xOwesSum + item.getAmount();
+                                    }
+
+                                    // balance
+                                    iOweAndXOwesBalance = iOweSum - xOwesSum;
+
+                                    // nr of items
+                                    nrOfItems = nrOfItems + 1;
+
+                                    peopleCard.setNumberOfItems(nrOfItems);
+                                    peopleCard.setBalance(iOweAndXOwesBalance);
+                                    mPeopleCardAdapter.notifyDataSetChanged();
+                                }
                             }
                         }
 
@@ -95,29 +122,8 @@ public class PeopleFragment extends Fragment {
 
                         }
                     });
-
-                    mPeopleCardListItemXOwesRef.addValueEventListener(new ValueEventListener() {
-                        @Override
-                        public void onDataChange(DataSnapshot dataSnapshot) {
-                            PeopleCardItem item = dataSnapshot.getValue(PeopleCardItem.class);
-
-                            if (item != null){
-                                nrOfItems = nrOfItems + 1;
-                            }
-                        }
-
-                        @Override
-                        public void onCancelled(FirebaseError firebaseError) {
-                            nrOfItems = nrOfItems + 1;
-                        }
-                    });
-
-                    peopleCard.setNumberOfItems(nrOfItems);
-                    //peopleCard.setBalance();
 
                 }
-
-
 
             }
 
@@ -125,7 +131,7 @@ public class PeopleFragment extends Fragment {
             public void onCancelled(FirebaseError firebaseError) {
 
             }
-        });*/
+        });
 
         return rootView;
     }

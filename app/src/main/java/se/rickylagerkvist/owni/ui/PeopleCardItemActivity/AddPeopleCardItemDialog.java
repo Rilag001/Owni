@@ -101,16 +101,15 @@ public class AddPeopleCardItemDialog extends DialogFragment {
         int userEnteredAmount = Integer.valueOf(mEditTextAmount.getText().toString().trim());
         String userEnteredValue = mEditTextValue.getText().toString().trim();
 
-        String mPeopleCardId = peopleCardId;
-
 
         if (mRadioButtonIowe.isChecked() && !userEnteredDescription.equals("") && userEnteredAmount >= 0 && !userEnteredValue.equals("")){
 
-            Firebase listsRef = new Firebase(Constants.FIREBASE_URL_PEOPLE_ITEMS + "/" + Constants.KEY_ENCODED_EMAIL).child(mPeopleCardId).child("iowe");
+            Firebase listsRef = new Firebase(Constants.FIREBASE_URL_PEOPLE_ITEMS + "/"
+                    + Constants.KEY_ENCODED_EMAIL).child(peopleCardId).child("iowe");
             Firebase newListRef = listsRef.push();
 
             //PeopleCard
-            PeopleCardItem peopleCardItem = new PeopleCardItem(userEnteredDescription, userEnteredAmount, userEnteredValue);
+            PeopleCardItem peopleCardItem = new PeopleCardItem(userEnteredDescription, userEnteredAmount, userEnteredValue, true);
 
             //Add to the list
             newListRef.setValue(peopleCardItem);
@@ -120,11 +119,11 @@ public class AddPeopleCardItemDialog extends DialogFragment {
 
         } else if (mRadioButtonSomeoneOwesMe.isChecked() && !userEnteredDescription.equals("") && userEnteredAmount >= 0 && !userEnteredValue.equals("")){
 
-            Firebase listsRef = new Firebase(Constants.FIREBASE_URL_PEOPLE_ITEMS + "/" + Constants.KEY_ENCODED_EMAIL).child(mPeopleCardId).child("xowes");
+            Firebase listsRef = new Firebase(Constants.FIREBASE_URL_PEOPLE_ITEMS + "/" + Constants.KEY_ENCODED_EMAIL).child(peopleCardId).child("xowes");
             Firebase newListRef = listsRef.push();
 
             //PeopleCard
-            PeopleCardItem peopleCardItem = new PeopleCardItem(userEnteredDescription, userEnteredAmount, userEnteredValue);
+            PeopleCardItem peopleCardItem = new PeopleCardItem(userEnteredDescription, userEnteredAmount, userEnteredValue, false);
 
             //Add to the list
             newListRef.setValue(peopleCardItem);

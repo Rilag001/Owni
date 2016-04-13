@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
+<RelativeLayout
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:android="http://schemas.android.com/apk/res/android"
@@ -8,90 +8,98 @@
     tools:context=".ui.PeopleCardItemActivity.PeopleCardItemActivity"
     tools:showIn="@layout/activity_people_card_item"
     android:background="@android:color/white"
-    android:padding="8dp"
     android:orientation="vertical">
 
 
-    <RelativeLayout
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_weight="5">
+        android:orientation="vertical"
+        android:layout_marginBottom="55dp">
 
         <RelativeLayout
+            android:layout_margin="8dp"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/round_and_title_i_owe">
+            android:layout_height="wrap_content">
 
-            <ImageView
-                android:layout_width="30dp"
-                android:layout_margin="8dp"
-                android:layout_height="30dp"
-                android:id="@+id/round_i_owe"
-                android:src="@drawable/round_red"/>
-
-            <TextView
+            <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_toRightOf="@id/round_i_owe"
-                android:layout_toEndOf="@id/round_i_owe"
-                android:text="@string/i_owe_person"
-                android:layout_centerVertical="true"
-                android:layout_margin="8dp"
-                android:textSize="18sp"
-                android:id="@+id/i_owe_people_list_title"/>
+                android:id="@+id/round_and_title_i_owe">
+
+                <ImageView
+                    android:layout_width="30dp"
+                    android:layout_margin="8dp"
+                    android:layout_height="30dp"
+                    android:id="@+id/round_i_owe"
+                    android:src="@drawable/round_red"/>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_toRightOf="@id/round_i_owe"
+                    android:layout_toEndOf="@id/round_i_owe"
+                    android:text="@string/i_owe_person"
+                    android:layout_centerVertical="true"
+                    android:layout_margin="8dp"
+                    android:textSize="18sp"
+                    android:id="@+id/i_owe_people_list_title"/>
+            </RelativeLayout>
+
+            <ListView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/round_and_title_i_owe"
+                android:id="@+id/i_owe_people_list"/>
         </RelativeLayout>
-
-        <ListView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/round_and_title_i_owe"
-            android:id="@+id/i_owe_people_list"/>
-    </RelativeLayout>
-
-
-
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_weight="5">
 
         <RelativeLayout
+            android:layout_margin="8dp"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/round_and_title_somone_owe">
+            android:layout_height="wrap_content">
 
-            <ImageView
-                android:layout_width="30dp"
-                android:layout_margin="8dp"
-                android:layout_height="30dp"
-                android:id="@+id/round_someone_owes"
-                android:src="@drawable/round_green"/>
-
-            <TextView
+            <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_toRightOf="@id/round_someone_owes"
-                android:layout_toEndOf="@id/round_someone_owes"
-                android:text="@string/person_owes_me"
-                android:layout_centerVertical="true"
-                android:layout_margin="8dp"
-                android:textSize="18sp"
-                android:id="@+id/people_owe_me_list_title"/>
+                android:id="@+id/round_and_title_somone_owe">
+
+                <ImageView
+                    android:layout_width="30dp"
+                    android:layout_margin="8dp"
+                    android:layout_height="30dp"
+                    android:id="@+id/round_someone_owes"
+                    android:src="@drawable/round_green"/>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_toRightOf="@id/round_someone_owes"
+                    android:layout_toEndOf="@id/round_someone_owes"
+                    android:text="@string/person_owes_me"
+                    android:layout_centerVertical="true"
+                    android:layout_margin="8dp"
+                    android:textSize="18sp"
+                    android:id="@+id/people_owe_me_list_title"/>
+            </RelativeLayout>
+
+            <ListView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/round_and_title_somone_owe"
+                android:id="@+id/people_owe_me_list"/>
         </RelativeLayout>
-
-        <ListView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/round_and_title_somone_owe"
-            android:id="@+id/people_owe_me_list"/>
-    </RelativeLayout>
-
+    </LinearLayout>
 
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_weight="1">
+        android:layout_height="55dp"
+        android:background="@android:color/white"
+        android:elevation="8dp"
+        android:paddingLeft="8dp"
+        android:paddingStart="8dp"
+        android:id="@+id/balance_bar"
+        android:layout_alignParentBottom = "true">
 
         <ImageView
             android:layout_width="30dp"
@@ -108,26 +116,13 @@
             android:layout_centerVertical="true"
             android:layout_toRightOf="@id/round_balance"
             android:layout_toEndOf="@id/round_balance"
-            android:layout_margin="8dp"
             android:id="@+id/people_card_items_balance"
-            android:text=""
+            android:text="@string/you_are_squared"
             android:textSize="18sp"/>
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_toRightOf="@+id/people_card_items_balance"
-            android:layout_toEndOf="@+id/people_card_items_balance"
-            android:layout_centerVertical="true"
-            android:id="@+id/people_card_item_balance_type"
-            android:textColor="@color/colorPrimary"
-            android:textSize="18sp"
-            android:layout_margin="8dp"
-            android:text="@string/currency"/>
 
     </RelativeLayout>
 
-</LinearLayout>
+</RelativeLayout>
 
 
 

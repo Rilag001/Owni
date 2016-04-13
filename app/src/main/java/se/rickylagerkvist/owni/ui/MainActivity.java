@@ -2,6 +2,7 @@ package se.rickylagerkvist.owni.ui;
 
 import android.app.DialogFragment;
 import android.content.Intent;
+import android.content.res.Resources;
 import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
@@ -55,6 +56,11 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            int navBarHeight = getNavigationBarHeight();
+            findViewById(R.id.container).setPadding(0, 0, 0, navBarHeight);
+        }
 
         // Set Firebase Context and connection String
         Firebase.setAndroidContext(this);
@@ -239,5 +245,14 @@ public class MainActivity extends AppCompatActivity {
             }
         });
         fab.startAnimation(shrink);
+    }
+
+    private int getNavigationBarHeight() {
+        Resources resources = getResources();
+        int resourceId = resources.getIdentifier("navigation_bar_height", "dimen", "android");
+        if (resourceId > 0) {
+            return resources.getDimensionPixelSize(resourceId);
+        }
+        return 0;
     }
 }
