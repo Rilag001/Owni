@@ -62,7 +62,7 @@ public class PeopleCardItemActivity extends AppCompatActivity {
         }
 
         // PeopleCard ref
-        Firebase mPeopleCardRef = new Firebase(Constants.FIREBASE_URL_PEOPLE + "/"
+        final Firebase mPeopleCardRef = new Firebase(Constants.FIREBASE_URL_PEOPLE + "/"
                 + Constants.KEY_ENCODED_EMAIL).child(mPeopleCardId);
 
         // PeopleCard items refs
@@ -117,6 +117,9 @@ public class PeopleCardItemActivity extends AppCompatActivity {
                 int iOweSum = 0;
                 int xOwesSum = 0;
                 int iOweAndXOwesBalance = 0;
+                int displayNr = 0;
+
+                int nrOfitems = 0;
 
                 for (DataSnapshot snapshot: dataSnapshot.getChildren()){
                     for (DataSnapshot peopleCardItem: snapshot.getChildren()){
@@ -131,24 +134,36 @@ public class PeopleCardItemActivity extends AppCompatActivity {
 
                         iOweAndXOwesBalance = iOweSum - xOwesSum;
 
+                        // gets the positive value if the number is negative (so the display dosent show: "X owes you -500 kr")
+                        if (iOweAndXOwesBalance < 0){
+                            displayNr = -iOweAndXOwesBalance;
+                        } else {
+                            displayNr = iOweAndXOwesBalance;
+                        }
+
+
                         // set mBalance text and round balance image
                         if (iOweAndXOwesBalance == 0){
                             mBalance.setText(getString(R.string.you_are_squared) + 0 + " " + getString(R.string.currency));
                             mRoundBalance.setImageResource(R.drawable.round_blue);
                         } else if (iOweAndXOwesBalance < 0) {
-                            mBalance.setText(mPeopleCardFirstName + getString(R.string.owes_you) + iOweAndXOwesBalance + " " + getString(R.string.currency));
+                            mBalance.setText(mPeopleCardFirstName + getString(R.string.owes_you) + displayNr + " " + getString(R.string.currency));
                             mRoundBalance.setImageResource(R.drawable.round_green);
                         } else if (iOweAndXOwesBalance > 0) {
-                            mBalance.setText(getString(R.string.you_owe) + mPeopleCardFirstName + " " + iOweAndXOwesBalance + " " + getString(R.string.currency));
+                            mBalance.setText(getString(R.string.you_owe) + mPeopleCardFirstName + " " + displayNr + " " + getString(R.string.currency));
                             mRoundBalance.setImageResource(R.drawable.round_red);
                         } else {
                             mBalance.setText(getString(R.string.you_are_squared) + iOweAndXOwesBalance);
                             mRoundBalance.setImageResource(R.drawable.round_blue);
                         }
+
+                        nrOfitems++;
                     }
                 }
-
-
+                // set balance and nr of items to the peopleCard at mPeopleCardRef
+                mPeopleCard.setBalance(iOweAndXOwesBalance);
+                mPeopleCard.setNumberOfItems(nrOfitems);
+                mPeopleCardRef.setValue(mPeopleCard);
             }
 
             @Override
