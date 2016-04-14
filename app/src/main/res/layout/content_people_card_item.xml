@@ -10,95 +10,95 @@
     android:background="@android:color/white"
     android:orientation="vertical">
 
-        <LinearLayout
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_marginBottom="55dp">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_margin="8dp"
+            android:layout_height="wrap_content"
+            android:id="@+id/round_and_title_i_owe">
+
+            <ImageView
+                android:layout_width="30dp"
+                android:layout_margin="8dp"
+                android:layout_height="30dp"
+                android:id="@+id/round_i_owe"
+                android:src="@drawable/round_red"/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_toRightOf="@id/round_i_owe"
+                android:layout_toEndOf="@id/round_i_owe"
+                android:text="@string/i_owe_person"
+                android:layout_centerVertical="true"
+                android:layout_margin="8dp"
+                android:textSize="18sp"
+                android:id="@+id/i_owe_people_list_title"/>
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1">
+
+            <ListView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:id="@+id/i_owe_people_list"/>
+        </RelativeLayout>
+
+
+        <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:layout_marginBottom="55dp">
+            android:layout_margin="8dp"
+            android:id="@+id/round_and_title_somone_owe">
 
-            <RelativeLayout
-                android:layout_width="match_parent"
+            <ImageView
+                android:layout_width="30dp"
                 android:layout_margin="8dp"
-                android:layout_height="wrap_content"
-                android:id="@+id/round_and_title_i_owe">
+                android:layout_height="30dp"
+                android:id="@+id/round_someone_owes"
+                android:src="@drawable/round_green"/>
 
-                <ImageView
-                    android:layout_width="30dp"
-                    android:layout_margin="8dp"
-                    android:layout_height="30dp"
-                    android:id="@+id/round_i_owe"
-                    android:src="@drawable/round_red"/>
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_toRightOf="@id/round_i_owe"
-                    android:layout_toEndOf="@id/round_i_owe"
-                    android:text="@string/i_owe_person"
-                    android:layout_centerVertical="true"
-                    android:layout_margin="8dp"
-                    android:textSize="18sp"
-                    android:id="@+id/i_owe_people_list_title"/>
-            </RelativeLayout>
-
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_weight="1">
-
-                <ListView
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:id="@+id/i_owe_people_list"/>
-            </RelativeLayout>
-
-
-            <RelativeLayout
+            <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_toRightOf="@id/round_someone_owes"
+                android:layout_toEndOf="@id/round_someone_owes"
+                android:text="@string/person_owes_me"
+                android:layout_centerVertical="true"
                 android:layout_margin="8dp"
-                android:id="@+id/round_and_title_somone_owe">
+                android:textSize="18sp"
+                android:id="@+id/people_owe_me_list_title"/>
+        </RelativeLayout>
 
-                <ImageView
-                    android:layout_width="30dp"
-                    android:layout_margin="8dp"
-                    android:layout_height="30dp"
-                    android:id="@+id/round_someone_owes"
-                    android:src="@drawable/round_green"/>
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1">
 
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_toRightOf="@id/round_someone_owes"
-                    android:layout_toEndOf="@id/round_someone_owes"
-                    android:text="@string/person_owes_me"
-                    android:layout_centerVertical="true"
-                    android:layout_margin="8dp"
-                    android:textSize="18sp"
-                    android:id="@+id/people_owe_me_list_title"/>
-            </RelativeLayout>
-
-            <RelativeLayout
+            <ListView
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_weight="1">
+                android:id="@+id/people_owe_me_list"/>
+        </RelativeLayout>
 
-                <ListView
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:id="@+id/people_owe_me_list"/>
-            </RelativeLayout>
-
-        </LinearLayout>
+    </LinearLayout>
 
 
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="55dp"
         android:background="@android:color/white"
-        android:elevation="8dp"
         android:paddingEnd="8dp"
         android:paddingStart="8dp"
+        android:elevation="4dp"
         android:id="@+id/balance_bar"
         android:layout_alignParentBottom = "true">
 
@@ -119,7 +119,6 @@
             android:id="@+id/people_card_items_balance"
             android:text="@string/you_are_squared"
             android:textSize="18sp"/>
-
     </RelativeLayout>
 
 </RelativeLayout>

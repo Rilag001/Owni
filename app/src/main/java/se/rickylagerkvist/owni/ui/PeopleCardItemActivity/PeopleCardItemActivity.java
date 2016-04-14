@@ -95,7 +95,7 @@ public class PeopleCardItemActivity extends AppCompatActivity {
                 // set mPeopleCard to peoplecard for ev later use
                 mPeopleCard = peopleCard;
                 // first name of peoplecard
-                if (peopleCard != null){
+                if (peopleCard != null) {
                     mPeopleCardFirstName = peopleCard.getName().split(" ", 2)[0];
                 } else {
                     finish();
@@ -126,7 +126,7 @@ public class PeopleCardItemActivity extends AppCompatActivity {
                 int iOweAndXOwesBalance = 0;
                 int displayNr = 0;
 
-                int nrOfitems = 0;
+                int nrOfItems = 0;
 
                 for (DataSnapshot snapshot: dataSnapshot.getChildren()){
                     for (DataSnapshot peopleCardItem: snapshot.getChildren()){
@@ -141,7 +141,7 @@ public class PeopleCardItemActivity extends AppCompatActivity {
 
                         iOweAndXOwesBalance = iOweSum - xOwesSum;
 
-                        // gets the positive value if the number is negative (so the display dosent show: "X owes you -500 kr")
+                        // gets the positive value if the number is negative (so the display do not show: "X owes you -500 kr")
                         if (iOweAndXOwesBalance < 0){
                             displayNr = -iOweAndXOwesBalance;
                         } else {
@@ -164,13 +164,19 @@ public class PeopleCardItemActivity extends AppCompatActivity {
                             mRoundBalance.setImageResource(R.drawable.round_blue);
                         }
 
-                        nrOfitems++;
+                        nrOfItems++;
                     }
                 }
                 // set balance and nr of items to the peopleCard at mPeopleCardRef
-                mPeopleCard.setBalance(iOweAndXOwesBalance);
-                mPeopleCard.setNumberOfItems(nrOfitems);
-                mPeopleCardRef.setValue(mPeopleCard);
+                if (mPeopleCard != null) {
+                    mPeopleCard.setBalance(iOweAndXOwesBalance);
+                    mPeopleCard.setNumberOfItems(nrOfItems);
+                    mPeopleCardRef.setValue(mPeopleCard);
+                } else {
+                    finish();
+                    return;
+                }
+
             }
 
             @Override
@@ -180,6 +186,42 @@ public class PeopleCardItemActivity extends AppCompatActivity {
         });
 
 
+        /*// Delete items in listViews
+        mIOweListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, final int position, long id) {
+
+                AlertDialog.Builder deleteItem = new AlertDialog.Builder(getApplicationContext());
+                deleteItem.setTitle("Delete item?");
+                deleteItem.setMessage("Are you sure you want to delete this item?");
+                deleteItem.setNegativeButton("Cancel", null);
+                deleteItem.setPositiveButton("Delete", new AlertDialog.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        Firebase itemToRemoveRef = mIoweXAdapter.getRef(position);
+                        itemToRemoveRef.removeValue();
+                    }
+                });
+                deleteItem.show();
+            }
+        });
+        mXOwesListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, final int position, long id) {
+                AlertDialog.Builder deleteItem = new AlertDialog.Builder(getApplicationContext());
+                deleteItem.setTitle("Delete item?");
+                deleteItem.setMessage("Are you sure you want to delete this item?");
+                deleteItem.setNegativeButton("Cancel", null);
+                deleteItem.setPositiveButton("Delete", new AlertDialog.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        Firebase itemToRemoveRef = mXowesMeAdapter.getRef(position);
+                        itemToRemoveRef.removeValue();
+                    }
+                });
+                deleteItem.show();
+            }
+        });*/
 
         fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
