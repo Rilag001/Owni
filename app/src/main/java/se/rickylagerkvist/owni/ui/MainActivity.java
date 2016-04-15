@@ -91,7 +91,7 @@ public class MainActivity extends AppCompatActivity {
 
         // Set up the ViewPager with the sections adapter.
         mViewPager = (ViewPager) findViewById(R.id.container);
-        mViewPager.setAdapter(mS ectionsPagerAdapter);
+        mViewPager.setAdapter(mSectionsPagerAdapter);
 
         // set icons for tabs (with two states: seletcted and unselected)
         tabLayout = (TabLayout) findViewById(R.id.tabs);
