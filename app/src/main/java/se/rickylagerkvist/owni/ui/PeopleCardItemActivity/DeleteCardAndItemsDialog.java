@@ -3,13 +3,11 @@ package se.rickylagerkvist.owni.ui.PeopleCardItemActivity;
 import android.app.Dialog;
 import android.app.DialogFragment;
 import android.content.DialogInterface;
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 
 import com.firebase.client.Firebase;
 
-import se.rickylagerkvist.owni.ui.MainActivity;
 import se.rickylagerkvist.owni.utils.Constants;
 
 /**
@@ -62,6 +60,7 @@ public class DeleteCardAndItemsDialog extends DialogFragment {
         return builder.create();
     }
 
+    // Remove PeopleCard and PeopleCardItems
     private void deleteCardAndItems(String peopleCardAndItemId) {
 
         Firebase peopleCardRef = new Firebase(Constants.FIREBASE_URL_PEOPLE + "/"
@@ -72,9 +71,8 @@ public class DeleteCardAndItemsDialog extends DialogFragment {
         peopleCardRef.removeValue();
         PeopleCardItemRef.removeValue();
 
-        Intent intent = new Intent(getActivity(), MainActivity.class);
-        startActivity(intent);
-
+        // returns to this Activity's parent Activity, in this case MainActivity
+        getActivity().finish();
     }
 
 }

@@ -34,6 +34,9 @@ public class PeopleCardItemActivity extends AppCompatActivity {
     private PeopleCardItemAdapter mIoweXAdapter, mXowesMeAdapter;
     private Menu menu;
 
+    private Firebase mPeopleCardRef, mPeopleCardListItemRef, mPeopleCardListItemIOweRef, mPeopleCardListItemXOwesRef;
+    private ValueEventListener mPeopleCardRefListener, mPeopleCardListItemRefListener;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -63,18 +66,19 @@ public class PeopleCardItemActivity extends AppCompatActivity {
 
 
         // PeopleCard ref
-        final Firebase mPeopleCardRef = new Firebase(Constants.FIREBASE_URL_PEOPLE + "/"
+        mPeopleCardRef = new Firebase(Constants.FIREBASE_URL_PEOPLE + "/"
                 + Constants.KEY_ENCODED_EMAIL).child(mPeopleCardId);
 
         // PeopleCard items refs
-        final Firebase mPeopleCardListItemRef = new Firebase(Constants.FIREBASE_URL_PEOPLE_ITEMS
+        mPeopleCardListItemRef = new Firebase(Constants.FIREBASE_URL_PEOPLE_ITEMS
                 + "/" + Constants.KEY_ENCODED_EMAIL).child(mPeopleCardId);
             // iowe child
-        Firebase mPeopleCardListItemIOweRef = new Firebase(Constants.FIREBASE_URL_PEOPLE_ITEMS
+        mPeopleCardListItemIOweRef = new Firebase(Constants.FIREBASE_URL_PEOPLE_ITEMS
                 + "/" + Constants.KEY_ENCODED_EMAIL).child(mPeopleCardId).child("iowe");
             // xowes child
-        Firebase mPeopleCardListItemXOwesRef = new Firebase(Constants.FIREBASE_URL_PEOPLE_ITEMS
+        mPeopleCardListItemXOwesRef = new Firebase(Constants.FIREBASE_URL_PEOPLE_ITEMS
                 + "/" + Constants.KEY_ENCODED_EMAIL).child(mPeopleCardId).child("xowes");
+
 
         // I owe List adapter
         mIoweXAdapter = new PeopleCardItemAdapter(PeopleCardItemActivity.this, PeopleCardItem.class,
@@ -86,8 +90,9 @@ public class PeopleCardItemActivity extends AppCompatActivity {
                 R.layout.card_people_item, mPeopleCardListItemXOwesRef);
         mXOwesListView.setAdapter(mXowesMeAdapter);
 
+
         // set toolbar titel and textView titel
-        mPeopleCardRef.addValueEventListener(new ValueEventListener() {
+        mPeopleCardRefListener = mPeopleCardRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 // get Peoplecard
@@ -117,7 +122,7 @@ public class PeopleCardItemActivity extends AppCompatActivity {
         });
 
         // balance, the sum of getAmount if getValue == "Kr"
-        mPeopleCardListItemRef.addValueEventListener(new ValueEventListener() {
+        mPeopleCardListItemRefListener = mPeopleCardListItemRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
 
@@ -174,7 +179,6 @@ public class PeopleCardItemActivity extends AppCompatActivity {
                     mPeopleCardRef.setValue(mPeopleCard);
                 } else {
                     finish();
-                    return;
                 }
 
             }
@@ -232,6 +236,16 @@ public class PeopleCardItemActivity extends AppCompatActivity {
         });
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+    }
+
+    // clean adapter
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        mIoweXAdapter.cleanup();
+        mXowesMeAdapter.cleanup();
+        mPeopleCardRef.removeEventListener(mPeopleCardRefListener);
+        mPeopleCardListItemRef.removeEventListener(mPeopleCardListItemRefListener);
     }
 
     // Open dialog to add new PeopleCard

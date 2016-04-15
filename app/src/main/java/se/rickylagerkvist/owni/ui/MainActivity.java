@@ -51,7 +51,7 @@ public class MainActivity extends AppCompatActivity {
     int[] iconIntArray = {R.drawable.ic_people_white_24dp, R.drawable.ic_local_dining_white_24dp};
     int[] colorIntArray = {R.color.colorAccent, R.color.blueColor};
 
-
+    private ValueEventListener mFirebaseRefListener;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -157,7 +157,7 @@ public class MainActivity extends AppCompatActivity {
         getMenuInflater().inflate(R.menu.menu_main, menu);
 
         // set menu item to display name of user
-        mFirebaseRef.addValueEventListener(new ValueEventListener() {
+        mFirebaseRefListener = mFirebaseRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 FireBaseUser mUser = dataSnapshot.getValue(FireBaseUser.class);
@@ -256,5 +256,11 @@ public class MainActivity extends AppCompatActivity {
             return resources.getDimensionPixelSize(resourceId);
         }
         return 0;
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        mFirebaseRef.removeEventListener(mFirebaseRefListener);
     }
 }

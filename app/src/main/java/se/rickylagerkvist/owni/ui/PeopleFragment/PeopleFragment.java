@@ -25,9 +25,6 @@ public class PeopleFragment extends Fragment {
     private ListView mListView;
     private PeopleCardAdapter mPeopleCardAdapter;
 
-    private int nrOfItems;
-    private int iOweAndXOwesBalance;
-
 
     public PeopleFragment() {
         // Required empty public constructor
