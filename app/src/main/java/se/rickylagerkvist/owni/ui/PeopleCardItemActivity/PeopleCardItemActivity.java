@@ -13,6 +13,7 @@ import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import com.firebase.client.AuthData;
 import com.firebase.client.DataSnapshot;
 import com.firebase.client.Firebase;
 import com.firebase.client.FirebaseError;
@@ -21,28 +22,37 @@ import com.firebase.client.ValueEventListener;
 import se.rickylagerkvist.owni.R;
 import se.rickylagerkvist.owni.model.PeopleCard;
 import se.rickylagerkvist.owni.model.PeopleCardItem;
+import se.rickylagerkvist.owni.ui.loginAndCreateUser.LoginActivity;
 import se.rickylagerkvist.owni.utils.Constants;
 
 public class PeopleCardItemActivity extends AppCompatActivity {
 
-    private String mPeopleCardId, mPeopleCardFirstName;
+    // Views, layout & adapters
     private PeopleCard mPeopleCard;
-    private FloatingActionButton fab;
+    private FloatingActionButton mFab;
     private ListView mIOweListView, mXOwesListView;
     private TextView mIoweTitle, mXOwesTitle, mBalance;
     private ImageView mRoundBalance;
     private PeopleCardItemAdapter mIoweXAdapter, mXowesMeAdapter;
-    private Menu menu;
+    private Menu mMenu;
+    private Toolbar mToolbar;
 
+    // Firebase
     private Firebase mPeopleCardRef, mPeopleCardListItemRef, mPeopleCardListItemIOweRef, mPeopleCardListItemXOwesRef;
     private ValueEventListener mPeopleCardRefListener, mPeopleCardListItemRefListener;
+    private Firebase.AuthStateListener mFirebaseRefAuthListener;
+
+    //Strings
+    private String mPeopleCardId, mPeopleCardFirstName;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_people_card_item);
-        final Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
+
+        mToolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(mToolbar);
 
         // ListViews
         mIOweListView = (ListView) findViewById(R.id.i_owe_people_list);
@@ -55,7 +65,6 @@ public class PeopleCardItemActivity extends AppCompatActivity {
 
         // Round ImageVier mRoundBalance
         mRoundBalance = (ImageView) findViewById(R.id.round_balance);
-
 
         Intent intent = this.getIntent();
         mPeopleCardId = intent.getStringExtra("PEOPLECARD_ITEM_ID");
@@ -80,6 +89,17 @@ public class PeopleCardItemActivity extends AppCompatActivity {
                 + "/" + Constants.KEY_ENCODED_EMAIL).child(mPeopleCardId).child("xowes");
 
 
+        // listens for login state, if the user is logged out open LoginActivity
+        mFirebaseRefAuthListener = mPeopleCardRef.addAuthStateListener(new Firebase.AuthStateListener() {
+            @Override
+            public void onAuthStateChanged(AuthData authData) {
+                if (authData == null){
+                    Intent intent = new Intent(PeopleCardItemActivity.this, LoginActivity.class);
+                    startActivity(intent);
+                }
+            }
+        });
+
         // I owe List adapter
         mIoweXAdapter = new PeopleCardItemAdapter(PeopleCardItemActivity.this, PeopleCardItem.class,
                 R.layout.card_people_item, mPeopleCardListItemIOweRef);
@@ -91,7 +111,7 @@ public class PeopleCardItemActivity extends AppCompatActivity {
         mXOwesListView.setAdapter(mXowesMeAdapter);
 
 
-        // set toolbar titel and textView titel
+        // set mToolbar titel and textView titel
         mPeopleCardRefListener = mPeopleCardRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
@@ -99,7 +119,8 @@ public class PeopleCardItemActivity extends AppCompatActivity {
                 PeopleCard peopleCard = dataSnapshot.getValue(PeopleCard.class);
                 // set mPeopleCard to peoplecard for ev later use
                 mPeopleCard = peopleCard;
-                // first name of peoplecard
+
+                // first name of peoplecard IF peoplecard != null
                 if (peopleCard != null) {
                     mPeopleCardFirstName = peopleCard.getName().split(" ", 2)[0];
                 } else {
@@ -107,8 +128,8 @@ public class PeopleCardItemActivity extends AppCompatActivity {
                     return;
                 }
 
-                // set toolbar titel to PeopleCards name
-                toolbar.setTitle(peopleCard.getName());
+                // set mToolbar titel to PeopleCards name
+                mToolbar.setTitle(peopleCard.getName());
 
                 // set title to include name
                 mIoweTitle.setText(getResources().getString(R.string.i_owe_person) + " " + mPeopleCardFirstName);
@@ -227,8 +248,8 @@ public class PeopleCardItemActivity extends AppCompatActivity {
             }
         });*/
 
-        fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
+        mFab = (FloatingActionButton) findViewById(R.id.fab);
+        mFab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 showAddPeopleCardItemDialog(view);
@@ -238,7 +259,7 @@ public class PeopleCardItemActivity extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     }
 
-    // clean adapter
+    // clean adapter and removeEventListener
     @Override
     public void onDestroy() {
         super.onDestroy();
@@ -246,6 +267,8 @@ public class PeopleCardItemActivity extends AppCompatActivity {
         mXowesMeAdapter.cleanup();
         mPeopleCardRef.removeEventListener(mPeopleCardRefListener);
         mPeopleCardListItemRef.removeEventListener(mPeopleCardListItemRefListener);
+
+        mPeopleCardRef.removeAuthStateListener(mFirebaseRefAuthListener);
     }
 
     // Open dialog to add new PeopleCard
@@ -254,9 +277,10 @@ public class PeopleCardItemActivity extends AppCompatActivity {
         dialog.show(PeopleCardItemActivity.this.getFragmentManager(), "AddPeopleCardItemDialog");
     }
 
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        this.menu = menu;
+        this.mMenu = menu;
         getMenuInflater().inflate(R.menu.menu_people_item, menu);
 
         return true;

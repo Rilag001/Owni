@@ -23,6 +23,7 @@ import android.view.animation.Animation;
 import android.view.animation.DecelerateInterpolator;
 import android.view.animation.ScaleAnimation;
 
+import com.firebase.client.AuthData;
 import com.firebase.client.DataSnapshot;
 import com.firebase.client.Firebase;
 import com.firebase.client.FirebaseError;
@@ -38,20 +39,23 @@ import se.rickylagerkvist.owni.utils.Constants;
 
 public class MainActivity extends AppCompatActivity {
 
-
+    // Views, layout & adapter
     private SectionsPagerAdapter mSectionsPagerAdapter;
     private ViewPager mViewPager;
     private FloatingActionButton fab;
     private TabLayout tabLayout;
     private Toolbar toolbar;
-    private Firebase mFirebaseRef;
     private Menu menu;
 
-    // icon for fab on tab changes
+    // icon and color for fab on tab changes
     int[] iconIntArray = {R.drawable.ic_people_white_24dp, R.drawable.ic_local_dining_white_24dp};
     int[] colorIntArray = {R.color.colorAccent, R.color.blueColor};
 
+    // Firebase
     private ValueEventListener mFirebaseRefListener;
+    private Firebase mFirebaseRef;
+
+    private Firebase.AuthStateListener mFirebaseRefAuthListener;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -68,6 +72,17 @@ public class MainActivity extends AppCompatActivity {
         Firebase.setAndroidContext(this);
         mFirebaseRef = new Firebase(Constants.FIREBASE_URL_USERS + "/" + Constants.KEY_ENCODED_EMAIL);
 
+        // listens for login state, if the user is logged out open LoginActivity
+        mFirebaseRefAuthListener = mFirebaseRef.addAuthStateListener(new Firebase.AuthStateListener() {
+            @Override
+            public void onAuthStateChanged(AuthData authData) {
+                if (authData == null){
+                    Intent intent = new Intent(MainActivity.this, LoginActivity.class);
+                    startActivity(intent);
+                }
+            }
+        });
+
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         // Create the adapter that will return a fragment for each of the three
@@ -76,7 +91,7 @@ public class MainActivity extends AppCompatActivity {
 
         // Set up the ViewPager with the sections adapter.
         mViewPager = (ViewPager) findViewById(R.id.container);
-        mViewPager.setAdapter(mSectionsPagerAdapter);
+        mViewPager.setAdapter(mS ectionsPagerAdapter);
 
         // set icons for tabs (with two states: seletcted and unselected)
         tabLayout = (TabLayout) findViewById(R.id.tabs);
@@ -95,8 +110,6 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        // set initial fab icon
-        fab.setImageResource(R.drawable.ic_people_white_24dp);
 
         // change toolbar title, fab color, icon on tab selected with animation
         tabLayout.setOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
@@ -170,7 +183,6 @@ public class MainActivity extends AppCompatActivity {
 
             }
         });
-
         return true;
     }
 
@@ -179,6 +191,7 @@ public class MainActivity extends AppCompatActivity {
         int id = item.getItemId();
 
         if (id == R.id.log_out) {
+            mFirebaseRef.unauth();
             Intent intent = new Intent(MainActivity.this, LoginActivity.class);
             startActivity(intent);
         }
@@ -249,6 +262,7 @@ public class MainActivity extends AppCompatActivity {
         fab.startAnimation(shrink);
     }
 
+    // fixes problem with navbar overlapping our views
     private int getNavigationBarHeight() {
         Resources resources = getResources();
         int resourceId = resources.getIdentifier("navigation_bar_height", "dimen", "android");
@@ -258,9 +272,12 @@ public class MainActivity extends AppCompatActivity {
         return 0;
     }
 
+    // remove EventListener for better memory performance
     @Override
     protected void onDestroy() {
         super.onDestroy();
         mFirebaseRef.removeEventListener(mFirebaseRefListener);
+
+        mFirebaseRef.removeAuthStateListener(mFirebaseRefAuthListener);
     }
 }

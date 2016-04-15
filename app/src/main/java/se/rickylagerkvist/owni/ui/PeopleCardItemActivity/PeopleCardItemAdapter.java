@@ -17,13 +17,14 @@ public class PeopleCardItemAdapter
         extends FirebaseListAdapter<PeopleCardItem> {
 
 
-    public PeopleCardItemAdapter(Activity activity, Class modelClass, int modelLayout, Query ref) {
+    public PeopleCardItemAdapter(Activity activity, Class modelClass, int modelLayout,
+                                 Query ref) {
         super(activity, modelClass, modelLayout, ref);
         this.mActivity = activity;
     }
 
     @Override
-    protected void populateView(View view, PeopleCardItem peopleCardItem) {
+    protected void populateView(View view, PeopleCardItem peopleCardItem, int position) {
 
         TextView descriptionOfItem = (TextView) view.findViewById(R.id.people_card_item_description);
         TextView amount = (TextView) view.findViewById(R.id.people_card_item_value);
@@ -33,5 +34,8 @@ public class PeopleCardItemAdapter
         descriptionOfItem.setText(peopleCardItem.getDescription());
         amount.setText("" + peopleCardItem.getAmount());
         type.setText(peopleCardItem.getTypeOfValue());
+
     }
+
+
 }
