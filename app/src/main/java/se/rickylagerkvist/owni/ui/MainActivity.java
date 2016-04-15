@@ -42,12 +42,12 @@ public class MainActivity extends AppCompatActivity {
     // Views, layout & adapter
     private SectionsPagerAdapter mSectionsPagerAdapter;
     private ViewPager mViewPager;
-    private FloatingActionButton fab;
-    private TabLayout tabLayout;
-    private Toolbar toolbar;
-    private Menu menu;
+    private FloatingActionButton mFab;
+    private TabLayout mTabLayout;
+    private Toolbar mToolbar;
+    private Menu mMenu;
 
-    // icon and color for fab on tab changes
+    // icon and color for mFab on tab changes
     int[] iconIntArray = {R.drawable.ic_people_white_24dp, R.drawable.ic_local_dining_white_24dp};
     int[] colorIntArray = {R.color.colorAccent, R.color.blueColor};
 
@@ -83,8 +83,8 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
+        mToolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(mToolbar);
         // Create the adapter that will return a fragment for each of the three
         // primary sections of the activity.
         mSectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager());
@@ -94,15 +94,15 @@ public class MainActivity extends AppCompatActivity {
         mViewPager.setAdapter(mSectionsPagerAdapter);
 
         // set icons for tabs (with two states: seletcted and unselected)
-        tabLayout = (TabLayout) findViewById(R.id.tabs);
-        tabLayout.setupWithViewPager(mViewPager);
-        tabLayout.getTabAt(0).setIcon(R.drawable.ic_people_material);
-        tabLayout.getTabAt(1).setIcon(R.drawable.ic_activities_material);
+        mTabLayout = (TabLayout) findViewById(R.id.tabs);
+        mTabLayout.setupWithViewPager(mViewPager);
+        mTabLayout.getTabAt(0).setIcon(R.drawable.ic_people_material);
+        mTabLayout.getTabAt(1).setIcon(R.drawable.ic_activities_material);
         // set tint color
-        tabLayout.setSelectedTabIndicatorColor(Color.parseColor("#FFFFFF"));
+        mTabLayout.setSelectedTabIndicatorColor(Color.parseColor("#FFFFFF"));
 
-        fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
+        mFab = (FloatingActionButton) findViewById(R.id.fab);
+        mFab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 // will select method depending on tab position
@@ -111,18 +111,18 @@ public class MainActivity extends AppCompatActivity {
         });
 
 
-        // change toolbar title, fab color, icon on tab selected with animation
-        tabLayout.setOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
+        // change mToolbar title, mFab color, icon on tab selected with animation
+        mTabLayout.setOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override
             public void onTabSelected(TabLayout.Tab tab) {
                 mViewPager.setCurrentItem(tab.getPosition());
                 animateFab(tab.getPosition());
 
-                int position = tabLayout.getSelectedTabPosition();
+                int position = mTabLayout.getSelectedTabPosition();
                 if (position == 0){
-                    toolbar.setTitle("People");
+                    mToolbar.setTitle("People");
                 } else if (position == 1) {
-                    toolbar.setTitle("Activities");
+                    mToolbar.setTitle("Activities");
                 }
             }
 
@@ -141,7 +141,7 @@ public class MainActivity extends AppCompatActivity {
 
     // Checks witch tab is active and selects method
     private void FABClickOpenDialog(View view) {
-        int position = tabLayout.getSelectedTabPosition();
+        int position = mTabLayout.getSelectedTabPosition();
 
         if (position == 0){
             showAddPeopleCardDialog(view);
@@ -165,11 +165,11 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     public boolean onCreateOptionsMenu(final Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        this.menu = menu;
+        // Inflate the mMenu; this adds items to the action bar if it is present.
+        this.mMenu = menu;
         getMenuInflater().inflate(R.menu.menu_main, menu);
 
-        // set menu item to display name of user
+        // set mMenu item to display name of user
         mFirebaseRefListener = mFirebaseRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
@@ -225,10 +225,10 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    // fab animation, shrink fab and scale up again
+    // mFab animation, shrink mFab and scale up again
     // from: http://stackoverflow.com/questions/31415742/how-to-change-floatingactionbutton-between-tabs/31418573
     protected void animateFab(final int position) {
-        fab.clearAnimation();
+        mFab.clearAnimation();
         // Scale down animation
         ScaleAnimation shrink =  new ScaleAnimation(1f, 0.2f, 1f, 0.2f, Animation.RELATIVE_TO_SELF, 0.5f, Animation.RELATIVE_TO_SELF, 0.5f);
         shrink.setDuration(100);     // animation duration in milliseconds
@@ -243,15 +243,15 @@ public class MainActivity extends AppCompatActivity {
             public void onAnimationEnd(Animation animation) {
                 // Change FAB color and icon
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-                    fab.setBackgroundTintList(getResources().getColorStateList(colorIntArray[position]));
-                    fab.setImageDrawable(getResources().getDrawable(iconIntArray[position], null));
+                    mFab.setBackgroundTintList(getResources().getColorStateList(colorIntArray[position]));
+                    mFab.setImageDrawable(getResources().getDrawable(iconIntArray[position], null));
                 }
 
                 // Scale up animation
                 ScaleAnimation expand = new ScaleAnimation(0.2f, 1f, 0.2f, 1f, Animation.RELATIVE_TO_SELF, 0.5f, Animation.RELATIVE_TO_SELF, 0.5f);
                 expand.setDuration(100);     // animation duration in milliseconds
                 expand.setInterpolator(new AccelerateInterpolator());
-                fab.startAnimation(expand);
+                mFab.startAnimation(expand);
             }
 
             @Override
@@ -259,7 +259,7 @@ public class MainActivity extends AppCompatActivity {
 
             }
         });
-        fab.startAnimation(shrink);
+        mFab.startAnimation(shrink);
     }
 
     // fixes problem with navbar overlapping our views
