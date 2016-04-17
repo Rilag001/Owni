@@ -2,7 +2,6 @@ package se.rickylagerkvist.owni.ui.loginAndCreateUser;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
@@ -130,24 +129,17 @@ public class LoginActivity extends AppCompatActivity {
             Log.i(LOG_TAG, provider + " " + getString(R.string.log_message_auth_successful));
 
             if (authData != null){
-                SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
-                SharedPreferences.Editor spe = sp.edit();
 
                 if (authData.getProvider().equals(Constants.PASSWORD_PROVIDER)) {
                     setAuthenticatedUserPasswordProvider(authData);
                 }
 
-                // Save provider name and encodedEmail for later use and start MainActivity
-                spe.putString(Constants.KEY_PROVIDER, authData.getProvider()).apply();
-                spe.putString(Constants.KEY_ENCODED_EMAIL, mEncodedEmail).apply();
-                //spe.putString(Constants.KEY_PROVIDER, authData.getUid()).apply();
-
-                Constants.KEY_ENCODED_EMAIL = mEncodedEmail;
+                // save mEncodedEmail to sharedPref
+                PreferenceManager.getDefaultSharedPreferences(getApplicationContext()).edit().putString("ENCODEDEMAIL", mEncodedEmail).apply();
 
                 // Go to main activity
                 Intent intent = new Intent(LoginActivity.this, MainActivity.class);
                 intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-
                 startActivity(intent);
                 finish();
             }

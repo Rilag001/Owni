@@ -4,6 +4,7 @@ import android.app.Dialog;
 import android.app.DialogFragment;
 import android.content.DialogInterface;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.v7.app.AlertDialog;
 
 import com.firebase.client.Firebase;
@@ -14,6 +15,8 @@ import se.rickylagerkvist.owni.utils.Constants;
  * Created by Ricky on 2016-04-13.
  */
 public class DeleteCardAndItemsDialog extends DialogFragment {
+
+    private String mEncodedEmail;
 
     public static DeleteCardAndItemsDialog newInstance(String peopleCardAndItemRef) {
         DeleteCardAndItemsDialog deleteCardAndItemsDialog
@@ -63,10 +66,12 @@ public class DeleteCardAndItemsDialog extends DialogFragment {
     // Remove PeopleCard and PeopleCardItems
     private void deleteCardAndItems(String peopleCardAndItemId) {
 
+        mEncodedEmail = PreferenceManager.getDefaultSharedPreferences(getActivity().getBaseContext()).getString("ENCODEDEMAIL", "defaultStringIfNothingFound");
+
         Firebase peopleCardRef = new Firebase(Constants.FIREBASE_URL_PEOPLE + "/"
-                + Constants.KEY_ENCODED_EMAIL).child(peopleCardAndItemId);
+                + mEncodedEmail).child(peopleCardAndItemId);
         Firebase PeopleCardItemRef = new Firebase(Constants.FIREBASE_URL_PEOPLE_ITEMS + "/"
-                + Constants.KEY_ENCODED_EMAIL).child(peopleCardAndItemId);
+                + mEncodedEmail).child(peopleCardAndItemId);
 
         peopleCardRef.removeValue();
         PeopleCardItemRef.removeValue();

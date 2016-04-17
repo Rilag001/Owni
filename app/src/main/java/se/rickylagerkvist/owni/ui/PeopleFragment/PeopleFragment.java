@@ -2,6 +2,7 @@ package se.rickylagerkvist.owni.ui.PeopleFragment;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -25,6 +26,8 @@ public class PeopleFragment extends Fragment {
     private ListView mListView;
     private PeopleCardAdapter mPeopleCardAdapter;
 
+    private String mEncodedEmail;
+
 
     public PeopleFragment() {
         // Required empty public constructor
@@ -38,13 +41,15 @@ public class PeopleFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+
+        mEncodedEmail = PreferenceManager.getDefaultSharedPreferences(getContext()).getString("ENCODEDEMAIL", "defaultStringIfNothingFound");
+
         // Inflate the layout for this fragment
         final View rootView = inflater.inflate(R.layout.fragment_people, container, false);
         mListView = (ListView) rootView.findViewById(R.id.peopleCardList);
 
-
         // firebase ref
-        mFirebaseRef = new Firebase(Constants.FIREBASE_URL_PEOPLE + "/" + Constants.KEY_ENCODED_EMAIL);
+        mFirebaseRef = new Firebase(Constants.FIREBASE_URL_PEOPLE + "/" + mEncodedEmail);
 
         // set adapter for listView
         mPeopleCardAdapter = new PeopleCardAdapter(getActivity(), PeopleCard.class,

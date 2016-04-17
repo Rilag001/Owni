@@ -25,7 +25,7 @@ public class Constants {
     // Constants for Firebase login
     public static final String PASSWORD_PROVIDER = "password";
     public static final String KEY_PROVIDER = "PROVIDER";
-    public static String KEY_ENCODED_EMAIL = "ENCODED_EMAIL";
+    //public static String KEY_ENCODED_EMAIL = "ENCODED_EMAIL";
 
     // Constants for Firebase object properties
     public static final String FIREBASE_PROPERTY_EMAIL = "email";

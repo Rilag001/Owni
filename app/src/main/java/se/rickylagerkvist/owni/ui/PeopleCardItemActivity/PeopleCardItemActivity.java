@@ -3,6 +3,7 @@ package se.rickylagerkvist.owni.ui.PeopleCardItemActivity;
 import android.app.DialogFragment;
 import android.content.Intent;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -44,6 +45,7 @@ public class PeopleCardItemActivity extends AppCompatActivity {
 
     //Strings
     private String mPeopleCardId, mPeopleCardFirstName;
+    private String mEncodedEmail;
 
 
     @Override
@@ -53,6 +55,8 @@ public class PeopleCardItemActivity extends AppCompatActivity {
 
         mToolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(mToolbar);
+
+        mEncodedEmail = PreferenceManager.getDefaultSharedPreferences(getApplicationContext()).getString("ENCODEDEMAIL", "defaultStringIfNothingFound");
 
         // ListViews
         mIOweListView = (ListView) findViewById(R.id.i_owe_people_list);
@@ -76,17 +80,17 @@ public class PeopleCardItemActivity extends AppCompatActivity {
 
         // PeopleCard ref
         mPeopleCardRef = new Firebase(Constants.FIREBASE_URL_PEOPLE + "/"
-                + Constants.KEY_ENCODED_EMAIL).child(mPeopleCardId);
+                + mEncodedEmail).child(mPeopleCardId);
 
         // PeopleCard items refs
         mPeopleCardListItemRef = new Firebase(Constants.FIREBASE_URL_PEOPLE_ITEMS
-                + "/" + Constants.KEY_ENCODED_EMAIL).child(mPeopleCardId);
+                + "/" + mEncodedEmail).child(mPeopleCardId);
             // iowe child
         mPeopleCardListItemIOweRef = new Firebase(Constants.FIREBASE_URL_PEOPLE_ITEMS
-                + "/" + Constants.KEY_ENCODED_EMAIL).child(mPeopleCardId).child("iowe");
+                + "/" + mEncodedEmail).child(mPeopleCardId).child("iowe");
             // xowes child
         mPeopleCardListItemXOwesRef = new Firebase(Constants.FIREBASE_URL_PEOPLE_ITEMS
-                + "/" + Constants.KEY_ENCODED_EMAIL).child(mPeopleCardId).child("xowes");
+                + "/" + mEncodedEmail).child(mPeopleCardId).child("xowes");
 
 
         // listens for login state, if the user is logged out open LoginActivity

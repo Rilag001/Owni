@@ -6,6 +6,7 @@ import android.content.res.Resources;
 import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.design.widget.TabLayout;
@@ -57,10 +58,14 @@ public class MainActivity extends AppCompatActivity {
 
     private Firebase.AuthStateListener mFirebaseRefAuthListener;
 
+    String mEncodedEmail;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        mEncodedEmail = PreferenceManager.getDefaultSharedPreferences(getApplicationContext()).getString("ENCODEDEMAIL", "defaultStringIfNothingFound");
 
         // set bottom margin equal to navBarHeight
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
@@ -68,20 +73,22 @@ public class MainActivity extends AppCompatActivity {
             findViewById(R.id.container).setPadding(0, 0, 0, navBarHeight);
         }
 
-        // Set Firebase Context and connection String
+        // Set Firebase Context and connection String if mEncodedEmail !=null
         Firebase.setAndroidContext(this);
-        mFirebaseRef = new Firebase(Constants.FIREBASE_URL_USERS + "/" + Constants.KEY_ENCODED_EMAIL);
-
+        mFirebaseRef = new Firebase(Constants.FIREBASE_URL_USERS + "/" + mEncodedEmail);
+        
         // listens for login state, if the user is logged out open LoginActivity
         mFirebaseRefAuthListener = mFirebaseRef.addAuthStateListener(new Firebase.AuthStateListener() {
             @Override
             public void onAuthStateChanged(AuthData authData) {
-                if (authData == null){
+                if (authData == null || mEncodedEmail == null){
+                    PreferenceManager.getDefaultSharedPreferences(getApplicationContext()).edit().putString("ENCODEDEMAIL", null).apply();
                     Intent intent = new Intent(MainActivity.this, LoginActivity.class);
                     startActivity(intent);
                 }
             }
         });
+
 
         mToolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(mToolbar);
@@ -192,6 +199,7 @@ public class MainActivity extends AppCompatActivity {
 
         if (id == R.id.log_out) {
             mFirebaseRef.unauth();
+            PreferenceManager.getDefaultSharedPreferences(getApplicationContext()).edit().putString("ENCODEDEMAIL", null).apply();
             Intent intent = new Intent(MainActivity.this, LoginActivity.class);
             startActivity(intent);
         }

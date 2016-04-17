@@ -4,6 +4,7 @@ import android.app.Dialog;
 import android.app.DialogFragment;
 import android.content.DialogInterface;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.v7.app.AlertDialog;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -21,6 +22,8 @@ import se.rickylagerkvist.owni.utils.Constants;
  */
 public class AddPeopleCardDialog extends DialogFragment {
     EditText mEditTextListName;
+
+    String mEncodedEmail;
 
     public static AddPeopleCardDialog newInstance() {
         AddPeopleCardDialog addListDialogFragment
@@ -79,8 +82,10 @@ public class AddPeopleCardDialog extends DialogFragment {
     private void addPeopleCardToList() {
         String userEnteredName = mEditTextListName.getText().toString().trim();
 
+        mEncodedEmail = PreferenceManager.getDefaultSharedPreferences(getActivity().getBaseContext()).getString("ENCODEDEMAIL", "defaultStringIfNothingFound");
+
         if (!userEnteredName.equals("")){
-            Firebase listsRef = new Firebase(Constants.FIREBASE_URL_PEOPLE + "/" + Constants.KEY_ENCODED_EMAIL);
+            Firebase listsRef = new Firebase(Constants.FIREBASE_URL_PEOPLE + "/" + mEncodedEmail);
             Firebase newListRef = listsRef.push();
 
             //PeopleCard
