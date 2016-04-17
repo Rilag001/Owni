@@ -18,7 +18,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:text="Description of item"
-                android:layout_weight="7"
+                android:layout_weight="6"
                 android:textSize="15sp"
                 android:id="@+id/people_card_item_description"/>
 
@@ -37,13 +37,6 @@
                 android:id="@+id/people_card_item_type"
                 android:textSize="15sp"
                 android:layout_weight="1"/>
-
-            <ImageButton
-                android:id="@+id/delete_peoplecard_item_button"
-                android:layout_width="wrap_content"
-                android:background="@android:color/white"
-                android:layout_height="wrap_content"
-                android:src="@drawable/ic_delete_black_18dp"/>
 
         </LinearLayout>
 </LinearLayout>

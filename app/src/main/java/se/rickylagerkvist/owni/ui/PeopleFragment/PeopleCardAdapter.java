@@ -32,11 +32,23 @@ public class PeopleCardAdapter
         ImageView round = (ImageView) view.findViewById(R.id.round);
 
 
-        // Set the var
+        // Set name
         textViewName.setText(peopleCard.getName());
-        textViewNrOfItems.setText("" + peopleCard.getNumberOfItems());
-        textViewBalance.setText("" + peopleCard.getBalance());
 
+        // set nr of items
+        textViewNrOfItems.setText("" + peopleCard.getNumberOfItems());
+
+        // set balance
+        String mFirstName = peopleCard.getName().split(" ", 2)[0];
+        if (peopleCard.getBalance() == 0){
+            textViewBalance.setText(mActivity.getString(R.string.you_are_squared) + " 0 " + mActivity.getString(R.string.currency));
+        } else if (peopleCard.getBalance() < 0){
+            textViewBalance.setText(mFirstName + " " + mActivity.getString(R.string.owes_you) + " " + -peopleCard.getBalance() + " " + mActivity.getString(R.string.currency));
+        } else if (peopleCard.getBalance() > 0) {
+            textViewBalance.setText(mActivity.getString(R.string.you_owe) + " " + mFirstName + " " + peopleCard.getBalance() + " " + mActivity.getString(R.string.currency) );
+        }
+
+        // set round
         if (peopleCard.getBalance() == 0){
             round.setImageResource(R.drawable.round_blue);
         } else if (peopleCard.getBalance() > 0) {
@@ -45,4 +57,11 @@ public class PeopleCardAdapter
             round.setImageResource(R.drawable.round_green);
         }
     }
+
+
+
+
 }
+
+
+

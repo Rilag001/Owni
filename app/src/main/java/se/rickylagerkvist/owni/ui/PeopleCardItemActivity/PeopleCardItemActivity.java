@@ -211,8 +211,8 @@ public class PeopleCardItemActivity extends AppCompatActivity {
         });
 
 
-        /*// Delete items in listViews
-        mIOweListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        // Delete items in listViews
+        /*mIOweListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, final int position, long id) {
 
@@ -225,6 +225,7 @@ public class PeopleCardItemActivity extends AppCompatActivity {
                     public void onClick(DialogInterface dialog, int which) {
                         Firebase itemToRemoveRef = mIoweXAdapter.getRef(position);
                         itemToRemoveRef.removeValue();
+
                     }
                 });
                 deleteItem.show();

@@ -74,32 +74,10 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:id="@+id/balance"
-                        android:text="Balance: "
+                        android:text=""
                         android:textSize="15sp"
                         android:layout_below="@+id/line"
                         android:layout_marginTop="4dp"/>
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:id="@+id/amount"
-                        android:text=""
-                        android:textSize="15sp"
-                        android:layout_marginTop="4dp"
-                        android:layout_below="@+id/line"
-                        android:layout_toRightOf="@id/balance"
-                        android:layout_toEndOf="@id/balance"/>
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:id="@+id/currency"
-                        android:text=" kr"
-                        android:textSize="15sp"
-                        android:layout_marginTop="4dp"
-                        android:layout_below="@+id/line"
-                        android:layout_toRightOf="@id/amount"
-                        android:layout_toEndOf="@id/amount"/>
 
                 </RelativeLayout>
             </LinearLayout>
