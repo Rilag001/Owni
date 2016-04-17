@@ -12,6 +12,7 @@
     <string name="log_message_auth_successful">Login successful</string>
     <string name="error_message_failed_sign_in_no_network">No network connection</string>
     <string name="error_message_email_issue">Email issues</string>
+    <string name="invalid_email">Invalid email</string>
     <string name="hint_enter_username">Enter username…</string>
     <string name="text_already_have_account">Already have an account?</string>
     <string name="button_sign_in">Sign in</string>

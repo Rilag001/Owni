@@ -25,8 +25,6 @@ public class AddPeopleCardItemDialog extends DialogFragment {
 
     EditText mEditTextDescription, mEditTextAmount, mEditTextValue;
     RadioButton mRadioButtonIowe, mRadioButtonSomeoneOwesMe;
-
-    private String id;
     private String mEncodedEmail;
 
     public static AddPeopleCardItemDialog newInstance(String peopleCardId, String name) {

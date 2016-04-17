@@ -40,8 +40,6 @@ public class LoginActivity extends AppCompatActivity {
     private EditText mEditTextEmailInput, mEditTextPasswordInput;
     protected String mEncodedEmail;
 
-    protected String mKey;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -64,7 +62,6 @@ public class LoginActivity extends AppCompatActivity {
                 return true;
             }
         });
-
     }
 
     @Override
@@ -149,8 +146,12 @@ public class LoginActivity extends AppCompatActivity {
         @Override
         public void onAuthenticationError(FirebaseError firebaseError) {
 
+            // closes the mAuthProgressDialog if there is an error
+            mAuthProgressDialog.dismiss();
+
             switch (firebaseError.getCode()) {
                 case FirebaseError.INVALID_EMAIL:
+                    mEditTextEmailInput.setError(getString(R.string.invalid_email));
                 case FirebaseError.USER_DOES_NOT_EXIST:
                     mEditTextEmailInput.setError(getString(R.string.error_message_email_issue));
                     break;
