@@ -177,8 +177,7 @@ public class CreateAccountActivity extends AppCompatActivity {
         boolean isGoodEmail = (email != null && android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches());
 
         if (!isGoodEmail) {
-            mEditTextEmailCreate.setError(String.format(getString(R.string.error_invalid_email_not_valid),
-                    email));
+            mEditTextEmailCreate.setError(getResources().getString(R.string.error_invalid_email_not_valid));
             return false;
         }
         return isGoodEmail;

@@ -31,7 +31,6 @@ public class PeopleCardAdapter
         TextView textViewBalance = (TextView) view.findViewById(R.id.balance);
         ImageView round = (ImageView) view.findViewById(R.id.round);
 
-
         // Set name
         textViewName.setText(peopleCard.getName());
 
@@ -48,7 +47,7 @@ public class PeopleCardAdapter
             textViewBalance.setText(mActivity.getString(R.string.you_owe) + " " + mFirstName + " " + peopleCard.getBalance() + " " + mActivity.getString(R.string.currency) );
         }
 
-        // set round
+        // set mRound
         if (peopleCard.getBalance() == 0){
             round.setImageResource(R.drawable.round_blue);
         } else if (peopleCard.getBalance() > 0) {
@@ -57,10 +56,6 @@ public class PeopleCardAdapter
             round.setImageResource(R.drawable.round_green);
         }
     }
-
-
-
-
 }
 
 

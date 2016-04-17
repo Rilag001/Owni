@@ -20,6 +20,8 @@ import com.firebase.client.Firebase;
 import com.firebase.client.FirebaseError;
 import com.firebase.client.ValueEventListener;
 
+import java.util.Locale;
+
 import se.rickylagerkvist.owni.R;
 import se.rickylagerkvist.owni.model.PeopleCard;
 import se.rickylagerkvist.owni.model.PeopleCardItem;
@@ -163,9 +165,10 @@ public class PeopleCardItemActivity extends AppCompatActivity {
 
                         PeopleCardItem item = peopleCardItem.getValue(PeopleCardItem.class);
 
-                        if (item.isiOwe() && item.getTypeOfValue().equalsIgnoreCase("kr")){
+
+                        if (item.isiOwe() && item.getTypeOfValue().equalsIgnoreCase(getLocalCurrency())){
                             iOweSum = iOweSum + item.getAmount();
-                        } else if (!item.isiOwe() && item.getTypeOfValue().equalsIgnoreCase("kr")) {
+                        } else if (!item.isiOwe() && item.getTypeOfValue().equalsIgnoreCase(getLocalCurrency())) {
                             xOwesSum = xOwesSum + item.getAmount();
                         }
 
@@ -181,17 +184,14 @@ public class PeopleCardItemActivity extends AppCompatActivity {
 
                         // set mBalance text and round balance image
                         if (iOweAndXOwesBalance == 0){
-                            mBalance.setText(getString(R.string.you_are_squared) + 0 + " " + getString(R.string.currency));
+                            mBalance.setText(getString(R.string.you_are_squared) + " " + 0 + " " + getString(R.string.currency));
                             mRoundBalance.setImageResource(R.drawable.round_blue);
                         } else if (iOweAndXOwesBalance < 0) {
-                            mBalance.setText(mPeopleCardFirstName + getString(R.string.owes_you) + displayNr + " " + getString(R.string.currency));
+                            mBalance.setText(mPeopleCardFirstName + " " + getString(R.string.owes_you) + " " + displayNr + " " + getString(R.string.currency));
                             mRoundBalance.setImageResource(R.drawable.round_green);
                         } else if (iOweAndXOwesBalance > 0) {
-                            mBalance.setText(getString(R.string.you_owe) + mPeopleCardFirstName + " " + displayNr + " " + getString(R.string.currency));
+                            mBalance.setText(getString(R.string.you_owe) + " " + mPeopleCardFirstName + " " + displayNr + " " + getString(R.string.currency));
                             mRoundBalance.setImageResource(R.drawable.round_red);
-                        } else {
-                            mBalance.setText(getString(R.string.you_are_squared) + iOweAndXOwesBalance);
-                            mRoundBalance.setImageResource(R.drawable.round_blue);
                         }
 
                         nrOfItems++;
@@ -301,5 +301,19 @@ public class PeopleCardItemActivity extends AppCompatActivity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    // returns the currency of languages setting (can be filled out with more) balance are calculated on local
+    public String getLocalCurrency (){
+        String local = null;
+
+        if(Locale.getDefault().toString().equals("en_US")){
+            local = "dollar";
+        } else if (Locale.getDefault().toString().equals("sv_SE")) {
+            local = "kr";
+        } else {
+            local = "dollar";
+        }
+        return local;
     }
 }
