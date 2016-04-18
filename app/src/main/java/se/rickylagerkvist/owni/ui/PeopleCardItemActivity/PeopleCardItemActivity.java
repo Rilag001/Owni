@@ -2,6 +2,7 @@ package se.rickylagerkvist.owni.ui.PeopleCardItemActivity;
 
 import android.app.DialogFragment;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.design.widget.FloatingActionButton;
@@ -14,6 +15,7 @@ import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.firebase.client.AuthData;
 import com.firebase.client.DataSnapshot;
@@ -87,10 +89,10 @@ public class PeopleCardItemActivity extends AppCompatActivity {
         // PeopleCard items refs
         mPeopleCardListItemRef = new Firebase(Constants.FIREBASE_URL_PEOPLE_ITEMS
                 + "/" + mEncodedEmail).child(mPeopleCardId);
-            // iowe child
+        // iowe child
         mPeopleCardListItemIOweRef = new Firebase(Constants.FIREBASE_URL_PEOPLE_ITEMS
                 + "/" + mEncodedEmail).child(mPeopleCardId).child("iowe");
-            // xowes child
+        // xowes child
         mPeopleCardListItemXOwesRef = new Firebase(Constants.FIREBASE_URL_PEOPLE_ITEMS
                 + "/" + mEncodedEmail).child(mPeopleCardId).child("xowes");
 
@@ -99,7 +101,7 @@ public class PeopleCardItemActivity extends AppCompatActivity {
         mFirebaseRefAuthListener = mPeopleCardRef.addAuthStateListener(new Firebase.AuthStateListener() {
             @Override
             public void onAuthStateChanged(AuthData authData) {
-                if (authData == null){
+                if (authData == null) {
                     Intent intent = new Intent(PeopleCardItemActivity.this, LoginActivity.class);
                     startActivity(intent);
                 }
@@ -160,12 +162,12 @@ public class PeopleCardItemActivity extends AppCompatActivity {
 
                 int nrOfItems = 0;
 
-                for (DataSnapshot snapshot: dataSnapshot.getChildren()){
-                    for (DataSnapshot peopleCardItem: snapshot.getChildren()){
+                for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+                    for (DataSnapshot peopleCardItem : snapshot.getChildren()) {
 
                         PeopleCardItem item = peopleCardItem.getValue(PeopleCardItem.class);
 
-                        if (item.isiOwe() && item.getTypeOfValue().equalsIgnoreCase(getLocalCurrency())){
+                        if (item.isiOwe() && item.getTypeOfValue().equalsIgnoreCase(getLocalCurrency())) {
                             iOweSum = iOweSum + item.getAmount();
                         } else if (!item.isiOwe() && item.getTypeOfValue().equalsIgnoreCase(getLocalCurrency())) {
                             xOwesSum = xOwesSum + item.getAmount();
@@ -174,7 +176,7 @@ public class PeopleCardItemActivity extends AppCompatActivity {
                         iOweAndXOwesBalance = iOweSum - xOwesSum;
 
                         // gets the positive value if the number is negative (so the display do not show: "X owes you -500 kr")
-                        if (iOweAndXOwesBalance < 0){
+                        if (iOweAndXOwesBalance < 0) {
                             displayNr = -iOweAndXOwesBalance;
                         } else {
                             displayNr = iOweAndXOwesBalance;
@@ -182,7 +184,7 @@ public class PeopleCardItemActivity extends AppCompatActivity {
 
 
                         // set mBalance text and round balance image
-                        if (iOweAndXOwesBalance == 0){
+                        if (iOweAndXOwesBalance == 0) {
                             mBalance.setText(getString(R.string.you_are_squared) + " " + 0 + " " + getString(R.string.currency));
                             mRoundBalance.setImageResource(R.drawable.round_blue);
                         } else if (iOweAndXOwesBalance < 0) {
@@ -221,7 +223,7 @@ public class PeopleCardItemActivity extends AppCompatActivity {
                 PeopleCardItem mPeopleCard = mIoweXAdapter.getItem(position);
 
                 String iOweOfXOwe = null;
-                if (mPeopleCard.isiOwe()){
+                if (mPeopleCard.isiOwe()) {
                     iOweOfXOwe = "iowe";
                 } else if (!mPeopleCard.isiOwe()) {
                     iOweOfXOwe = "xowes";
@@ -239,7 +241,7 @@ public class PeopleCardItemActivity extends AppCompatActivity {
                 PeopleCardItem mPeopleCard = mXowesMeAdapter.getItem(position);
 
                 String iOweOfXOwe = null;
-                if (mPeopleCard.isiOwe()){
+                if (mPeopleCard.isiOwe()) {
                     iOweOfXOwe = "iowe";
                 } else if (!mPeopleCard.isiOwe()) {
                     iOweOfXOwe = "xowes";
@@ -302,10 +304,10 @@ public class PeopleCardItemActivity extends AppCompatActivity {
     }
 
     // returns the currency of languages setting (can be filled out with more) balance are calculated on local
-    public String getLocalCurrency(){
+    public String getLocalCurrency() {
         String localCurrency = null;
 
-        if(Locale.getDefault().toString().equals("en_US")){
+        if (Locale.getDefault().toString().equals("en_US")) {
             localCurrency = "dollar";
         } else if (Locale.getDefault().toString().equals("sv_SE")) {
             localCurrency = "kr";
@@ -313,5 +315,22 @@ public class PeopleCardItemActivity extends AppCompatActivity {
             localCurrency = "dollar";
         }
         return localCurrency;
+    }
+
+
+
+    // opens swish if it is installed, otherwise show Toast
+    public void openSwish(View view) {
+
+        String appPackageName = "se.bankgirot.swish";
+
+        PackageManager pm = getBaseContext().getPackageManager();
+        Intent appStartIntent = pm.getLaunchIntentForPackage(appPackageName);
+        if (null != appStartIntent) {
+            getBaseContext().startActivity(appStartIntent);
+        } else {
+            Toast.makeText(PeopleCardItemActivity.this, "Swish is not installed", Toast.LENGTH_SHORT).show();
+        }
+
     }
 }
