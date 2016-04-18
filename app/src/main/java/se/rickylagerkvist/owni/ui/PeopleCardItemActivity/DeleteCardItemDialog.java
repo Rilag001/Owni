@@ -13,19 +13,21 @@ import com.firebase.client.Firebase;
 import se.rickylagerkvist.owni.utils.Constants;
 
 /**
- * Created by Ricky on 2016-04-13.
+ * Created by Ricky on 2016-04-18.
  */
-public class DeleteCardAndItemsDialog extends DialogFragment {
+public class DeleteCardItemDialog extends DialogFragment {
 
     private String mEncodedEmail;
 
-    public static DeleteCardAndItemsDialog newInstance(String peopleCardAndItemRef) {
-        DeleteCardAndItemsDialog deleteCardAndItemsDialog
-                = new DeleteCardAndItemsDialog();
+    public static DeleteCardItemDialog newInstance(String peopleItemParentRef, String peopleItemIdRef, String iOweOfXOwe) {
+        DeleteCardItemDialog deleteCardItemsDialog
+                = new DeleteCardItemDialog();
         Bundle bundle = new Bundle();
-        bundle.putString("id", peopleCardAndItemRef);
-        deleteCardAndItemsDialog.setArguments(bundle);
-        return deleteCardAndItemsDialog;
+        bundle.putString("idParent", peopleItemParentRef);
+        bundle.putString("id", peopleItemIdRef);
+        bundle.putString("bol", iOweOfXOwe);
+        deleteCardItemsDialog.setArguments(bundle);
+        return deleteCardItemsDialog;
     }
 
     @Override
@@ -40,45 +42,40 @@ public class DeleteCardAndItemsDialog extends DialogFragment {
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
 
         Bundle bundle = this.getArguments();
-        final String peopleCardAndItemId = bundle.getString("id");
+        final String peopleItemParentRef = bundle.getString("idParent");
+        final String peopleItemIdRef = bundle.getString("id");
+        final String iOweOfXOwe = bundle.getString("bol");
 
         // Inflate and set the layout for the dialog
         // Pass null as the parent view because its going in the dialog layout
-        builder.setTitle("Delete Card")
-                .setMessage("Are you sure you want to delete this card and all its items?")
+        builder.setTitle("Delete item")
+                .setMessage("Are you sure you want to delete this item?")
                 .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         // Close the dialog
-                        DeleteCardAndItemsDialog.this.getDialog().cancel();
+                        DeleteCardItemDialog.this.getDialog().cancel();
                     }
                 })
-                        // Add action buttons
+                // Add action buttons
                 .setPositiveButton("Delete", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int id) {
-                        deleteCardAndItems(peopleCardAndItemId);
+                        deleteCardItems(peopleItemParentRef, peopleItemIdRef, iOweOfXOwe);
                     }
                 });
 
         return builder.create();
     }
 
-    // Remove PeopleCard and PeopleCardItems
-    private void deleteCardAndItems(String peopleCardAndItemId) {
+    // Remove PeopleCardItem
+    private void deleteCardItems(String peopleItemParentRef, String peopleItemIdRef, String iOweOfXOwe) {
 
         mEncodedEmail = PreferenceManager.getDefaultSharedPreferences(getActivity().getBaseContext()).getString("ENCODEDEMAIL", "defaultStringIfNothingFound");
 
-        Firebase peopleCardRef = new Firebase(Constants.FIREBASE_URL_PEOPLE + "/"
-                + mEncodedEmail).child(peopleCardAndItemId);
         Firebase PeopleCardItemRef = new Firebase(Constants.FIREBASE_URL_PEOPLE_ITEMS + "/"
-                + mEncodedEmail).child(peopleCardAndItemId);
-
-        peopleCardRef.removeValue();
+                + mEncodedEmail).child(peopleItemParentRef).child(iOweOfXOwe).child(peopleItemIdRef);
         PeopleCardItemRef.removeValue();
 
-        // returns to this Activity's parent Activity, in this case MainActivity
-        getActivity().finish();
     }
-
 }

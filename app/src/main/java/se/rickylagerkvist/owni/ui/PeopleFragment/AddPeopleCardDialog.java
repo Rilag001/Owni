@@ -21,8 +21,8 @@ import se.rickylagerkvist.owni.utils.Constants;
  * Created by Ricky on 2016-04-05.
  */
 public class AddPeopleCardDialog extends DialogFragment {
-    EditText mEditTextListName;
 
+    EditText mEditTextListName;
     String mEncodedEmail;
 
     public static AddPeopleCardDialog newInstance() {

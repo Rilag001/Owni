@@ -10,6 +10,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -78,7 +79,6 @@ public class PeopleCardItemActivity extends AppCompatActivity {
             finish();
             return;
         }
-
 
         // PeopleCard ref
         mPeopleCardRef = new Firebase(Constants.FIREBASE_URL_PEOPLE + "/"
@@ -216,42 +216,41 @@ public class PeopleCardItemActivity extends AppCompatActivity {
 
 
         // Delete items in listViews
-        /*mIOweListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        mIOweListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, final int position, long id) {
+                PeopleCardItem mPeopleCard = mIoweXAdapter.getItem(position);
 
-                AlertDialog.Builder deleteItem = new AlertDialog.Builder(getApplicationContext());
-                deleteItem.setTitle("Delete item?");
-                deleteItem.setMessage("Are you sure you want to delete this item?");
-                deleteItem.setNegativeButton("Cancel", null);
-                deleteItem.setPositiveButton("Delete", new AlertDialog.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        Firebase itemToRemoveRef = mIoweXAdapter.getRef(position);
-                        itemToRemoveRef.removeValue();
+                String iOweOfXOwe = null;
+                if (mPeopleCard.isiOwe()){
+                    iOweOfXOwe = "iowe";
+                } else if (!mPeopleCard.isiOwe()) {
+                    iOweOfXOwe = "xowes";
+                }
 
-                    }
-                });
-                deleteItem.show();
+                String mPeopleCardItemId = mIoweXAdapter.getRef(position).getKey();
+
+                DialogFragment dialog = DeleteCardItemDialog.newInstance(mPeopleCardId, mPeopleCardItemId, iOweOfXOwe);
+                dialog.show(PeopleCardItemActivity.this.getFragmentManager(), "DeleteCardItemDialog");
             }
         });
         mXOwesListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, final int position, long id) {
-                AlertDialog.Builder deleteItem = new AlertDialog.Builder(getApplicationContext());
-                deleteItem.setTitle("Delete item?");
-                deleteItem.setMessage("Are you sure you want to delete this item?");
-                deleteItem.setNegativeButton("Cancel", null);
-                deleteItem.setPositiveButton("Delete", new AlertDialog.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        Firebase itemToRemoveRef = mXowesMeAdapter.getRef(position);
-                        itemToRemoveRef.removeValue();
-                    }
-                });
-                deleteItem.show();
+                PeopleCardItem mPeopleCard = mXowesMeAdapter.getItem(position);
+
+                String iOweOfXOwe = null;
+                if (mPeopleCard.isiOwe()){
+                    iOweOfXOwe = "iowe";
+                } else if (!mPeopleCard.isiOwe()) {
+                    iOweOfXOwe = "xowes";
+                }
+                String mPeopleCardItemId = mXowesMeAdapter.getRef(position).getKey();
+
+                DialogFragment dialog = DeleteCardItemDialog.newInstance(mPeopleCardId, mPeopleCardItemId, iOweOfXOwe);
+                dialog.show(PeopleCardItemActivity.this.getFragmentManager(), "DeleteCardItemDialog");
             }
-        });*/
+        });
 
         mFab = (FloatingActionButton) findViewById(R.id.fab);
         mFab.setOnClickListener(new View.OnClickListener() {
@@ -305,15 +304,15 @@ public class PeopleCardItemActivity extends AppCompatActivity {
 
     // returns the currency of languages setting (can be filled out with more) balance are calculated on local
     public String getLocalCurrency (){
-        String local = null;
+        String localCurrency = null;
 
         if(Locale.getDefault().toString().equals("en_US")){
-            local = "dollar";
-        } else if (Locale.getDefault().toString().equals("sv_SE")) {
-            local = "kr";
+            localCurrency = "dollar";
+        } else if (Locale.getDefault().getLanguage().equals("sv_SE")) {
+            localCurrency = "kr";
         } else {
-            local = "dollar";
+            localCurrency = "dollar";
         }
-        return local;
+        return localCurrency;
     }
 }
