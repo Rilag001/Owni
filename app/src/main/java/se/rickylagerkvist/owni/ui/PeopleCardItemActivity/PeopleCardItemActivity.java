@@ -165,7 +165,6 @@ public class PeopleCardItemActivity extends AppCompatActivity {
 
                         PeopleCardItem item = peopleCardItem.getValue(PeopleCardItem.class);
 
-
                         if (item.isiOwe() && item.getTypeOfValue().equalsIgnoreCase(getLocalCurrency())){
                             iOweSum = iOweSum + item.getAmount();
                         } else if (!item.isiOwe() && item.getTypeOfValue().equalsIgnoreCase(getLocalCurrency())) {
@@ -303,12 +302,12 @@ public class PeopleCardItemActivity extends AppCompatActivity {
     }
 
     // returns the currency of languages setting (can be filled out with more) balance are calculated on local
-    public String getLocalCurrency (){
+    public String getLocalCurrency(){
         String localCurrency = null;
 
         if(Locale.getDefault().toString().equals("en_US")){
             localCurrency = "dollar";
-        } else if (Locale.getDefault().getLanguage().equals("sv_SE")) {
+        } else if (Locale.getDefault().toString().equals("sv_SE")) {
             localCurrency = "kr";
         } else {
             localCurrency = "dollar";
