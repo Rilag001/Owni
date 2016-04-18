@@ -12,92 +12,99 @@
     android:background="@android:color/white"
     android:orientation="vertical">
 
-    <LinearLayout
+    <ScrollView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
         android:layout_marginBottom="55dp">
 
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_margin="8dp"
-            android:layout_height="wrap_content"
-            android:id="@+id/round_and_title_i_owe">
-
-            <ImageView
-                android:layout_width="30dp"
-                android:layout_margin="8dp"
-                android:layout_height="30dp"
-                android:id="@+id/round_i_owe"
-                android:src="@drawable/round_red"/>
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_toRightOf="@id/round_i_owe"
-                android:layout_toEndOf="@id/round_i_owe"
-                android:text="@string/i_owe_person"
-                android:layout_centerVertical="true"
-                android:layout_margin="8dp"
-                android:textSize="18sp"
-                android:id="@+id/i_owe_people_list_title"/>
-        </RelativeLayout>
-
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_weight="1">
-
-            <ListView
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:dividerHeight="0dp"
-                android:divider="@null"
-                android:focusable="false"
-                android:id="@+id/i_owe_people_list"/>
-        </RelativeLayout>
-
-
-        <RelativeLayout
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="8dp"
-            android:id="@+id/round_and_title_somone_owe">
+            android:orientation="vertical">
 
-            <ImageView
-                android:layout_width="30dp"
-                android:layout_margin="8dp"
-                android:layout_height="30dp"
-                android:id="@+id/round_someone_owes"
-                android:src="@drawable/round_green"/>
-
-            <TextView
+            <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_toRightOf="@id/round_someone_owes"
-                android:layout_toEndOf="@id/round_someone_owes"
-                android:text="@string/person_owes_me"
-                android:layout_centerVertical="true"
                 android:layout_margin="8dp"
-                android:textSize="18sp"
-                android:id="@+id/people_owe_me_list_title"/>
-        </RelativeLayout>
+                android:layout_height="wrap_content"
+                android:id="@+id/round_and_title_i_owe">
 
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_weight="1">
+                <ImageView
+                    android:layout_width="30dp"
+                    android:layout_margin="8dp"
+                    android:layout_height="30dp"
+                    android:id="@+id/round_i_owe"
+                    android:src="@drawable/round_red"/>
 
-            <ListView
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_toRightOf="@id/round_i_owe"
+                    android:layout_toEndOf="@id/round_i_owe"
+                    android:text="@string/i_owe_person"
+                    android:layout_centerVertical="true"
+                    android:layout_margin="8dp"
+                    android:textSize="18sp"
+                    android:id="@+id/i_owe_people_list_title"/>
+            </RelativeLayout>
+
+            <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:dividerHeight="0dp"
-                android:focusable="false"
-                android:divider="@null"
-                android:id="@+id/people_owe_me_list"/>
-        </RelativeLayout>
+                android:layout_weight="1">
 
-    </LinearLayout>
+                <se.rickylagerkvist.owni.ui.NonScrollListView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:dividerHeight="0dp"
+                    android:divider="@null"
+                    android:focusable="false"
+                    android:id="@+id/i_owe_people_list"/>
+            </RelativeLayout>
+
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="8dp"
+                android:id="@+id/round_and_title_somone_owe">
+
+                <ImageView
+                    android:layout_width="30dp"
+                    android:layout_margin="8dp"
+                    android:layout_height="30dp"
+                    android:id="@+id/round_someone_owes"
+                    android:src="@drawable/round_green"/>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_toRightOf="@id/round_someone_owes"
+                    android:layout_toEndOf="@id/round_someone_owes"
+                    android:text="@string/person_owes_me"
+                    android:layout_centerVertical="true"
+                    android:layout_margin="8dp"
+                    android:textSize="18sp"
+                    android:id="@+id/people_owe_me_list_title"/>
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1">
+
+                <se.rickylagerkvist.owni.ui.NonScrollListView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:dividerHeight="0dp"
+                    android:focusable="false"
+                    android:divider="@null"
+                    android:id="@+id/people_owe_me_list"/>
+            </RelativeLayout>
+
+        </LinearLayout>
+
+
+    </ScrollView>
 
     <android.support.v7.widget.CardView
         android:layout_width="match_parent"
@@ -153,7 +160,6 @@
                 android:tint="@android:color/tab_indicator_text"
                 android:src="@drawable/ic_people_green_24dp"/>
         </LinearLayout>
-
     </android.support.v7.widget.CardView>
 
 </RelativeLayout>
