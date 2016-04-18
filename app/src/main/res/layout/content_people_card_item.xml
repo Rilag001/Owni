@@ -50,6 +50,8 @@
             <ListView
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:dividerHeight="0dp"
+                android:divider="@null"
                 android:id="@+id/i_owe_people_list"/>
         </RelativeLayout>
 
@@ -87,6 +89,8 @@
             <ListView
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:dividerHeight="0dp"
+                android:divider="@null"
                 android:id="@+id/people_owe_me_list"/>
         </RelativeLayout>
 
@@ -101,6 +105,7 @@
         android:paddingStart="8dp"
         android:orientation="horizontal"
         android:id="@+id/balance_bar"
+        android:elevation="16dp"
         android:layout_alignParentBottom = "true">
 
         <ImageView
@@ -128,6 +133,7 @@
             android:layout_weight="1"
             android:background="@android:color/white"
             android:onClick="openSwish"
+            android:tint="@android:color/darker_gray"
             android:src="@drawable/ic_payment_black_24dp"/>
 
         <ImageButton
@@ -138,9 +144,8 @@
             android:layout_weight="1"
             android:background="@android:color/white"
             android:onClick="showAddPeopleCardItemDialog"
-            android:src="@drawable/ic_people_black_24dp"/>
-
-
+            android:tint="@android:color/darker_gray"
+            android:src="@drawable/ic_people_green_24dp"/>
     </LinearLayout>
 
 </RelativeLayout>
