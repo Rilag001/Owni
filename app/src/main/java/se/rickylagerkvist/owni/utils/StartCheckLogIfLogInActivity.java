@@ -1,10 +1,11 @@
-package se.rickylagerkvist.owni.ui;
+package se.rickylagerkvist.owni.utils;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
 
+import se.rickylagerkvist.owni.ui.MainActivity;
 import se.rickylagerkvist.owni.ui.loginAndCreateUser.LoginActivity;
 
 public class StartCheckLogIfLogInActivity extends AppCompatActivity {

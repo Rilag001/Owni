@@ -46,7 +46,7 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="se.rickylagerkvist.owni.ui.MainActivity"/>
         </activity>
-        <activity android:name=".ui.StartCheckLogIfLogInActivity">
+        <activity android:name=".utils.StartCheckLogIfLogInActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
                 <category android:name="android.intent.category.LAUNCHER"/>
