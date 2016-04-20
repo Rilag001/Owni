@@ -91,6 +91,7 @@ public class CreateAccountActivity extends AppCompatActivity {
 
                 //String uid = (String) result.get("uid");
                 String email = Utils.replaceDotWithSemiColon(mUserEmail);
+
                 //createUserInFirebaseHelper(uid);
                 createUserInFirebaseHelper(email);
 

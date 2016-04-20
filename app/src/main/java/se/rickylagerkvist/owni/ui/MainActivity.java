@@ -66,6 +66,13 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         mEncodedEmail = PreferenceManager.getDefaultSharedPreferences(getApplicationContext()).getString("ENCODEDEMAIL", "defaultStringIfNothingFound");
+        // if mEncodedEmail has default value start LoginActivity, else start MainActivity
+        Intent intent;
+        if (mEncodedEmail.equals("defaultStringIfNothingFound")){
+            intent = new Intent(this, LoginActivity.class);
+            startActivity(intent);
+            finish();
+        }
 
         // set bottom margin equal to navBarHeight
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
@@ -182,7 +189,10 @@ public class MainActivity extends AppCompatActivity {
             public void onDataChange(DataSnapshot dataSnapshot) {
                 FireBaseUser mUser = dataSnapshot.getValue(FireBaseUser.class);
                 MenuItem m = menu.findItem(R.id.log_out);
-                m.setTitle("Log out " + mUser.getName());
+                if(mUser != null){
+                    m.setTitle("Log out " + mUser.getName());
+                }
+
             }
 
             @Override
@@ -284,8 +294,9 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        mFirebaseRef.removeEventListener(mFirebaseRefListener);
-
-        mFirebaseRef.removeAuthStateListener(mFirebaseRefAuthListener);
+        if (mFirebaseRefListener != null && mFirebaseRefAuthListener !=null){
+            mFirebaseRef.removeEventListener(mFirebaseRefListener);
+            mFirebaseRef.removeAuthStateListener(mFirebaseRefAuthListener);
+        }
     }
 }
