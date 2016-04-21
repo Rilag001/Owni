@@ -80,8 +80,6 @@ public class MainActivity extends AppCompatActivity {
             findViewById(R.id.container).setPadding(0, 0, 0, navBarHeight);
         }
 
-        // Set Firebase Context and connection String if mUserUid !=null
-        Firebase.setAndroidContext(this);
         mFirebaseRef = new Firebase(Constants.FIREBASE_URL_USERS + "/" + mUserUid);
         
         // listens for login state, if the user is logged out open LoginActivity

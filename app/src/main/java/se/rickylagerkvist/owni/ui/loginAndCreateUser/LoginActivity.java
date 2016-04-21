@@ -126,10 +126,6 @@ public class LoginActivity extends AppCompatActivity {
 
             if (authData != null){
 
-                /*if (authData.getProvider().equals(Constants.PASSWORD_PROVIDER)) {
-                    setAuthenticatedUserPasswordProvider(authData);
-                }*/
-
                 mUserUid = authData.getUid();
                 // save mUserUid to sharedPref
                 PreferenceManager.getDefaultSharedPreferences(getApplicationContext()).edit().putString("USERUID", mUserUid).apply();
@@ -172,11 +168,6 @@ public class LoginActivity extends AppCompatActivity {
         Toast.makeText(LoginActivity.this, message, Toast.LENGTH_LONG).show();
     }
 
-    /*// Helper method that makes sure a user is created if the use login with Firebase's email/password provider.
-    private void setAuthenticatedUserPasswordProvider(AuthData authData) {
-        final String unprocessedEmail = authData.getProviderData().get(Constants.FIREBASE_PROPERTY_EMAIL).toString().toLowerCase();
-    }*/
-
     private void initializeScreen() {
         // user input EditTexts
         mEditTextEmailInput = (EditText) findViewById(R.id.edit_text_email);
@@ -184,7 +175,7 @@ public class LoginActivity extends AppCompatActivity {
 
         /* Setup the progress dialog that is displayed later when authenticating with Firebase */
         mAuthProgressDialog = new ProgressDialog(this);
-        mAuthProgressDialog.setTitle(getString(R.string.progress_dialog_loading));
+        mAuthProgressDialog.setTitle(getResources().getString(R.string.progress_dialog_loading));
         mAuthProgressDialog.setMessage(getString(R.string.progress_dialog_authenticating_with_firebase));
         mAuthProgressDialog.setCancelable(false);
     }

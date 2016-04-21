@@ -1,4 +1,4 @@
-package se.rickylagerkvist.owni.ui.ActivityFragment;
+package se.rickylagerkvist.owni.ui.ActivityCardItemActivity;
 
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;

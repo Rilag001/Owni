@@ -119,11 +119,6 @@ public class CreateAccountActivity extends AppCompatActivity {
 
         // Unique locations for new user
         final Firebase userLocation = new Firebase(Constants.FIREBASE_URL_USERS).child(uid);
-        final Firebase peopleLocation = new Firebase(Constants.FIREBASE_URL_PEOPLE).child(uid);
-        final Firebase activitiesLocation = new Firebase(Constants.FIREBASE_URL_ACTIVITIES).child(uid);
-        final Firebase peopleItemsLocation = new Firebase(Constants.FIREBASE_URL_PEOPLE_ITEMS).child(uid);
-        final Firebase activitiesItemsLocation = new Firebase(Constants.FIREBASE_URL_ACTIVITIES_ITEMS).child(uid);
-
 
         userLocation.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
@@ -137,10 +132,6 @@ public class CreateAccountActivity extends AppCompatActivity {
                     // Create and populate locations for new user
                     FireBaseUser newUser = new FireBaseUser(mUserName, mUserEmail, timestampJoined);
                     userLocation.setValue(newUser);
-                    peopleLocation.setValue("null");
-                    activitiesLocation.setValue("null");
-                    peopleItemsLocation.setValue("null");
-                    activitiesItemsLocation.setValue("null");
                 }
             }
 
@@ -184,5 +175,10 @@ public class CreateAccountActivity extends AppCompatActivity {
     // Show error toast to users
     private void showErrorToast(String message) {
         Toast.makeText(CreateAccountActivity.this, message, Toast.LENGTH_LONG).show();
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
     }
 }
