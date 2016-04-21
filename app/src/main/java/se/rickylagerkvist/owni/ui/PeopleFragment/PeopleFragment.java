@@ -26,7 +26,7 @@ public class PeopleFragment extends Fragment {
     private ListView mListView;
     private PeopleCardAdapter mPeopleCardAdapter;
 
-    private String mEncodedEmail;
+    private String mUserUid;
 
 
     public PeopleFragment() {
@@ -42,14 +42,14 @@ public class PeopleFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
-        mEncodedEmail = PreferenceManager.getDefaultSharedPreferences(getContext()).getString("ENCODEDEMAIL", "defaultStringIfNothingFound");
+        mUserUid = PreferenceManager.getDefaultSharedPreferences(getContext()).getString("USERUID", "defaultStringIfNothingFound");
 
         // Inflate the layout for this fragment
         final View rootView = inflater.inflate(R.layout.fragment_people, container, false);
         mListView = (ListView) rootView.findViewById(R.id.peopleCardList);
 
         // firebase ref
-        mFirebaseRef = new Firebase(Constants.FIREBASE_URL_PEOPLE + "/" + mEncodedEmail);
+        mFirebaseRef = new Firebase(Constants.FIREBASE_URL_PEOPLE + "/" + mUserUid);
 
         // set adapter for listView
         mPeopleCardAdapter = new PeopleCardAdapter(getActivity(), PeopleCard.class,

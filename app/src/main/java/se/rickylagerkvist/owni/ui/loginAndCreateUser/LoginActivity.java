@@ -20,7 +20,6 @@ import com.firebase.client.FirebaseError;
 import se.rickylagerkvist.owni.R;
 import se.rickylagerkvist.owni.ui.MainActivity;
 import se.rickylagerkvist.owni.utils.Constants;
-import se.rickylagerkvist.owni.utils.Utils;
 
 /*
 I quickly realised I needed user accounts, otherwise all users would get the same data.
@@ -38,7 +37,7 @@ public class LoginActivity extends AppCompatActivity {
     private ProgressDialog mAuthProgressDialog;
     private Firebase mFirebaseRef;
     private EditText mEditTextEmailInput, mEditTextPasswordInput;
-    protected String mEncodedEmail;
+    protected String mUserUid;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -127,12 +126,13 @@ public class LoginActivity extends AppCompatActivity {
 
             if (authData != null){
 
-                if (authData.getProvider().equals(Constants.PASSWORD_PROVIDER)) {
+                /*if (authData.getProvider().equals(Constants.PASSWORD_PROVIDER)) {
                     setAuthenticatedUserPasswordProvider(authData);
-                }
+                }*/
 
-                // save mEncodedEmail to sharedPref
-                PreferenceManager.getDefaultSharedPreferences(getApplicationContext()).edit().putString("ENCODEDEMAIL", mEncodedEmail).apply();
+                mUserUid = authData.getUid();
+                // save mUserUid to sharedPref
+                PreferenceManager.getDefaultSharedPreferences(getApplicationContext()).edit().putString("USERUID", mUserUid).apply();
 
                 // Go to main activity
                 Intent intent = new Intent(LoginActivity.this, MainActivity.class);
@@ -172,13 +172,10 @@ public class LoginActivity extends AppCompatActivity {
         Toast.makeText(LoginActivity.this, message, Toast.LENGTH_LONG).show();
     }
 
-    // Helper method that makes sure a user is created if the use login with Firebase's email/password provider.
+    /*// Helper method that makes sure a user is created if the use login with Firebase's email/password provider.
     private void setAuthenticatedUserPasswordProvider(AuthData authData) {
         final String unprocessedEmail = authData.getProviderData().get(Constants.FIREBASE_PROPERTY_EMAIL).toString().toLowerCase();
-
-        // Encode user email replacing "." with "," to be able to use it as a Firebase db key
-        mEncodedEmail = Utils.replaceDotWithSemiColon(unprocessedEmail);
-    }
+    }*/
 
     private void initializeScreen() {
         // user input EditTexts

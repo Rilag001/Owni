@@ -46,7 +46,6 @@
             android:layout_height="wrap_content"
             fab:fab_colorNormal="@color/colorAccent"
             fab:fab_title="Add item"
-            app:fab_addButtonSize="mini"
             android:onClick="showAddPeopleCardItemDialog"
             android:src="@drawable/ic_people_white_24dp"
             fab:fab_colorPressed="@android:color/black"/>
@@ -57,8 +56,7 @@
             android:layout_height="wrap_content"
             fab:fab_colorNormal="@color/colorAccent"
             android:onClick="openSwish"
-            app:fab_addButtonSize="mini"
-            android:src="@drawable/ic_payment_white_18dp"
+            android:src="@drawable/ic_payment_white_24dp"
             fab:fab_title="Open Swish"
             fab:fab_colorPressed="@android:color/black"/>
 

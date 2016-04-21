@@ -20,7 +20,6 @@ import java.util.Map;
 import se.rickylagerkvist.owni.R;
 import se.rickylagerkvist.owni.model.FireBaseUser;
 import se.rickylagerkvist.owni.utils.Constants;
-import se.rickylagerkvist.owni.utils.Utils;
 
 // Background in xml from: https://unsplash.com/photos/8mqOw4DBBSg (licensed under Creative Commons Zero)
 public class CreateAccountActivity extends AppCompatActivity {
@@ -89,11 +88,9 @@ public class CreateAccountActivity extends AppCompatActivity {
                 mAuthProgressDialog.dismiss();
                 Log.i(LOG_TAG, getString(R.string.log_message_auth_successful));
 
-                //String uid = (String) result.get("uid");
-                String email = Utils.replaceDotWithSemiColon(mUserEmail);
-
                 //createUserInFirebaseHelper(uid);
-                createUserInFirebaseHelper(email);
+                String uid = (String) result.get("uid");
+                createUserInFirebaseHelper(uid);
 
                 Intent intent = new Intent(CreateAccountActivity.this, LoginActivity.class);
                 intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
@@ -118,14 +115,14 @@ public class CreateAccountActivity extends AppCompatActivity {
     }
 
     // Creates a new user in Firebase with the Java FirebaseUser
-    private void createUserInFirebaseHelper(String email) {
+    private void createUserInFirebaseHelper(String uid) {
 
         // Unique locations for new user
-        final Firebase userLocation = new Firebase(Constants.FIREBASE_URL_USERS).child(email);
-        final Firebase peopleLocation = new Firebase(Constants.FIREBASE_URL_PEOPLE).child(email);
-        final Firebase activitiesLocation = new Firebase(Constants.FIREBASE_URL_ACTIVITIES).child(email);
-        final Firebase peopleItemsLocation = new Firebase(Constants.FIREBASE_URL_PEOPLE_ITEMS).child(email);
-        final Firebase activitiesItemsLocation = new Firebase(Constants.FIREBASE_URL_ACTIVITIES_ITEMS).child(email);
+        final Firebase userLocation = new Firebase(Constants.FIREBASE_URL_USERS).child(uid);
+        final Firebase peopleLocation = new Firebase(Constants.FIREBASE_URL_PEOPLE).child(uid);
+        final Firebase activitiesLocation = new Firebase(Constants.FIREBASE_URL_ACTIVITIES).child(uid);
+        final Firebase peopleItemsLocation = new Firebase(Constants.FIREBASE_URL_PEOPLE_ITEMS).child(uid);
+        final Firebase activitiesItemsLocation = new Firebase(Constants.FIREBASE_URL_ACTIVITIES_ITEMS).child(uid);
 
 
         userLocation.addListenerForSingleValueEvent(new ValueEventListener() {

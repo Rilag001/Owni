@@ -58,17 +58,17 @@ public class MainActivity extends AppCompatActivity {
 
     private Firebase.AuthStateListener mFirebaseRefAuthListener;
 
-    String mEncodedEmail;
+    String mUserUid;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        mEncodedEmail = PreferenceManager.getDefaultSharedPreferences(getApplicationContext()).getString("ENCODEDEMAIL", "defaultStringIfNothingFound");
-        // if mEncodedEmail has default value start LoginActivity
+        mUserUid = PreferenceManager.getDefaultSharedPreferences(getApplicationContext()).getString("USERUID", "defaultStringIfNothingFound");
+        // if mUserUid has default value start LoginActivity
         Intent intent;
-        if (mEncodedEmail.equals("defaultStringIfNothingFound")){
+        if (mUserUid.equals("defaultStringIfNothingFound")){
             intent = new Intent(this, LoginActivity.class);
             startActivity(intent);
             finish();
@@ -80,15 +80,15 @@ public class MainActivity extends AppCompatActivity {
             findViewById(R.id.container).setPadding(0, 0, 0, navBarHeight);
         }
 
-        // Set Firebase Context and connection String if mEncodedEmail !=null
+        // Set Firebase Context and connection String if mUserUid !=null
         Firebase.setAndroidContext(this);
-        mFirebaseRef = new Firebase(Constants.FIREBASE_URL_USERS + "/" + mEncodedEmail);
+        mFirebaseRef = new Firebase(Constants.FIREBASE_URL_USERS + "/" + mUserUid);
         
         // listens for login state, if the user is logged out open LoginActivity
         mFirebaseRefAuthListener = mFirebaseRef.addAuthStateListener(new Firebase.AuthStateListener() {
             @Override
             public void onAuthStateChanged(AuthData authData) {
-                if (authData == null || mEncodedEmail == null){
+                if (authData == null || mUserUid == null){
                     PreferenceManager.getDefaultSharedPreferences(getApplicationContext()).edit().putString("ENCODEDEMAIL", null).apply();
                     Intent intent = new Intent(MainActivity.this, LoginActivity.class);
                     startActivity(intent);

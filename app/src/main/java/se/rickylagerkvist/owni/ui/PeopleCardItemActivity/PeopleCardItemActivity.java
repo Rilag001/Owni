@@ -50,7 +50,7 @@ public class PeopleCardItemActivity extends AppCompatActivity {
 
     //Strings
     private String mPeopleCardId, mPeopleCardFirstName;
-    private String mEncodedEmail;
+    private String mUserUid;
 
 
 
@@ -62,7 +62,7 @@ public class PeopleCardItemActivity extends AppCompatActivity {
         mToolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(mToolbar);
 
-        mEncodedEmail = PreferenceManager.getDefaultSharedPreferences(getApplicationContext()).getString("ENCODEDEMAIL", "defaultStringIfNothingFound");
+        mUserUid = PreferenceManager.getDefaultSharedPreferences(getApplicationContext()).getString("USERUID", "defaultStringIfNothingFound");
 
         // ListViews
         mIOweListView = (ListView) findViewById(R.id.i_owe_people_list);
@@ -85,17 +85,17 @@ public class PeopleCardItemActivity extends AppCompatActivity {
 
         // PeopleCard ref
         mPeopleCardRef = new Firebase(Constants.FIREBASE_URL_PEOPLE + "/"
-                + mEncodedEmail).child(mPeopleCardId);
+                + mUserUid).child(mPeopleCardId);
 
         // PeopleCard items refs
         mPeopleCardListItemRef = new Firebase(Constants.FIREBASE_URL_PEOPLE_ITEMS
-                + "/" + mEncodedEmail).child(mPeopleCardId);
+                + "/" + mUserUid).child(mPeopleCardId);
         // iowe child
         mPeopleCardListItemIOweRef = new Firebase(Constants.FIREBASE_URL_PEOPLE_ITEMS
-                + "/" + mEncodedEmail).child(mPeopleCardId).child("iowe");
+                + "/" + mUserUid).child(mPeopleCardId).child("iowe");
         // xowes child
         mPeopleCardListItemXOwesRef = new Firebase(Constants.FIREBASE_URL_PEOPLE_ITEMS
-                + "/" + mEncodedEmail).child(mPeopleCardId).child("xowes");
+                + "/" + mUserUid).child(mPeopleCardId).child("xowes");
 
 
         // listens for login state, if the user is logged out open LoginActivity

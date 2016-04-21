@@ -17,7 +17,7 @@ import se.rickylagerkvist.owni.utils.Constants;
  */
 public class DeleteCardItemDialog extends DialogFragment {
 
-    private String mEncodedEmail;
+    private String mUserUid;
 
     public static DeleteCardItemDialog newInstance(String peopleItemParentRef, String peopleItemIdRef, String iOweOfXOwe) {
         DeleteCardItemDialog deleteCardItemsDialog
@@ -71,10 +71,10 @@ public class DeleteCardItemDialog extends DialogFragment {
     // Remove PeopleCardItem
     private void deleteCardItems(String peopleItemParentRef, String peopleItemIdRef, String iOweOfXOwe) {
 
-        mEncodedEmail = PreferenceManager.getDefaultSharedPreferences(getActivity().getBaseContext()).getString("ENCODEDEMAIL", "defaultStringIfNothingFound");
+        mUserUid = PreferenceManager.getDefaultSharedPreferences(getActivity().getBaseContext()).getString("USERUID", "defaultStringIfNothingFound");
 
         Firebase PeopleCardItemRef = new Firebase(Constants.FIREBASE_URL_PEOPLE_ITEMS + "/"
-                + mEncodedEmail).child(peopleItemParentRef).child(iOweOfXOwe).child(peopleItemIdRef);
+                + mUserUid).child(peopleItemParentRef).child(iOweOfXOwe).child(peopleItemIdRef);
         PeopleCardItemRef.removeValue();
 
     }

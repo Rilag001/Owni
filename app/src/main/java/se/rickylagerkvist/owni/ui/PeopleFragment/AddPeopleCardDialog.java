@@ -23,7 +23,7 @@ import se.rickylagerkvist.owni.utils.Constants;
 public class AddPeopleCardDialog extends DialogFragment {
 
     EditText mEditTextListName;
-    String mEncodedEmail;
+    String mUserUid;
 
     public static AddPeopleCardDialog newInstance() {
         AddPeopleCardDialog addListDialogFragment
@@ -82,10 +82,10 @@ public class AddPeopleCardDialog extends DialogFragment {
     private void addPeopleCardToList() {
         String userEnteredName = mEditTextListName.getText().toString().trim();
 
-        mEncodedEmail = PreferenceManager.getDefaultSharedPreferences(getActivity().getBaseContext()).getString("ENCODEDEMAIL", "defaultStringIfNothingFound");
+        mUserUid = PreferenceManager.getDefaultSharedPreferences(getActivity().getBaseContext()).getString("USERUID", "defaultStringIfNothingFound");
 
         if (!userEnteredName.equals("")){
-            Firebase listsRef = new Firebase(Constants.FIREBASE_URL_PEOPLE + "/" + mEncodedEmail);
+            Firebase listsRef = new Firebase(Constants.FIREBASE_URL_PEOPLE + "/" + mUserUid);
             Firebase newListRef = listsRef.push();
 
             //PeopleCard

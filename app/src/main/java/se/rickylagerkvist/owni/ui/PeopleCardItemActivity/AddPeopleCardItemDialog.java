@@ -26,7 +26,7 @@ public class AddPeopleCardItemDialog extends DialogFragment {
 
     EditText mEditTextDescription, mEditTextAmount, mEditTextValue;
     RadioButton mRadioButtonIowe, mRadioButtonSomeoneOwesMe;
-    private String mEncodedEmail;
+    private String mUserUid;
 
     public static AddPeopleCardItemDialog newInstance(String peopleCardId, String name) {
         AddPeopleCardItemDialog addListDialogFragment
@@ -102,11 +102,11 @@ public class AddPeopleCardItemDialog extends DialogFragment {
         int userEnteredAmount = Integer.valueOf(mEditTextAmount.getText().toString().trim());
         String userEnteredValue = mEditTextValue.getText().toString().trim();
 
-        mEncodedEmail = PreferenceManager.getDefaultSharedPreferences(getActivity().getBaseContext()).getString("ENCODEDEMAIL", "defaultStringIfNothingFound");
+        mUserUid = PreferenceManager.getDefaultSharedPreferences(getActivity().getBaseContext()).getString("USERUID", "defaultStringIfNothingFound");
 
         if (mRadioButtonIowe.isChecked() && !userEnteredDescription.equals("") && userEnteredAmount >= 0 && !userEnteredValue.equals("")){
 
-            Firebase listsRef = new Firebase(Constants.FIREBASE_URL_PEOPLE_ITEMS + "/" + mEncodedEmail).child(peopleCardId).child("iowe");
+            Firebase listsRef = new Firebase(Constants.FIREBASE_URL_PEOPLE_ITEMS + "/" + mUserUid).child(peopleCardId).child("iowe");
             Firebase newListRef = listsRef.push();
 
             //PeopleCard
@@ -120,7 +120,7 @@ public class AddPeopleCardItemDialog extends DialogFragment {
 
         } else if (mRadioButtonSomeoneOwesMe.isChecked() && !userEnteredDescription.equals("") && userEnteredAmount >= 0 && !userEnteredValue.equals("")){
 
-            Firebase listsRef = new Firebase(Constants.FIREBASE_URL_PEOPLE_ITEMS + "/" + mEncodedEmail).child(peopleCardId).child("xowes");
+            Firebase listsRef = new Firebase(Constants.FIREBASE_URL_PEOPLE_ITEMS + "/" + mUserUid).child(peopleCardId).child("xowes");
             Firebase newListRef = listsRef.push();
 
             //PeopleCard
