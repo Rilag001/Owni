@@ -66,7 +66,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         mEncodedEmail = PreferenceManager.getDefaultSharedPreferences(getApplicationContext()).getString("ENCODEDEMAIL", "defaultStringIfNothingFound");
-        // if mEncodedEmail has default value start LoginActivity, else start MainActivity
+        // if mEncodedEmail has default value start LoginActivity
         Intent intent;
         if (mEncodedEmail.equals("defaultStringIfNothingFound")){
             intent = new Intent(this, LoginActivity.class);

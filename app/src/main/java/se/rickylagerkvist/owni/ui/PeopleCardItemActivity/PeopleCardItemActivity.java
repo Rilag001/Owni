@@ -53,6 +53,7 @@ public class PeopleCardItemActivity extends AppCompatActivity {
     private String mEncodedEmail;
 
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -73,7 +74,7 @@ public class PeopleCardItemActivity extends AppCompatActivity {
         mBalance = (TextView) findViewById(R.id.people_card_items_balance);
 
         // Round ImageVier mRoundBalance
-        mRoundBalance = (ImageView) findViewById(R.id.round_balance);
+        mRoundBalance = (ImageView) findViewById(R.id.round_balance);;
 
         Intent intent = this.getIntent();
         mPeopleCardId = intent.getStringExtra("PEOPLECARD_ITEM_ID");
@@ -250,14 +251,6 @@ public class PeopleCardItemActivity extends AppCompatActivity {
 
                 DialogFragment dialog = DeleteCardItemDialog.newInstance(mPeopleCardId, mPeopleCardItemId, iOweOfXOwe);
                 dialog.show(PeopleCardItemActivity.this.getFragmentManager(), "DeleteCardItemDialog");
-            }
-        });
-
-        mFab = (FloatingActionButton) findViewById(R.id.fab);
-        mFab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                showAddPeopleCardItemDialog(view);
             }
         });
 
