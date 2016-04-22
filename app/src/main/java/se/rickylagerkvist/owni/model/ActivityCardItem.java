@@ -5,63 +5,60 @@ package se.rickylagerkvist.owni.model;
  */
 public class ActivityCardItem {
 
-    public String nameOfPerson;
     public String description;
     public int amount;
     public String typeOfValue;
-    public boolean iOwePersonX;
+    public String nameOfPerson;
+    public boolean iOwe;
 
     public ActivityCardItem() {
     }
 
-    public ActivityCardItem(String nameOfPerson, String description, int amount, String typeOfValue, boolean iOwePersonX) {
-        this.nameOfPerson = nameOfPerson;
+    public ActivityCardItem(String description, int amount, String typeOfValue, String nameOfPerson, boolean iOwe) {
         this.description = description;
         this.amount = amount;
         this.typeOfValue = typeOfValue;
-        this.iOwePersonX = iOwePersonX;
-    }
-
-    // getters
-    public String getNameOfPerson() {
-        return nameOfPerson;
+        this.nameOfPerson = nameOfPerson;
+        this.iOwe = iOwe;
     }
 
     public String getDescription() {
         return description;
     }
 
-    public int getAmount() {
-        return amount;
-    }
-
-    public String getTypeOfValue() {
-        return typeOfValue;
-    }
-
-    public boolean isiOwePersonX() {
-        return iOwePersonX;
-    }
-
-
-    // setters
-    public void setNameOfPerson(String nameOfPerson) {
-        this.nameOfPerson = nameOfPerson;
-    }
-
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public int getAmount() {
+        return amount;
     }
 
     public void setAmount(int amount) {
         this.amount = amount;
     }
 
+    public String getTypeOfValue() {
+        return typeOfValue;
+    }
+
     public void setTypeOfValue(String typeOfValue) {
         this.typeOfValue = typeOfValue;
     }
 
-    public void setiOwePersonX(boolean iOwePersonX) {
-        this.iOwePersonX = iOwePersonX;
+    public String getNameOfPerson() {
+        return nameOfPerson;
+    }
+
+    public void setNameOfPerson(String nameOfPerson) {
+        this.nameOfPerson = nameOfPerson;
+    }
+
+    public boolean isiOwe() {
+        return iOwe;
+    }
+
+    public void setiOwe(boolean iOwe) {
+        this.iOwe = iOwe;
     }
 }

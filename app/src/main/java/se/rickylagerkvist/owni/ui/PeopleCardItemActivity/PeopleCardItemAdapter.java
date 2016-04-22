@@ -16,8 +16,7 @@ import se.rickylagerkvist.owni.model.PeopleCardItem;
 public class PeopleCardItemAdapter
         extends FirebaseListAdapter<PeopleCardItem> {
 
-
-    public PeopleCardItemAdapter(Activity activity, Class modelClass, int modelLayout,
+    public PeopleCardItemAdapter(Activity activity, Class<PeopleCardItem> modelClass, int modelLayout,
                                  Query ref) {
         super(activity, modelClass, modelLayout, ref);
         this.mActivity = activity;
@@ -29,6 +28,7 @@ public class PeopleCardItemAdapter
         TextView descriptionOfItem = (TextView) view.findViewById(R.id.people_card_item_description);
         TextView amount = (TextView) view.findViewById(R.id.people_card_item_value);
         TextView type = (TextView) view.findViewById(R.id.people_card_item_type);
+
 
         // Set the var
         descriptionOfItem.setText(peopleCardItem.getDescription());

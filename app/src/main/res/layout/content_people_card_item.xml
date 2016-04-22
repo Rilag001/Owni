@@ -128,7 +128,7 @@
                 android:layout_height="30dp"
                 android:layout_margin="8dp"
                 android:layout_gravity="center_vertical"
-                android:id="@+id/round_balance"
+                android:id="@+id/round_balance_people"
                 android:src="@drawable/round_blue"/>
 
             <TextView

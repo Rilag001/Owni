@@ -8,7 +8,6 @@ import android.os.Build;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -33,6 +32,7 @@ import com.firebase.client.ValueEventListener;
 import se.rickylagerkvist.owni.R;
 import se.rickylagerkvist.owni.model.FireBaseUser;
 import se.rickylagerkvist.owni.ui.ActivityFragment.ActivitiesFragment;
+import se.rickylagerkvist.owni.ui.ActivityFragment.AddActivityCardDialog;
 import se.rickylagerkvist.owni.ui.PeopleFragment.AddPeopleCardDialog;
 import se.rickylagerkvist.owni.ui.PeopleFragment.PeopleFragment;
 import se.rickylagerkvist.owni.ui.loginAndCreateUser.LoginActivity;
@@ -50,7 +50,7 @@ public class MainActivity extends AppCompatActivity {
 
     // icon and color for mFab on tab changes
     int[] iconIntArray = {R.drawable.ic_people_white_24dp, R.drawable.ic_local_dining_white_24dp};
-    int[] colorIntArray = {R.color.colorAccent, R.color.blueColor};
+    int[] colorIntArray = {R.color.colorAccent, R.color.colorAccent};
 
     // Firebase
     private ValueEventListener mFirebaseRefListener;
@@ -170,8 +170,8 @@ public class MainActivity extends AppCompatActivity {
 
     // Open dialog to add new ActivityCard
     public void showAddActivityCardDialog(View view) {
-        Snackbar.make(view, "AddActivity Card", Snackbar.LENGTH_LONG)
-                .setAction("Action", null).show();
+        DialogFragment dialog = AddActivityCardDialog.newInstance();
+        dialog.show(MainActivity.this.getFragmentManager(), "AddActivitiesCardDialog");
     }
 
 

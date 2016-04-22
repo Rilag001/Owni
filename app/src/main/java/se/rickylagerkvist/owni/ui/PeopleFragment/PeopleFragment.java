@@ -53,7 +53,7 @@ public class PeopleFragment extends Fragment {
 
         // set adapter for listView
         mPeopleCardAdapter = new PeopleCardAdapter(getActivity(), PeopleCard.class,
-                R.layout.card_people, mFirebaseRef);
+                R.layout.card_fragment, mFirebaseRef);
         mListView.setAdapter(mPeopleCardAdapter);
 
         // open PeopleCardItemActivity

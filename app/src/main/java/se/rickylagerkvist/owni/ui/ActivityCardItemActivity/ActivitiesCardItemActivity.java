@@ -1,4 +1,4 @@
-package se.rickylagerkvist.owni.ui.PeopleCardItemActivity;
+package se.rickylagerkvist.owni.ui.ActivityCardItemActivity;
 
 import android.app.DialogFragment;
 import android.content.Intent;
@@ -26,35 +26,35 @@ import com.firebase.client.ValueEventListener;
 import java.util.Locale;
 
 import se.rickylagerkvist.owni.R;
-import se.rickylagerkvist.owni.model.PeopleCard;
-import se.rickylagerkvist.owni.model.PeopleCardItem;
+import se.rickylagerkvist.owni.model.ActivityCard;
+import se.rickylagerkvist.owni.model.ActivityCardItem;
 import se.rickylagerkvist.owni.ui.loginAndCreateUser.LoginActivity;
 import se.rickylagerkvist.owni.utils.Constants;
 
-public class PeopleCardItemActivity extends AppCompatActivity {
+public class ActivitiesCardItemActivity extends AppCompatActivity {
 
     // Views, layout & adapters
-    private PeopleCard mPeopleCard;
+    private ActivityCard mActivityCard;
     private ListView mIOweListView, mXOwesListView;
     private TextView mIoweTitle, mXOwesTitle, mBalance;
     private ImageView mRoundBalance;
-    private PeopleCardItemAdapter mIoweXAdapter, mXowesMeAdapter;
+    private ActivitiesCardItemAdapter mIoweXAdapter, mXowesMeAdapter;
     private Menu mMenu;
     private Toolbar mToolbar;
 
     // Firebase
-    private Firebase mPeopleCardRef, mPeopleCardListItemRef, mPeopleCardListItemIOweRef, mPeopleCardListItemXOwesRef;
-    private ValueEventListener mPeopleCardRefListener, mPeopleCardListItemRefListener;
+    private Firebase mActivitiesCardRef, mActivitiesCardListItemRef, mActivitiesCardListItemIOweRef, mActivitiesCardListItemXOwesRef;
+    private ValueEventListener mActivitiesCardRefListener, mActivitiesCardListItemRefListener;
     private Firebase.AuthStateListener mFirebaseRefAuthListener;
 
     //Strings
-    private String mPeopleCardId, mPeopleCardFirstName;
+    private String mActivitiesCardId, mActivitiesCardName;
     private String mUserUid;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_people_card_item);
+        setContentView(R.layout.activity_avtivities_card_item);
 
         mToolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(mToolbar);
@@ -62,84 +62,82 @@ public class PeopleCardItemActivity extends AppCompatActivity {
         mUserUid = PreferenceManager.getDefaultSharedPreferences(getApplicationContext()).getString("USERUID", "defaultStringIfNothingFound");
 
         // ListViews
-        mIOweListView = (ListView) findViewById(R.id.i_owe_people_list);
-        mXOwesListView = (ListView) findViewById(R.id.people_owe_me_list);
-
+        mIOweListView = (ListView) findViewById(R.id.i_owe_activities_list);
+        mXOwesListView = (ListView) findViewById(R.id.activities_owe_me_list);
+        
         //TextView
-        mIoweTitle = (TextView) findViewById(R.id.i_owe_people_list_title);
-        mXOwesTitle = (TextView) findViewById(R.id.people_owe_me_list_title);
-        mBalance = (TextView) findViewById(R.id.people_card_items_balance);
+        mIoweTitle = (TextView) findViewById(R.id.i_owe_activities_list_title);
+        mXOwesTitle = (TextView) findViewById(R.id.activities_owe_me_list_title);
+        mBalance = (TextView) findViewById(R.id.activities_card_items_balance);
 
         // Round ImageVier mRoundBalance
-        mRoundBalance = (ImageView) findViewById(R.id.round_balance_people);
+        mRoundBalance = (ImageView) findViewById(R.id.round_balance_activities);;
 
         Intent intent = this.getIntent();
-        mPeopleCardId = intent.getStringExtra("PEOPLECARD_ITEM_ID");
-        if (mPeopleCardId == null) {
+        mActivitiesCardId = intent.getStringExtra("ACTIVITIESCARD_ITEM_ID");
+        if (mActivitiesCardId == null) {
             finish();
             return;
         }
 
         // PeopleCard ref
-        mPeopleCardRef = new Firebase(Constants.FIREBASE_URL_PEOPLE + "/"
-                + mUserUid).child(mPeopleCardId);
+        mActivitiesCardRef = new Firebase(Constants.FIREBASE_URL_ACTIVITIES + "/"
+                + mUserUid).child(mActivitiesCardId);
 
         // PeopleCard items refs
-        mPeopleCardListItemRef = new Firebase(Constants.FIREBASE_URL_PEOPLE_ITEMS
-                + "/" + mUserUid).child(mPeopleCardId);
+        mActivitiesCardListItemRef = new Firebase(Constants.FIREBASE_URL_ACTIVITIES_ITEMS
+                + "/" + mUserUid).child(mActivitiesCardId);
         // iowe child
-        mPeopleCardListItemIOweRef = new Firebase(Constants.FIREBASE_URL_PEOPLE_ITEMS
-                + "/" + mUserUid).child(mPeopleCardId).child("iowe");
+        mActivitiesCardListItemIOweRef = new Firebase(Constants.FIREBASE_URL_ACTIVITIES_ITEMS
+                + "/" + mUserUid).child(mActivitiesCardId).child("iowe");
         // xowes child
-        mPeopleCardListItemXOwesRef = new Firebase(Constants.FIREBASE_URL_PEOPLE_ITEMS
-                + "/" + mUserUid).child(mPeopleCardId).child("xowes");
+        mActivitiesCardListItemXOwesRef = new Firebase(Constants.FIREBASE_URL_ACTIVITIES_ITEMS
+                + "/" + mUserUid).child(mActivitiesCardId).child("xowes");
 
 
         // listens for login state, if the user is logged out open LoginActivity
-        mFirebaseRefAuthListener = mPeopleCardRef.addAuthStateListener(new Firebase.AuthStateListener() {
+        mFirebaseRefAuthListener = mActivitiesCardRef.addAuthStateListener(new Firebase.AuthStateListener() {
             @Override
             public void onAuthStateChanged(AuthData authData) {
                 if (authData == null) {
-                    Intent intent = new Intent(PeopleCardItemActivity.this, LoginActivity.class);
+                    Intent intent = new Intent(ActivitiesCardItemActivity.this, LoginActivity.class);
                     startActivity(intent);
                 }
             }
         });
 
         // I owe List adapter
-        mIoweXAdapter = new PeopleCardItemAdapter(PeopleCardItemActivity.this, PeopleCardItem.class,
-                R.layout.card_people_item, mPeopleCardListItemIOweRef);
+        mIoweXAdapter = new ActivitiesCardItemAdapter(ActivitiesCardItemActivity.this, ActivityCardItem.class,
+                R.layout.card_activities_item, mActivitiesCardListItemIOweRef);
         mIOweListView.setAdapter(mIoweXAdapter);
 
+
         // Other list owe adapter
-        mXowesMeAdapter = new PeopleCardItemAdapter(PeopleCardItemActivity.this, PeopleCardItem.class,
-                R.layout.card_people_item, mPeopleCardListItemXOwesRef);
+        mXowesMeAdapter = new ActivitiesCardItemAdapter(ActivitiesCardItemActivity.this, ActivityCardItem.class,
+                R.layout.card_activities_item, mActivitiesCardListItemXOwesRef);
         mXOwesListView.setAdapter(mXowesMeAdapter);
 
-
         // set mToolbar titel and textView titel
-        mPeopleCardRefListener = mPeopleCardRef.addValueEventListener(new ValueEventListener() {
+        mActivitiesCardRefListener = mActivitiesCardRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                // get Peoplecard
-                PeopleCard peopleCard = dataSnapshot.getValue(PeopleCard.class);
-                // set mPeopleCard to peoplecard for ev later use
-                mPeopleCard = peopleCard;
+                // get ActivityCard
+                ActivityCard activityCard = dataSnapshot.getValue(ActivityCard.class);
+                // set mActivityCard to ActivityCard for ev later use
+                mActivityCard = activityCard;
 
-                // first name of peoplecard IF peoplecard != null
-                if (peopleCard != null) {
-                    mPeopleCardFirstName = peopleCard.getName().split(" ", 2)[0];
+                // first name of ActivityCard IF ActivityCard != null
+                if (activityCard != null) {
+                    // set mToolbar titel to PeopleCards name
+                    mToolbar.setTitle(activityCard.getNameOfActivity());
                 } else {
                     finish();
                     return;
                 }
 
-                // set mToolbar titel to PeopleCards name
-                mToolbar.setTitle(peopleCard.getName());
-
                 // set title to include name
-                mIoweTitle.setText(getResources().getString(R.string.i_owe_person) + " " + mPeopleCardFirstName);
-                mXOwesTitle.setText(mPeopleCardFirstName + " " + getResources().getString(R.string.person_owes_me));
+                mIoweTitle.setText(getResources().getString(R.string.i_owe_person) + " other people");
+                mXOwesTitle.setText("Other people owe me" + " " + getResources().getString(R.string.person_owes_me));
             }
 
             @Override
@@ -149,7 +147,7 @@ public class PeopleCardItemActivity extends AppCompatActivity {
         });
 
         // balance, the sum of getAmount if getValue == "Kr"
-        mPeopleCardListItemRefListener = mPeopleCardListItemRef.addValueEventListener(new ValueEventListener() {
+        mActivitiesCardListItemRefListener = mActivitiesCardListItemRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
 
@@ -161,9 +159,9 @@ public class PeopleCardItemActivity extends AppCompatActivity {
                 int nrOfItems = 0;
 
                 for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
-                    for (DataSnapshot peopleCardItem : snapshot.getChildren()) {
+                    for (DataSnapshot activitiesCardItem : snapshot.getChildren()) {
 
-                        PeopleCardItem item = peopleCardItem.getValue(PeopleCardItem.class);
+                        ActivityCardItem item = activitiesCardItem.getValue(ActivityCardItem.class);
 
                         if (item.isiOwe() && item.getTypeOfValue().equalsIgnoreCase(getLocalCurrency())) {
                             iOweSum = iOweSum + item.getAmount();
@@ -185,10 +183,10 @@ public class PeopleCardItemActivity extends AppCompatActivity {
                             mBalance.setText(getString(R.string.you_are_squared) + " " + 0 + " " + getString(R.string.currency));
                             mRoundBalance.setImageResource(R.drawable.round_blue);
                         } else if (iOweAndXOwesBalance < 0) {
-                            mBalance.setText(mPeopleCardFirstName + " " + getString(R.string.owes_you) + " " + displayNr + " " + getString(R.string.currency));
+                            mBalance.setText("Other people owe you" + " " + displayNr + " " + getString(R.string.currency));
                             mRoundBalance.setImageResource(R.drawable.round_green);
                         } else if (iOweAndXOwesBalance > 0) {
-                            mBalance.setText(getString(R.string.you_owe) + " " + mPeopleCardFirstName + " " + displayNr + " " + getString(R.string.currency));
+                            mBalance.setText("You owe other people" + " " + displayNr + " " + getString(R.string.currency));
                             mRoundBalance.setImageResource(R.drawable.round_red);
                         }
 
@@ -196,10 +194,10 @@ public class PeopleCardItemActivity extends AppCompatActivity {
                     }
                 }
                 // set balance and nr of items to the peopleCard at mPeopleCardRef
-                if (mPeopleCard != null) {
-                    mPeopleCard.setBalance(iOweAndXOwesBalance);
-                    mPeopleCard.setNumberOfItems(nrOfItems);
-                    mPeopleCardRef.setValue(mPeopleCard);
+                if (mActivityCard != null) {
+                    mActivityCard.setBalance(iOweAndXOwesBalance);
+                    mActivityCard.setNumberOfItems(nrOfItems);
+                    mActivitiesCardRef.setValue(mActivityCard);
                 } else {
                     finish();
                 }
@@ -212,41 +210,40 @@ public class PeopleCardItemActivity extends AppCompatActivity {
             }
         });
 
-
         // Delete items in listViews
         mIOweListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, final int position, long id) {
-                PeopleCardItem mPeopleCard = mIoweXAdapter.getItem(position);
+                ActivityCardItem mActivitiesCard = mIoweXAdapter.getItem(position);
 
                 String iOweOfXOwe = null;
-                if (mPeopleCard.isiOwe()) {
+                if (mActivitiesCard.isiOwe()) {
                     iOweOfXOwe = "iowe";
-                } else if (!mPeopleCard.isiOwe()) {
+                } else if (!mActivitiesCard.isiOwe()) {
                     iOweOfXOwe = "xowes";
                 }
 
-                String mPeopleCardItemId = mIoweXAdapter.getRef(position).getKey();
+                String mActivitiesCardItemId = mIoweXAdapter.getRef(position).getKey();
 
-                DialogFragment dialog = DeleteCardItemDialog.newInstance(mPeopleCardId, mPeopleCardItemId, iOweOfXOwe);
-                dialog.show(PeopleCardItemActivity.this.getFragmentManager(), "DeleteCardItemDialog");
+                DialogFragment dialog = DeleteActivityCardItemDialog.newInstance(mActivitiesCardId, mActivitiesCardItemId, iOweOfXOwe);
+                dialog.show(ActivitiesCardItemActivity.this.getFragmentManager(), "DeleteCardItemDialog");
             }
         });
         mXOwesListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, final int position, long id) {
-                PeopleCardItem mPeopleCard = mXowesMeAdapter.getItem(position);
+                ActivityCardItem mActivitiesCard = mXowesMeAdapter.getItem(position);
 
                 String iOweOfXOwe = null;
-                if (mPeopleCard.isiOwe()) {
+                if (mActivitiesCard.isiOwe()) {
                     iOweOfXOwe = "iowe";
-                } else if (!mPeopleCard.isiOwe()) {
+                } else if (!mActivitiesCard.isiOwe()) {
                     iOweOfXOwe = "xowes";
                 }
-                String mPeopleCardItemId = mXowesMeAdapter.getRef(position).getKey();
+                String mActivitiesCardItemId = mXowesMeAdapter.getRef(position).getKey();
 
-                DialogFragment dialog = DeleteCardItemDialog.newInstance(mPeopleCardId, mPeopleCardItemId, iOweOfXOwe);
-                dialog.show(PeopleCardItemActivity.this.getFragmentManager(), "DeleteCardItemDialog");
+                DialogFragment dialog = DeleteActivityCardItemDialog.newInstance(mActivitiesCardId, mActivitiesCardItemId, iOweOfXOwe);
+                dialog.show(ActivitiesCardItemActivity.this.getFragmentManager(), "DeleteCardItemDialog");
             }
         });
 
@@ -259,17 +256,16 @@ public class PeopleCardItemActivity extends AppCompatActivity {
         super.onDestroy();
         mIoweXAdapter.cleanup();
         mXowesMeAdapter.cleanup();
-        mPeopleCardRef.removeEventListener(mPeopleCardRefListener);
-        mPeopleCardListItemRef.removeEventListener(mPeopleCardListItemRefListener);
-        mPeopleCardRef.removeAuthStateListener(mFirebaseRefAuthListener);
+        mActivitiesCardRef.removeEventListener(mActivitiesCardRefListener);
+        mActivitiesCardListItemRef.removeEventListener(mActivitiesCardListItemRefListener);
+        mActivitiesCardRef.removeAuthStateListener(mFirebaseRefAuthListener);
     }
 
     // Open dialog to add new PeopleCard
     public void showAddPeopleCardItemDialog(View view) {
-        DialogFragment dialog = AddPeopleCardItemDialog.newInstance(mPeopleCardId, mPeopleCardFirstName);
-        dialog.show(PeopleCardItemActivity.this.getFragmentManager(), "AddPeopleCardItemDialog");
+        DialogFragment dialog = AddActivitiesCardItemDialog.newInstance(mActivitiesCardId);
+        dialog.show(ActivitiesCardItemActivity.this.getFragmentManager(), "AddPeopleCardItemDialog");
     }
-
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -284,8 +280,8 @@ public class PeopleCardItemActivity extends AppCompatActivity {
         int id = item.getItemId();
 
         if (id == R.id.delete_card_and_items) {
-            DialogFragment dialog = DeleteCardAndItemsDialog.newInstance(mPeopleCardId);
-            dialog.show(PeopleCardItemActivity.this.getFragmentManager(), "DeleteCardAndItemsDialog");
+            DialogFragment dialog = DeleteActivitiesCardAndItemsDialog.newInstance(mActivitiesCardId);
+            dialog.show(ActivitiesCardItemActivity.this.getFragmentManager(), "DeleteCardAndItemsDialog");
         }
 
         return super.onOptionsItemSelected(item);
@@ -341,4 +337,5 @@ public class PeopleCardItemActivity extends AppCompatActivity {
         Intent launchBrowser = new Intent(Intent.ACTION_VIEW, uriUrl);
         startActivity(launchBrowser);
     }
+
 }

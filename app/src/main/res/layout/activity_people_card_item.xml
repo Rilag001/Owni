@@ -47,8 +47,7 @@
             fab:fab_colorNormal="@color/colorAccent"
             fab:fab_title="Add item"
             android:onClick="showAddPeopleCardItemDialog"
-            android:src="@drawable/ic_people_white_24dp"
-            fab:fab_colorPressed="@android:color/black"/>
+            android:src="@drawable/ic_people_white_24dp"/>
 
         <com.getbase.floatingactionbutton.FloatingActionButton
             android:id="@+id/swish_fab"
@@ -57,8 +56,7 @@
             fab:fab_colorNormal="@color/colorAccent"
             android:onClick="openSwish"
             android:src="@drawable/ic_payment_white_24dp"
-            fab:fab_title="Open Swish"
-            fab:fab_colorPressed="@android:color/black"/>
+            fab:fab_title="Open Swish"/>
 
     </com.getbase.floatingactionbutton.FloatingActionsMenu>
 

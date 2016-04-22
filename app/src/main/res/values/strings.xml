@@ -33,4 +33,5 @@
     <string name="owes_you">"owe you"</string>
     <string name="you_owe">"You owe"</string>
     <string name="title_activity_main2">Main2Activity</string>
+    <string name="balance_is_0">Balance: 0 </string>
 </resources>

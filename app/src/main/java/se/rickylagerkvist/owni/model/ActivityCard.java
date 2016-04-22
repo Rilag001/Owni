@@ -7,13 +7,16 @@ public class ActivityCard {
 
     public String nameOfActivity;
     public int numberOfItems;
+    public int balance;
+
 
     public ActivityCard() {
     }
 
-    public ActivityCard(String nameOfActivity, int numberOfItems) {
+    public ActivityCard(String nameOfActivity) {
         this.nameOfActivity = nameOfActivity;
-        this.numberOfItems = numberOfItems;
+        this.numberOfItems = 0;
+        this.balance = 0;
     }
 
     // getters
@@ -25,6 +28,9 @@ public class ActivityCard {
         return numberOfItems;
     }
 
+    public int getBalance() {
+        return balance;
+    }
 
     // setters
     public void setNameOfActivity(String nameOfActivity) {
@@ -33,5 +39,9 @@ public class ActivityCard {
 
     public void setNumberOfItems(int numberOfItems) {
         this.numberOfItems = numberOfItems;
+    }
+
+    public void setBalance(int balance) {
+        this.balance = balance;
     }
 }

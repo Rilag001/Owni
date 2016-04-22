@@ -44,18 +44,13 @@
                 android:value="se.rickylagerkvist.owni.ui.MainActivity"/>
         </activity>
         <activity
-            android:name=".ui.ActivityCardItemActivity.AvtivitiesCardItemActivity"
+            android:name=".ui.ActivityCardItemActivity.ActivitiesCardItemActivity"
             android:label="@string/title_activity_avtivities_card_item"
             android:parentActivityName=".ui.MainActivity"
             android:theme="@style/AppTheme.NoActionBar">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="se.rickylagerkvist.owni.ui.MainActivity"/>
-        </activity>
-        <activity
-            android:name=".Main2Activity"
-            android:label="@string/title_activity_main2"
-            android:theme="@style/AppTheme">
         </activity>
     </application>
 
