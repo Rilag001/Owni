@@ -39,16 +39,16 @@ public class PeopleCardAdapter
 
         // set balance
         String mFirstName = peopleCard.getName().split(" ", 2)[0];
-        if (peopleCard.getBalance() == 0){
+        if (peopleCard.getBalance() == 0) {
             textViewBalance.setText(mActivity.getString(R.string.you_are_squared) + " 0 " + mActivity.getString(R.string.currency));
-        } else if (peopleCard.getBalance() < 0){
+        } else if (peopleCard.getBalance() < 0) {
             textViewBalance.setText(mFirstName + " " + mActivity.getString(R.string.owes_you) + " " + -peopleCard.getBalance() + " " + mActivity.getString(R.string.currency));
         } else if (peopleCard.getBalance() > 0) {
-            textViewBalance.setText(mActivity.getString(R.string.you_owe) + " " + mFirstName + " " + peopleCard.getBalance() + " " + mActivity.getString(R.string.currency) );
+            textViewBalance.setText(mActivity.getString(R.string.you_owe) + " " + mFirstName + " " + peopleCard.getBalance() + " " + mActivity.getString(R.string.currency));
         }
 
         // set mRound
-        if (peopleCard.getBalance() == 0){
+        if (peopleCard.getBalance() == 0) {
             round.setImageResource(R.drawable.round_blue);
         } else if (peopleCard.getBalance() > 0) {
             round.setImageResource(R.drawable.round_red);

@@ -40,13 +40,10 @@ import se.rickylagerkvist.owni.utils.Constants;
 
 public class MainActivity extends AppCompatActivity {
 
-    // Views, layout & adapter
-    private SectionsPagerAdapter mSectionsPagerAdapter;
     private ViewPager mViewPager;
     private FloatingActionButton mFab;
     private TabLayout mTabLayout;
     private Toolbar mToolbar;
-    private Menu mMenu;
 
     // icon and color for mFab on tab changes
     int[] iconIntArray = {R.drawable.ic_people_white_24dp, R.drawable.ic_local_dining_white_24dp};
@@ -68,7 +65,7 @@ public class MainActivity extends AppCompatActivity {
         mUserUid = PreferenceManager.getDefaultSharedPreferences(getApplicationContext()).getString("USERUID", "defaultStringIfNothingFound");
         // if mUserUid has default value start LoginActivity
         Intent intent;
-        if (mUserUid.equals("defaultStringIfNothingFound")){
+        if (mUserUid.equals("defaultStringIfNothingFound")) {
             intent = new Intent(this, LoginActivity.class);
             startActivity(intent);
             finish();
@@ -81,12 +78,12 @@ public class MainActivity extends AppCompatActivity {
         }
 
         mFirebaseRef = new Firebase(Constants.FIREBASE_URL_USERS + "/" + mUserUid);
-        
+
         // listens for login state, if the user is logged out open LoginActivity
         mFirebaseRefAuthListener = mFirebaseRef.addAuthStateListener(new Firebase.AuthStateListener() {
             @Override
             public void onAuthStateChanged(AuthData authData) {
-                if (authData == null || mUserUid == null){
+                if (authData == null || mUserUid == null) {
                     PreferenceManager.getDefaultSharedPreferences(getApplicationContext()).edit().putString("ENCODEDEMAIL", null).apply();
                     Intent intent = new Intent(MainActivity.this, LoginActivity.class);
                     startActivity(intent);
@@ -99,11 +96,11 @@ public class MainActivity extends AppCompatActivity {
         setSupportActionBar(mToolbar);
         // Create the adapter that will return a fragment for each of the three
         // primary sections of the activity.
-        mSectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager());
+        SectionsPagerAdapter sectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager());
 
         // Set up the ViewPager with the sections adapter.
         mViewPager = (ViewPager) findViewById(R.id.container);
-        mViewPager.setAdapter(mSectionsPagerAdapter);
+        mViewPager.setAdapter(sectionsPagerAdapter);
 
         // set icons for tabs (with two states: seletcted and unselected)
         mTabLayout = (TabLayout) findViewById(R.id.tabs);
@@ -131,7 +128,7 @@ public class MainActivity extends AppCompatActivity {
                 animateFab(tab.getPosition());
 
                 int position = mTabLayout.getSelectedTabPosition();
-                if (position == 0){
+                if (position == 0) {
                     mToolbar.setTitle("People");
                 } else if (position == 1) {
                     mToolbar.setTitle("Activities");
@@ -155,7 +152,7 @@ public class MainActivity extends AppCompatActivity {
     private void FABClickOpenDialog(View view) {
         int position = mTabLayout.getSelectedTabPosition();
 
-        if (position == 0){
+        if (position == 0) {
             showAddPeopleCardDialog(view);
         } else if (position == 1) {
             showAddActivityCardDialog(view);
@@ -178,7 +175,6 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public boolean onCreateOptionsMenu(final Menu menu) {
         // Inflate the mMenu; this adds items to the action bar if it is present.
-        this.mMenu = menu;
         getMenuInflater().inflate(R.menu.menu_main, menu);
 
         // set mMenu item to display name of user
@@ -187,7 +183,7 @@ public class MainActivity extends AppCompatActivity {
             public void onDataChange(DataSnapshot dataSnapshot) {
                 FireBaseUser mUser = dataSnapshot.getValue(FireBaseUser.class);
                 MenuItem m = menu.findItem(R.id.log_out);
-                if(mUser != null){
+                if (mUser != null) {
                     m.setTitle("Log out " + mUser.getName());
                 }
 
@@ -246,7 +242,7 @@ public class MainActivity extends AppCompatActivity {
     protected void animateFab(final int position) {
         mFab.clearAnimation();
         // Scale down animation
-        ScaleAnimation shrink =  new ScaleAnimation(1f, 0.2f, 1f, 0.2f, Animation.RELATIVE_TO_SELF, 0.5f, Animation.RELATIVE_TO_SELF, 0.5f);
+        ScaleAnimation shrink = new ScaleAnimation(1f, 0.2f, 1f, 0.2f, Animation.RELATIVE_TO_SELF, 0.5f, Animation.RELATIVE_TO_SELF, 0.5f);
         shrink.setDuration(100);     // animation duration in milliseconds
         shrink.setInterpolator(new DecelerateInterpolator());
         shrink.setAnimationListener(new Animation.AnimationListener() {
@@ -292,7 +288,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        if (mFirebaseRefListener != null && mFirebaseRefAuthListener !=null){
+        if (mFirebaseRefListener != null && mFirebaseRefAuthListener != null) {
             mFirebaseRef.removeEventListener(mFirebaseRefListener);
             mFirebaseRef.removeAuthStateListener(mFirebaseRefAuthListener);
         }

@@ -35,21 +35,19 @@ public class PeopleCardItemActivity extends AppCompatActivity {
 
     // Views, layout & adapters
     private PeopleCard mPeopleCard;
-    private ListView mIOweListView, mXOwesListView;
     private TextView mIoweTitle, mXOwesTitle, mBalance;
     private ImageView mRoundBalance;
     private PeopleCardItemAdapter mIoweXAdapter, mXowesMeAdapter;
-    private Menu mMenu;
     private Toolbar mToolbar;
 
     // Firebase
-    private Firebase mPeopleCardRef, mPeopleCardListItemRef, mPeopleCardListItemIOweRef, mPeopleCardListItemXOwesRef;
+    private Firebase mPeopleCardRef;
+    private Firebase mPeopleCardListItemRef;
     private ValueEventListener mPeopleCardRefListener, mPeopleCardListItemRefListener;
     private Firebase.AuthStateListener mFirebaseRefAuthListener;
 
     //Strings
     private String mPeopleCardId, mPeopleCardFirstName;
-    private String mUserUid;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -59,11 +57,11 @@ public class PeopleCardItemActivity extends AppCompatActivity {
         mToolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(mToolbar);
 
-        mUserUid = PreferenceManager.getDefaultSharedPreferences(getApplicationContext()).getString("USERUID", "defaultStringIfNothingFound");
+        String userUid = PreferenceManager.getDefaultSharedPreferences(getApplicationContext()).getString("USERUID", "defaultStringIfNothingFound");
 
         // ListViews
-        mIOweListView = (ListView) findViewById(R.id.i_owe_people_list);
-        mXOwesListView = (ListView) findViewById(R.id.people_owe_me_list);
+        ListView IOweListView = (ListView) findViewById(R.id.i_owe_people_list);
+        ListView XOwesListView = (ListView) findViewById(R.id.people_owe_me_list);
 
         //TextView
         mIoweTitle = (TextView) findViewById(R.id.i_owe_people_list_title);
@@ -82,17 +80,17 @@ public class PeopleCardItemActivity extends AppCompatActivity {
 
         // PeopleCard ref
         mPeopleCardRef = new Firebase(Constants.FIREBASE_URL_PEOPLE + "/"
-                + mUserUid).child(mPeopleCardId);
+                + userUid).child(mPeopleCardId);
 
         // PeopleCard items refs
         mPeopleCardListItemRef = new Firebase(Constants.FIREBASE_URL_PEOPLE_ITEMS
-                + "/" + mUserUid).child(mPeopleCardId);
+                + "/" + userUid).child(mPeopleCardId);
         // iowe child
-        mPeopleCardListItemIOweRef = new Firebase(Constants.FIREBASE_URL_PEOPLE_ITEMS
-                + "/" + mUserUid).child(mPeopleCardId).child("iowe");
+        Firebase peopleCardListItemIOweRef = new Firebase(Constants.FIREBASE_URL_PEOPLE_ITEMS
+                + "/" + userUid).child(mPeopleCardId).child("iowe");
         // xowes child
-        mPeopleCardListItemXOwesRef = new Firebase(Constants.FIREBASE_URL_PEOPLE_ITEMS
-                + "/" + mUserUid).child(mPeopleCardId).child("xowes");
+        Firebase peopleCardListItemXOwesRef = new Firebase(Constants.FIREBASE_URL_PEOPLE_ITEMS
+                + "/" + userUid).child(mPeopleCardId).child("xowes");
 
 
         // listens for login state, if the user is logged out open LoginActivity
@@ -108,13 +106,15 @@ public class PeopleCardItemActivity extends AppCompatActivity {
 
         // I owe List adapter
         mIoweXAdapter = new PeopleCardItemAdapter(PeopleCardItemActivity.this, PeopleCardItem.class,
-                R.layout.card_people_item, mPeopleCardListItemIOweRef);
-        mIOweListView.setAdapter(mIoweXAdapter);
+                R.layout.card_people_item, peopleCardListItemIOweRef);
+        assert IOweListView != null;
+        IOweListView.setAdapter(mIoweXAdapter);
 
         // Other list owe adapter
         mXowesMeAdapter = new PeopleCardItemAdapter(PeopleCardItemActivity.this, PeopleCardItem.class,
-                R.layout.card_people_item, mPeopleCardListItemXOwesRef);
-        mXOwesListView.setAdapter(mXowesMeAdapter);
+                R.layout.card_people_item, peopleCardListItemXOwesRef);
+        assert XOwesListView != null;
+        XOwesListView.setAdapter(mXowesMeAdapter);
 
 
         // set mToolbar titel and textView titel
@@ -214,7 +214,7 @@ public class PeopleCardItemActivity extends AppCompatActivity {
 
 
         // Delete items in listViews
-        mIOweListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        IOweListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, final int position, long id) {
                 PeopleCardItem mPeopleCard = mIoweXAdapter.getItem(position);
@@ -232,7 +232,7 @@ public class PeopleCardItemActivity extends AppCompatActivity {
                 dialog.show(PeopleCardItemActivity.this.getFragmentManager(), "DeleteCardItemDialog");
             }
         });
-        mXOwesListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        XOwesListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, final int position, long id) {
                 PeopleCardItem mPeopleCard = mXowesMeAdapter.getItem(position);
@@ -273,7 +273,6 @@ public class PeopleCardItemActivity extends AppCompatActivity {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        this.mMenu = menu;
         getMenuInflater().inflate(R.menu.menu_people_item, menu);
 
         return true;
@@ -323,7 +322,7 @@ public class PeopleCardItemActivity extends AppCompatActivity {
             getBaseContext().startActivity(appStartIntent);
         } else {
             Snackbar snackbar = Snackbar
-                    .make(view,  appName + " is not installed.", Snackbar.LENGTH_LONG)
+                    .make(view, appName + " is not installed.", Snackbar.LENGTH_LONG)
                     .setAction("INSTALL " + appName.toUpperCase(), new View.OnClickListener() {
                         @Override
                         public void onClick(View view) {
@@ -336,7 +335,7 @@ public class PeopleCardItemActivity extends AppCompatActivity {
     }
 
     // generic go to Url
-    private void goToUrl (String url) {
+    private void goToUrl(String url) {
         Uri uriUrl = Uri.parse(url);
         Intent launchBrowser = new Intent(Intent.ACTION_VIEW, uriUrl);
         startActivity(launchBrowser);

@@ -84,7 +84,7 @@ public class AddActivityCardDialog extends DialogFragment {
 
         mUserUid = PreferenceManager.getDefaultSharedPreferences(getActivity().getBaseContext()).getString("USERUID", "defaultStringIfNothingFound");
 
-        if (!userEnteredName.equals("")){
+        if (!userEnteredName.equals("")) {
             Firebase listsRef = new Firebase(Constants.FIREBASE_URL_ACTIVITIES + "/" + mUserUid);
             Firebase newListRef = listsRef.push();
 

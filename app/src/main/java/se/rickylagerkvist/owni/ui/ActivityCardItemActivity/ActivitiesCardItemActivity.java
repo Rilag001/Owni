@@ -64,14 +64,15 @@ public class ActivitiesCardItemActivity extends AppCompatActivity {
         // ListViews
         mIOweListView = (ListView) findViewById(R.id.i_owe_activities_list);
         mXOwesListView = (ListView) findViewById(R.id.activities_owe_me_list);
-        
+
         //TextView
         mIoweTitle = (TextView) findViewById(R.id.i_owe_activities_list_title);
         mXOwesTitle = (TextView) findViewById(R.id.activities_owe_me_list_title);
         mBalance = (TextView) findViewById(R.id.activities_card_items_balance);
 
         // Round ImageVier mRoundBalance
-        mRoundBalance = (ImageView) findViewById(R.id.round_balance_activities);;
+        mRoundBalance = (ImageView) findViewById(R.id.round_balance_activities);
+        ;
 
         Intent intent = this.getIntent();
         mActivitiesCardId = intent.getStringExtra("ACTIVITIESCARD_ITEM_ID");
@@ -319,7 +320,7 @@ public class ActivitiesCardItemActivity extends AppCompatActivity {
             getBaseContext().startActivity(appStartIntent);
         } else {
             Snackbar snackbar = Snackbar
-                    .make(view,  appName + " is not installed.", Snackbar.LENGTH_LONG)
+                    .make(view, appName + " is not installed.", Snackbar.LENGTH_LONG)
                     .setAction("INSTALL " + appName.toUpperCase(), new View.OnClickListener() {
                         @Override
                         public void onClick(View view) {
@@ -332,7 +333,7 @@ public class ActivitiesCardItemActivity extends AppCompatActivity {
     }
 
     // generic go to Url
-    private void goToUrl (String url) {
+    private void goToUrl(String url) {
         Uri uriUrl = Uri.parse(url);
         Intent launchBrowser = new Intent(Intent.ACTION_VIEW, uriUrl);
         startActivity(launchBrowser);

@@ -86,7 +86,7 @@
             android:textSize="15sp"
             android:textColor="@android:color/white"
             android:layout_height="wrap_content"
-            android:text="Don´t have a account?"
+            android:text="@string/don_t_have_a_account"
             />
 
         <TextView

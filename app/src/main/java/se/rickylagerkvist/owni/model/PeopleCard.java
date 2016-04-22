@@ -4,7 +4,7 @@ package se.rickylagerkvist.owni.model;
  * Created by Ricky on 2016-04-03.
  */
 public class PeopleCard {
-    
+
     public String name;
     public int numberOfItems;
     public int balance;

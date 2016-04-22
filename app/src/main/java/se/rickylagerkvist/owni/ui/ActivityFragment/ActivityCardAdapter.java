@@ -38,16 +38,16 @@ public class ActivityCardAdapter extends
         textViewNrOfItems.setText("" + activityCard.getNumberOfItems());
 
         // set balance
-        if (activityCard.getBalance() == 0){
+        if (activityCard.getBalance() == 0) {
             textViewBalance.setText(mActivity.getString(R.string.balance_is_0) + "" + mActivity.getString(R.string.currency));
-        } else if (activityCard.getBalance() < 0){
+        } else if (activityCard.getBalance() < 0) {
             textViewBalance.setText("Other people" + " " + mActivity.getString(R.string.owes_you) + " " + -activityCard.getBalance() + " " + mActivity.getString(R.string.currency));
         } else if (activityCard.getBalance() > 0) {
-            textViewBalance.setText(mActivity.getString(R.string.you_owe) + " other people " + activityCard.getBalance() + " " + mActivity.getString(R.string.currency) );
+            textViewBalance.setText(mActivity.getString(R.string.you_owe) + " other people " + activityCard.getBalance() + " " + mActivity.getString(R.string.currency));
         }
 
         // set mRound
-        if (activityCard.getBalance() == 0){
+        if (activityCard.getBalance() == 0) {
             round.setImageResource(R.drawable.round_blue);
         } else if (activityCard.getBalance() > 0) {
             round.setImageResource(R.drawable.round_red);

@@ -68,7 +68,7 @@ public class AddPeopleCardDialog extends DialogFragment {
                         AddPeopleCardDialog.this.getDialog().cancel();
                     }
                 })
-                        // Add action buttons
+                // Add action buttons
                 .setPositiveButton("Add", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int id) {
@@ -84,7 +84,7 @@ public class AddPeopleCardDialog extends DialogFragment {
 
         mUserUid = PreferenceManager.getDefaultSharedPreferences(getActivity().getBaseContext()).getString("USERUID", "defaultStringIfNothingFound");
 
-        if (!userEnteredName.equals("")){
+        if (!userEnteredName.equals("")) {
             Firebase listsRef = new Firebase(Constants.FIREBASE_URL_PEOPLE + "/" + mUserUid);
             Firebase newListRef = listsRef.push();
 

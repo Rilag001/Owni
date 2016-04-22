@@ -22,7 +22,7 @@ import se.rickylagerkvist.owni.utils.Constants;
 /**
  * Created by Ricky on 2016-04-22.
  */
-public class AddActivitiesCardItemDialog  extends DialogFragment {
+public class AddActivitiesCardItemDialog extends DialogFragment {
 
     EditText mEditTextDescription, mEditTextAmount, mEditTextValue, mEditTextName;
     RadioButton mRadioButtonIowe, mRadioButtonSomeoneOwesMe;
@@ -103,7 +103,7 @@ public class AddActivitiesCardItemDialog  extends DialogFragment {
 
         mUserUid = PreferenceManager.getDefaultSharedPreferences(getActivity().getBaseContext()).getString("USERUID", "defaultStringIfNothingFound");
 
-        if (mRadioButtonIowe.isChecked() && !userEnteredDescription.equals("") && userEnteredAmount >= 0 && !userEnteredValue.equals("")){
+        if (mRadioButtonIowe.isChecked() && !userEnteredDescription.equals("") && userEnteredAmount >= 0 && !userEnteredValue.equals("")) {
 
             Firebase listsRef = new Firebase(Constants.FIREBASE_URL_ACTIVITIES_ITEMS + "/" + mUserUid).child(peopleCardId).child("iowe");
             Firebase newListRef = listsRef.push();
@@ -117,7 +117,7 @@ public class AddActivitiesCardItemDialog  extends DialogFragment {
             // Close dialog
             AddActivitiesCardItemDialog.this.getDialog().cancel();
 
-        } else if (mRadioButtonSomeoneOwesMe.isChecked() && !userEnteredDescription.equals("") && userEnteredAmount >= 0 && !userEnteredValue.equals("")){
+        } else if (mRadioButtonSomeoneOwesMe.isChecked() && !userEnteredDescription.equals("") && userEnteredAmount >= 0 && !userEnteredValue.equals("")) {
 
             Firebase listsRef = new Firebase(Constants.FIREBASE_URL_ACTIVITIES_ITEMS + "/" + mUserUid).child(peopleCardId).child("xowes");
             Firebase newListRef = listsRef.push();
@@ -131,12 +131,11 @@ public class AddActivitiesCardItemDialog  extends DialogFragment {
             // Close dialog
             AddActivitiesCardItemDialog.this.getDialog().cancel();
 
-        } else  {
+        } else {
             AddActivitiesCardItemDialog.this.getDialog().cancel();
         }
 
     }
-
 
 
 }

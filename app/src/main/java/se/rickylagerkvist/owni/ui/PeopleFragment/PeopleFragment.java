@@ -22,11 +22,7 @@ import se.rickylagerkvist.owni.utils.Constants;
  */
 public class PeopleFragment extends Fragment {
 
-    private Firebase mFirebaseRef;
-    private ListView mListView;
     private PeopleCardAdapter mPeopleCardAdapter;
-
-    private String mUserUid;
 
 
     public PeopleFragment() {
@@ -42,22 +38,22 @@ public class PeopleFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
-        mUserUid = PreferenceManager.getDefaultSharedPreferences(getContext()).getString("USERUID", "defaultStringIfNothingFound");
+        String userUid = PreferenceManager.getDefaultSharedPreferences(getContext()).getString("USERUID", "defaultStringIfNothingFound");
 
         // Inflate the layout for this fragment
         final View rootView = inflater.inflate(R.layout.fragment_people, container, false);
-        mListView = (ListView) rootView.findViewById(R.id.peopleCardList);
+        ListView listView = (ListView) rootView.findViewById(R.id.peopleCardList);
 
         // firebase ref
-        mFirebaseRef = new Firebase(Constants.FIREBASE_URL_PEOPLE + "/" + mUserUid);
+        Firebase firebaseRef = new Firebase(Constants.FIREBASE_URL_PEOPLE + "/" + userUid);
 
         // set adapter for listView
         mPeopleCardAdapter = new PeopleCardAdapter(getActivity(), PeopleCard.class,
-                R.layout.card_fragment, mFirebaseRef);
-        mListView.setAdapter(mPeopleCardAdapter);
+                R.layout.card_fragment, firebaseRef);
+        listView.setAdapter(mPeopleCardAdapter);
 
         // open PeopleCardItemActivity
-        mListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 PeopleCard peopleCard = mPeopleCardAdapter.getItem(position);
