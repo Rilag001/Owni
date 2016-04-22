@@ -90,7 +90,7 @@
         android:background="@color/colorAccent"
         android:onClick="onCreateAccountPressed"
         android:layout_margin="8dp"
-        android:text="Create account"
+        android:text="@string/button_create_account"
         android:textColor="@android:color/white"
         android:textSize="15sp" />
 

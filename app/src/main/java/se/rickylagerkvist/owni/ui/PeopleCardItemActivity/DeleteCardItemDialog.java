@@ -10,6 +10,7 @@ import android.support.v7.app.AlertDialog;
 
 import com.firebase.client.Firebase;
 
+import se.rickylagerkvist.owni.R;
 import se.rickylagerkvist.owni.utils.Constants;
 
 /**
@@ -47,8 +48,8 @@ public class DeleteCardItemDialog extends DialogFragment {
         // Inflate and set the layout for the dialog
         // Pass null as the parent view because its going in the dialog layout
         builder.setTitle("Delete item")
-                .setMessage("Are you sure you want to delete this item?")
-                .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                .setMessage(getActivity().getString(R.string.do_you_want_to_delete_item))
+                .setNegativeButton(getActivity().getString(R.string.cancel), new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         // Close the dialog
@@ -56,7 +57,7 @@ public class DeleteCardItemDialog extends DialogFragment {
                     }
                 })
                 // Add action buttons
-                .setPositiveButton("Delete", new DialogInterface.OnClickListener() {
+                .setPositiveButton(getActivity().getString(R.string.delete_item), new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int id) {
                         deleteCardItems(peopleItemParentRef, peopleItemIdRef, iOweOfXOwe);

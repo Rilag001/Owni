@@ -26,7 +26,6 @@ public class AddActivitiesCardItemDialog extends DialogFragment {
 
     EditText mEditTextDescription, mEditTextAmount, mEditTextValue, mEditTextName;
     RadioButton mRadioButtonIowe, mRadioButtonSomeoneOwesMe;
-    private String mUserUid;
 
     public static AddActivitiesCardItemDialog newInstance(String peopleCardId) {
         AddActivitiesCardItemDialog addListDialogFragment
@@ -70,14 +69,14 @@ public class AddActivitiesCardItemDialog extends DialogFragment {
         mEditTextName = (EditText) rootView.findViewById(R.id.edit_name);
 
         // set text with correct name
-        mRadioButtonIowe.setText("I Owe");
-        mRadioButtonSomeoneOwesMe.setText("Someone owes me");
+        mRadioButtonIowe.setText(getActivity().getString(R.string.i_owe_person));
+        mRadioButtonSomeoneOwesMe.setText(getActivity().getString(R.string.someone_owe_me));
 
         // Inflate and set the layout for the dialog
         // Pass null as the parent view because its going in the dialog layout
         builder.setView(rootView)
-                .setTitle("Create new ActivitiesCard item")
-                .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                .setTitle(getActivity().getString(R.string.new_activitiescard_item))
+                .setNegativeButton(getActivity().getString(R.string.cancel), new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         // Close the dialog
@@ -85,7 +84,7 @@ public class AddActivitiesCardItemDialog extends DialogFragment {
                     }
                 })
                 // Add action buttons
-                .setPositiveButton("Add", new DialogInterface.OnClickListener() {
+                .setPositiveButton(getActivity().getString(R.string.add), new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int id) {
                         addPeopleCardItemToList(peopleCardId);
@@ -101,11 +100,11 @@ public class AddActivitiesCardItemDialog extends DialogFragment {
         String userEnteredValue = mEditTextValue.getText().toString().trim();
         String userEnteredName = mEditTextName.getText().toString().trim();
 
-        mUserUid = PreferenceManager.getDefaultSharedPreferences(getActivity().getBaseContext()).getString("USERUID", "defaultStringIfNothingFound");
+        String userUid = PreferenceManager.getDefaultSharedPreferences(getActivity().getBaseContext()).getString("USERUID", "defaultStringIfNothingFound");
 
         if (mRadioButtonIowe.isChecked() && !userEnteredDescription.equals("") && userEnteredAmount >= 0 && !userEnteredValue.equals("")) {
 
-            Firebase listsRef = new Firebase(Constants.FIREBASE_URL_ACTIVITIES_ITEMS + "/" + mUserUid).child(peopleCardId).child("iowe");
+            Firebase listsRef = new Firebase(Constants.FIREBASE_URL_ACTIVITIES_ITEMS + "/" + userUid).child(peopleCardId).child("iowe");
             Firebase newListRef = listsRef.push();
 
             //PeopleCard
@@ -119,7 +118,7 @@ public class AddActivitiesCardItemDialog extends DialogFragment {
 
         } else if (mRadioButtonSomeoneOwesMe.isChecked() && !userEnteredDescription.equals("") && userEnteredAmount >= 0 && !userEnteredValue.equals("")) {
 
-            Firebase listsRef = new Firebase(Constants.FIREBASE_URL_ACTIVITIES_ITEMS + "/" + mUserUid).child(peopleCardId).child("xowes");
+            Firebase listsRef = new Firebase(Constants.FIREBASE_URL_ACTIVITIES_ITEMS + "/" + userUid).child(peopleCardId).child("xowes");
             Firebase newListRef = listsRef.push();
 
             //PeopleCard

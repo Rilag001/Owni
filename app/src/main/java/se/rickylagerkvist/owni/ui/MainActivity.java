@@ -62,8 +62,8 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        // get mUserUid, if it has default value start LoginActivity
         mUserUid = PreferenceManager.getDefaultSharedPreferences(getApplicationContext()).getString("USERUID", "defaultStringIfNothingFound");
-        // if mUserUid has default value start LoginActivity
         Intent intent;
         if (mUserUid.equals("defaultStringIfNothingFound")) {
             intent = new Intent(this, LoginActivity.class);
@@ -91,8 +91,9 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-
+        // init toolbar title
         mToolbar = (Toolbar) findViewById(R.id.toolbar);
+        mToolbar.setTitle(R.string.people);
         setSupportActionBar(mToolbar);
         // Create the adapter that will return a fragment for each of the three
         // primary sections of the activity.
@@ -119,7 +120,6 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-
         // change mToolbar title, mFab color, icon on tab selected with animation
         mTabLayout.setOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override
@@ -129,9 +129,9 @@ public class MainActivity extends AppCompatActivity {
 
                 int position = mTabLayout.getSelectedTabPosition();
                 if (position == 0) {
-                    mToolbar.setTitle("People");
+                    mToolbar.setTitle(R.string.people);
                 } else if (position == 1) {
-                    mToolbar.setTitle("Activities");
+                    mToolbar.setTitle(R.string.Activities);
                 }
             }
 

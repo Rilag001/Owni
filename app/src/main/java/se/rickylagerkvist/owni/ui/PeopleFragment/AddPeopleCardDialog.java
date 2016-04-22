@@ -60,8 +60,8 @@ public class AddPeopleCardDialog extends DialogFragment {
         // Inflate and set the layout for the dialog
         // Pass null as the parent view because its going in the dialog layout
         builder.setView(rootView)
-                .setTitle("Create new Peoplecard")
-                .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                .setTitle(getActivity().getString(R.string.new_peoplecard))
+                .setNegativeButton(getActivity().getString(R.string.cancel), new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         // Close the dialog
@@ -69,7 +69,7 @@ public class AddPeopleCardDialog extends DialogFragment {
                     }
                 })
                 // Add action buttons
-                .setPositiveButton("Add", new DialogInterface.OnClickListener() {
+                .setPositiveButton(getActivity().getString(R.string.add), new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int id) {
                         addPeopleCardToList();

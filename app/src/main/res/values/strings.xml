@@ -35,4 +35,26 @@
     <string name="title_activity_main2">Main2Activity</string>
     <string name="balance_is_0">Balance: 0 </string>
     <string name="don_t_have_a_account">Don´t have a account?</string>
+    <string name="add_item">Add item</string>
+    <string name="open_swish">Open Swish</string>
+    <string name="someone_owe_me">Someone owes you</string>
+    <string name="name_of_person">Name of person</string>
+    <string name="describe_item">Describe item</string>
+    <string name="amount">Amount</string>
+    <string name="kr_st_etc">Kr, st etc.</string>
+    <string name="name_of_activity">Name of activity</string>
+    <string name="delete_card_and_items">Are you sure you want to delete this card and all its items?</string>
+    <string name="Cancel">Cancel</string>
+    <string name="Delete">Delete</string>
+    <string name="delete_card">Delete Card</string>
+    <string name="new_peoplecard">Create new Peoplecard</string>
+    <string name="cancel">Cancel</string>
+    <string name="add">Add</string>
+    <string name="new_activitiescard_item">Create new ActivitiesCard item</string>
+    <string name="delete_item">Delete item</string>
+    <string name="do_you_want_to_delete_item">Are you sure you want to delete this item?</string>
+    <string name="new_activitiescard">Create new Activitiescard</string>
+    <string name="new_peoplecard_item">Create new PeopleCard item</string>
+    <string name="people">People</string>
+    <string name="Activities">Activities</string>
 </resources>

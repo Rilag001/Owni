@@ -16,14 +16,14 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:id="@+id/i_owe_radiobutton"
-            android:text="I owe"/>
+            android:text="@string/i_owe_person"/>
 
         <RadioButton
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:id="@+id/someone_owes_me_radiobutton"
-            android:text="Someone owes me"/>
+            android:text="@string/someone_owe_me"/>
 
     </RadioGroup>
 
@@ -35,7 +35,7 @@
             android:id="@+id/edit_description"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Describe item"
+            android:hint="@string/describe_item"
             android:textColorHint="@android:color/darker_gray"
             android:textSize="15sp"
             android:inputType="textCapWords"/>
@@ -56,7 +56,7 @@
                 android:id="@+id/edit_amount"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="Amount"
+                android:hint="@string/amount"
                 android:textColorHint="@android:color/darker_gray"
                 android:textSize="15sp"
                 android:inputType="number"/>
@@ -72,7 +72,7 @@
                 android:id="@+id/edit_value"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="Kr, st etc."
+                android:hint="@string/kr_st_etc"
                 android:textColorHint="@android:color/darker_gray"
                 android:textSize="15sp"
                 android:inputType="textCapWords"/>

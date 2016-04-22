@@ -14,7 +14,7 @@
             android:id="@+id/edit_text_list_name"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Name of person"
+            android:hint="@string/name_of_person"
             android:textColorHint="@android:color/darker_gray"
             android:textSize="15sp"
             android:inputType="textCapWords"/>
