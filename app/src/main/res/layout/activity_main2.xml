@@ -3,11 +3,10 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/people_item_coordinatorlayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fitsSystemWindows="true"
-    tools:context=".ui.ActivityCardItemActivity.AvtivitiesCardItemActivity">
+    tools:context="se.rickylagerkvist.owni.Main2Activity">
 
     <android.support.design.widget.AppBarLayout
         android:layout_width="match_parent"
@@ -23,7 +22,7 @@
 
     </android.support.design.widget.AppBarLayout>
 
-    <include layout="@layout/content_avtivities_card_item"/>
+    <include layout="@layout/content_main2"/>
 
     <android.support.design.widget.FloatingActionButton
         android:id="@+id/fab"

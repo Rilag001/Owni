@@ -3,9 +3,12 @@ package se.rickylagerkvist.owni.ui.PeopleCardItemActivity;
 import android.app.DialogFragment;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.net.Uri;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.FloatingActionButton;
+import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
@@ -15,7 +18,6 @@ import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.firebase.client.AuthData;
 import com.firebase.client.DataSnapshot;
@@ -42,6 +44,8 @@ public class PeopleCardItemActivity extends AppCompatActivity {
     private PeopleCardItemAdapter mIoweXAdapter, mXowesMeAdapter;
     private Menu mMenu;
     private Toolbar mToolbar;
+
+    private CoordinatorLayout mCoordinatorLayout;
 
     // Firebase
     private Firebase mPeopleCardRef, mPeopleCardListItemRef, mPeopleCardListItemIOweRef, mPeopleCardListItemXOwesRef;
@@ -75,6 +79,9 @@ public class PeopleCardItemActivity extends AppCompatActivity {
 
         // Round ImageVier mRoundBalance
         mRoundBalance = (ImageView) findViewById(R.id.round_balance);;
+
+        // CoordinatorLayout
+        mCoordinatorLayout = (CoordinatorLayout) findViewById(R.id.people_item_coordinatorlayout);
 
         Intent intent = this.getIntent();
         mPeopleCardId = intent.getStringExtra("PEOPLECARD_ITEM_ID");
@@ -322,8 +329,21 @@ public class PeopleCardItemActivity extends AppCompatActivity {
         if (null != appStartIntent) {
             getBaseContext().startActivity(appStartIntent);
         } else {
-            Toast.makeText(PeopleCardItemActivity.this, "Swish is not installed", Toast.LENGTH_SHORT).show();
+            Snackbar snackbar = Snackbar
+                    .make(view, "Swish is not installed. Do you wish to?", Snackbar.LENGTH_LONG)
+                    .setAction("INSTALL", new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            goToUrl("https://play.google.com/store/apps/details?id=se.bankgirot.swish");
+                        }
+                    });
+            snackbar.show();
         }
+    }
 
+    private void goToUrl (String url) {
+        Uri uriUrl = Uri.parse(url);
+        Intent launchBrowser = new Intent(Intent.ACTION_VIEW, uriUrl);
+        startActivity(launchBrowser);
     }
 }
