@@ -26,7 +26,7 @@
         <TextView
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:text="Description of item"
+            android:text="Test Description of item"
             android:layout_weight="6"
             android:textSize="15sp"
             android:id="@+id/activities_card_item_description"/>
@@ -34,7 +34,7 @@
         <TextView
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:text="100"
+            android:text="Test 100"
             android:textSize="15sp"
             android:layout_weight="1"
             android:id="@+id/activities_card_item_value"/>
@@ -42,10 +42,10 @@
         <TextView
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:text="kr"
+            android:text="Test kronor"
             android:id="@+id/activities_card_item_type"
             android:textSize="15sp"
-            android:layout_weight="1"/>
+            android:layout_weight="2"/>
 
         <ImageView
             android:layout_width="wrap_content"

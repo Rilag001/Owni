@@ -63,22 +63,14 @@
 
         </android.support.design.widget.TextInputLayout>
 
-        <android.support.design.widget.TextInputLayout
-            android:layout_height="wrap_content"
+
+        <Spinner
             android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:id="@+id/spinner_add_peoplecard_item"
             android:layout_weight="1">
-
-            <EditText
-                android:id="@+id/edit_value"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="@string/kr_st_etc"
-                android:textColorHint="@android:color/darker_gray"
-                android:textSize="15sp"
-                android:inputType="textCapWords"/>
-
-        </android.support.design.widget.TextInputLayout>
-
+        </Spinner>
 
     </LinearLayout>
 

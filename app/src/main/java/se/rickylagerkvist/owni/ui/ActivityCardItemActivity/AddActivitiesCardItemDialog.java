@@ -10,8 +10,11 @@ import android.support.v7.app.AlertDialog;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.WindowManager;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.RadioButton;
+import android.widget.Spinner;
 
 import com.firebase.client.Firebase;
 
@@ -24,8 +27,9 @@ import se.rickylagerkvist.owni.utils.Constants;
  */
 public class AddActivitiesCardItemDialog extends DialogFragment {
 
-    EditText mEditTextDescription, mEditTextAmount, mEditTextValue, mEditTextName;
+    EditText mEditTextDescription, mEditTextAmount, mEditTextName;
     RadioButton mRadioButtonIowe, mRadioButtonSomeoneOwesMe;
+    String userEnteredValue;
 
     public static AddActivitiesCardItemDialog newInstance(String peopleCardId) {
         AddActivitiesCardItemDialog addListDialogFragment
@@ -60,17 +64,41 @@ public class AddActivitiesCardItemDialog extends DialogFragment {
         Bundle bundle = this.getArguments();
         final String peopleCardId = bundle.getString("id");
 
-        // Views
-        mEditTextDescription = (EditText) rootView.findViewById(R.id.edit_description);
-        mEditTextAmount = (EditText) rootView.findViewById(R.id.edit_amount);
-        mEditTextValue = (EditText) rootView.findViewById(R.id.edit_value);
+        // get currency
+        String mCurrency = PreferenceManager.getDefaultSharedPreferences(getActivity()).getString("CURRENCY", "Select your currency");
+        // set array for Spinner
+        String[] currencyOrItem = {mCurrency, "item"};
+
+        // Radiobittons
         mRadioButtonIowe = (RadioButton) rootView.findViewById(R.id.i_owe_radiobutton);
         mRadioButtonSomeoneOwesMe = (RadioButton) rootView.findViewById(R.id.someone_owes_me_radiobutton);
-        mEditTextName = (EditText) rootView.findViewById(R.id.edit_name);
-
         // set text with correct name
         mRadioButtonIowe.setText(getActivity().getString(R.string.i_owe_someone));
         mRadioButtonSomeoneOwesMe.setText(getActivity().getString(R.string.someone_owe_me));
+
+        // Edittexts
+        mEditTextName = (EditText) rootView.findViewById(R.id.edit_name);
+        mEditTextDescription = (EditText) rootView.findViewById(R.id.edit_description);
+        mEditTextAmount = (EditText) rootView.findViewById(R.id.edit_amount);
+
+        // Spinner
+        Spinner mSpinner = (Spinner) rootView.findViewById(R.id.spinner_add_activitycard_item);
+        // set spinner adapter
+        ArrayAdapter<String> mAdapter = new ArrayAdapter<>(getActivity(), android.R.layout.simple_spinner_item, currencyOrItem);
+        mAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        mSpinner.setAdapter(mAdapter);
+        // set OnitemSelected
+        mSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                userEnteredValue = "" + parent.getItemAtPosition(position);
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
 
         // Inflate and set the layout for the dialog
         // Pass null as the parent view because its going in the dialog layout
@@ -97,7 +125,6 @@ public class AddActivitiesCardItemDialog extends DialogFragment {
     private void addPeopleCardItemToList(String peopleCardId) {
         String userEnteredDescription = mEditTextDescription.getText().toString().trim();
         int userEnteredAmount = Integer.valueOf(mEditTextAmount.getText().toString().trim());
-        String userEnteredValue = mEditTextValue.getText().toString().trim();
         String userEnteredName = mEditTextName.getText().toString().trim();
 
         String userUid = PreferenceManager.getDefaultSharedPreferences(getActivity().getBaseContext()).getString("USERUID", "defaultStringIfNothingFound");

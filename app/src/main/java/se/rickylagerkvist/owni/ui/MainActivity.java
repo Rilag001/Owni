@@ -30,7 +30,6 @@ import com.firebase.client.FirebaseError;
 import com.firebase.client.ValueEventListener;
 
 import se.rickylagerkvist.owni.R;
-import se.rickylagerkvist.owni.SelectCurrencyActivity;
 import se.rickylagerkvist.owni.model.FireBaseUser;
 import se.rickylagerkvist.owni.ui.ActivityFragment.ActivitiesFragment;
 import se.rickylagerkvist.owni.ui.ActivityFragment.AddActivityCardDialog;

@@ -17,16 +17,9 @@ import se.rickylagerkvist.owni.model.ActivityCard;
 import se.rickylagerkvist.owni.ui.ActivityCardItemActivity.ActivitiesCardItemActivity;
 import se.rickylagerkvist.owni.utils.Constants;
 
-/**
-
- */
 public class ActivitiesFragment extends Fragment {
 
-    private Firebase mFirebaseRef;
-    private ListView mListView;
     private ActivityCardAdapter mActivityCardAdapter;
-
-    private String mUserUid;
 
     public ActivitiesFragment() {
         // Required empty public constructor
@@ -42,22 +35,22 @@ public class ActivitiesFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
-        mUserUid = PreferenceManager.getDefaultSharedPreferences(getContext()).getString("USERUID", "defaultStringIfNothingFound");
+        String userUid = PreferenceManager.getDefaultSharedPreferences(getContext()).getString("USERUID", "defaultStringIfNothingFound");
 
         // Inflate the layout for this fragment
         final View rootView = inflater.inflate(R.layout.fragment_activities, container, false);
-        mListView = (ListView) rootView.findViewById(R.id.activitiesCardList);
+        ListView listView = (ListView) rootView.findViewById(R.id.activitiesCardList);
 
         // firebase ref
-        mFirebaseRef = new Firebase(Constants.FIREBASE_URL_ACTIVITIES + "/" + mUserUid);
+        Firebase firebaseRef = new Firebase(Constants.FIREBASE_URL_ACTIVITIES + "/" + userUid);
 
         // set adapter for listView
         mActivityCardAdapter = new ActivityCardAdapter(getActivity(), ActivityCard.class,
-                R.layout.card_fragment, mFirebaseRef);
-        mListView.setAdapter(mActivityCardAdapter);
+                R.layout.card_fragment, firebaseRef);
+        listView.setAdapter(mActivityCardAdapter);
 
         // open PeopleCardItemActivity
-        mListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 ActivityCard activityCard = mActivityCardAdapter.getItem(position);

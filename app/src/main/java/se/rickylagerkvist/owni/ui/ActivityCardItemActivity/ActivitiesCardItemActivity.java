@@ -23,8 +23,6 @@ import com.firebase.client.Firebase;
 import com.firebase.client.FirebaseError;
 import com.firebase.client.ValueEventListener;
 
-import java.util.Locale;
-
 import se.rickylagerkvist.owni.R;
 import se.rickylagerkvist.owni.model.ActivityCard;
 import se.rickylagerkvist.owni.model.ActivityCardItem;
@@ -35,21 +33,19 @@ public class ActivitiesCardItemActivity extends AppCompatActivity {
 
     // Views, layout & adapters
     private ActivityCard mActivityCard;
-    private ListView mIOweListView, mXOwesListView;
     private TextView mIoweTitle, mXOwesTitle, mBalance;
     private ImageView mRoundBalance;
     private ActivitiesCardItemAdapter mIoweXAdapter, mXowesMeAdapter;
-    private Menu mMenu;
     private Toolbar mToolbar;
 
     // Firebase
-    private Firebase mActivitiesCardRef, mActivitiesCardListItemRef, mActivitiesCardListItemIOweRef, mActivitiesCardListItemXOwesRef;
+    private Firebase mActivitiesCardRef;
+    private Firebase mActivitiesCardListItemRef;
     private ValueEventListener mActivitiesCardRefListener, mActivitiesCardListItemRefListener;
     private Firebase.AuthStateListener mFirebaseRefAuthListener;
 
     //Strings
-    private String mActivitiesCardId, mActivitiesCardName;
-    private String mUserUid, mCurrency;
+    private String mActivitiesCardId, mCurrency;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -59,13 +55,13 @@ public class ActivitiesCardItemActivity extends AppCompatActivity {
         mToolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(mToolbar);
 
-        mUserUid = PreferenceManager.getDefaultSharedPreferences(getApplicationContext()).getString("USERUID", "defaultStringIfNothingFound");
-        // get currency
+        // get mUserUid and mCurrency
+        String userUid = PreferenceManager.getDefaultSharedPreferences(getApplicationContext()).getString("USERUID", "defaultStringIfNothingFound");
         mCurrency = PreferenceManager.getDefaultSharedPreferences(getApplicationContext()).getString("CURRENCY", "Select your currency");
 
         // ListViews
-        mIOweListView = (ListView) findViewById(R.id.i_owe_activities_list);
-        mXOwesListView = (ListView) findViewById(R.id.activities_owe_me_list);
+        ListView IOweListView = (ListView) findViewById(R.id.i_owe_activities_list);
+        ListView XOwesListView = (ListView) findViewById(R.id.activities_owe_me_list);
 
         //TextView
         mIoweTitle = (TextView) findViewById(R.id.i_owe_activities_list_title);
@@ -85,17 +81,17 @@ public class ActivitiesCardItemActivity extends AppCompatActivity {
 
         // PeopleCard ref
         mActivitiesCardRef = new Firebase(Constants.FIREBASE_URL_ACTIVITIES + "/"
-                + mUserUid).child(mActivitiesCardId);
+                + userUid).child(mActivitiesCardId);
 
         // PeopleCard items refs
         mActivitiesCardListItemRef = new Firebase(Constants.FIREBASE_URL_ACTIVITIES_ITEMS
-                + "/" + mUserUid).child(mActivitiesCardId);
+                + "/" + userUid).child(mActivitiesCardId);
         // iowe child
-        mActivitiesCardListItemIOweRef = new Firebase(Constants.FIREBASE_URL_ACTIVITIES_ITEMS
-                + "/" + mUserUid).child(mActivitiesCardId).child("iowe");
+        Firebase activitiesCardListItemIOweRef = new Firebase(Constants.FIREBASE_URL_ACTIVITIES_ITEMS
+                + "/" + userUid).child(mActivitiesCardId).child("iowe");
         // xowes child
-        mActivitiesCardListItemXOwesRef = new Firebase(Constants.FIREBASE_URL_ACTIVITIES_ITEMS
-                + "/" + mUserUid).child(mActivitiesCardId).child("xowes");
+        Firebase activitiesCardListItemXOwesRef = new Firebase(Constants.FIREBASE_URL_ACTIVITIES_ITEMS
+                + "/" + userUid).child(mActivitiesCardId).child("xowes");
 
 
         // listens for login state, if the user is logged out open LoginActivity
@@ -111,14 +107,14 @@ public class ActivitiesCardItemActivity extends AppCompatActivity {
 
         // I owe List adapter
         mIoweXAdapter = new ActivitiesCardItemAdapter(ActivitiesCardItemActivity.this, ActivityCardItem.class,
-                R.layout.card_activities_item, mActivitiesCardListItemIOweRef);
-        mIOweListView.setAdapter(mIoweXAdapter);
+                R.layout.card_activities_item, activitiesCardListItemIOweRef);
+        IOweListView.setAdapter(mIoweXAdapter);
 
 
         // Other list owe adapter
         mXowesMeAdapter = new ActivitiesCardItemAdapter(ActivitiesCardItemActivity.this, ActivityCardItem.class,
-                R.layout.card_activities_item, mActivitiesCardListItemXOwesRef);
-        mXOwesListView.setAdapter(mXowesMeAdapter);
+                R.layout.card_activities_item, activitiesCardListItemXOwesRef);
+        XOwesListView.setAdapter(mXowesMeAdapter);
 
         // set mToolbar titel and textView titel
         mActivitiesCardRefListener = mActivitiesCardRef.addValueEventListener(new ValueEventListener() {
@@ -157,8 +153,7 @@ public class ActivitiesCardItemActivity extends AppCompatActivity {
                 int iOweSum = 0;
                 int xOwesSum = 0;
                 int iOweAndXOwesBalance = 0;
-                String displayNr;
-
+                int displayNr;
                 int nrOfItems = 0;
 
                 for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
@@ -166,9 +161,9 @@ public class ActivitiesCardItemActivity extends AppCompatActivity {
 
                         ActivityCardItem item = activitiesCardItem.getValue(ActivityCardItem.class);
 
-                        if (item.isiOwe() && item.getTypeOfValue().equalsIgnoreCase(getLocalCurrency())) {
+                        if (item.isiOwe() && item.getTypeOfValue().equalsIgnoreCase(mCurrency)) {
                             iOweSum = iOweSum + item.getAmount();
-                        } else if (!item.isiOwe() && item.getTypeOfValue().equalsIgnoreCase(getLocalCurrency())) {
+                        } else if (!item.isiOwe() && item.getTypeOfValue().equalsIgnoreCase(mCurrency)) {
                             xOwesSum = xOwesSum + item.getAmount();
                         }
 
@@ -176,9 +171,9 @@ public class ActivitiesCardItemActivity extends AppCompatActivity {
 
                         // gets the positive value if the number is negative (so the display do not show: "X owes you -500 kr")
                         if (iOweAndXOwesBalance < 0) {
-                            displayNr = "" + -iOweAndXOwesBalance;
+                            displayNr = -iOweAndXOwesBalance;
                         } else {
-                            displayNr = "" + iOweAndXOwesBalance;
+                            displayNr = iOweAndXOwesBalance;
                         }
 
 
@@ -215,7 +210,7 @@ public class ActivitiesCardItemActivity extends AppCompatActivity {
         });
 
         // Delete items in listViews
-        mIOweListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        IOweListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, final int position, long id) {
                 ActivityCardItem mActivitiesCard = mIoweXAdapter.getItem(position);
@@ -233,7 +228,7 @@ public class ActivitiesCardItemActivity extends AppCompatActivity {
                 dialog.show(ActivitiesCardItemActivity.this.getFragmentManager(), "DeleteCardItemDialog");
             }
         });
-        mXOwesListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        XOwesListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, final int position, long id) {
                 ActivityCardItem mActivitiesCard = mXowesMeAdapter.getItem(position);
@@ -273,7 +268,6 @@ public class ActivitiesCardItemActivity extends AppCompatActivity {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        this.mMenu = menu;
         getMenuInflater().inflate(R.menu.menu_people_item, menu);
 
         return true;
@@ -289,20 +283,6 @@ public class ActivitiesCardItemActivity extends AppCompatActivity {
         }
 
         return super.onOptionsItemSelected(item);
-    }
-
-    // returns the currency of languages setting (can be filled out with more) balance are calculated on local
-    public String getLocalCurrency() {
-        String localCurrency = null;
-
-        if (Locale.getDefault().toString().equals("en_US")) {
-            localCurrency = "dollar";
-        } else if (Locale.getDefault().toString().equals("sv_SE")) {
-            localCurrency = "kr";
-        } else {
-            localCurrency = "dollar";
-        }
-        return localCurrency;
     }
 
     // opens swish if it is installed, otherwise show Toast

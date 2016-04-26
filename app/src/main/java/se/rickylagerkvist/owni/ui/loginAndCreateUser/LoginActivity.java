@@ -18,7 +18,7 @@ import com.firebase.client.Firebase;
 import com.firebase.client.FirebaseError;
 
 import se.rickylagerkvist.owni.R;
-import se.rickylagerkvist.owni.SelectCurrencyActivity;
+import se.rickylagerkvist.owni.ui.SelectCurrencyActivity;
 import se.rickylagerkvist.owni.utils.Constants;
 
 /*

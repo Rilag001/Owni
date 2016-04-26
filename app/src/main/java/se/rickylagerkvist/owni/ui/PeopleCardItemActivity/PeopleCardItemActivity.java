@@ -23,8 +23,6 @@ import com.firebase.client.Firebase;
 import com.firebase.client.FirebaseError;
 import com.firebase.client.ValueEventListener;
 
-import java.util.Locale;
-
 import se.rickylagerkvist.owni.R;
 import se.rickylagerkvist.owni.model.PeopleCard;
 import se.rickylagerkvist.owni.model.PeopleCardItem;
@@ -47,7 +45,7 @@ public class PeopleCardItemActivity extends AppCompatActivity {
     private Firebase.AuthStateListener mFirebaseRefAuthListener;
 
     //Strings
-    private String mPeopleCardId, mPeopleCardFirstName, currency;
+    private String mPeopleCardId, mPeopleCardFirstName, mCurrency;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,11 +55,11 @@ public class PeopleCardItemActivity extends AppCompatActivity {
         mToolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(mToolbar);
 
+        //get userUid & mCurrency
         String userUid = PreferenceManager.getDefaultSharedPreferences(getApplicationContext()).getString("USERUID", "defaultStringIfNothingFound");
+        mCurrency = PreferenceManager.getDefaultSharedPreferences(getApplicationContext()).getString("CURRENCY", "Select your currency");
 
-        currency = "kr";
-
-        // ListViews
+        // init ListViews
         ListView IOweListView = (ListView) findViewById(R.id.i_owe_people_list);
         ListView XOwesListView = (ListView) findViewById(R.id.people_owe_me_list);
 
@@ -166,9 +164,9 @@ public class PeopleCardItemActivity extends AppCompatActivity {
 
                         PeopleCardItem item = peopleCardItem.getValue(PeopleCardItem.class);
 
-                        if (item.isiOwe() && item.getTypeOfValue().equalsIgnoreCase(getLocalCurrency())) {
+                        if (item.isiOwe() && item.getTypeOfValue().equalsIgnoreCase(mCurrency)) {
                             iOweSum = iOweSum + item.getAmount();
-                        } else if (!item.isiOwe() && item.getTypeOfValue().equalsIgnoreCase(getLocalCurrency())) {
+                        } else if (!item.isiOwe() && item.getTypeOfValue().equalsIgnoreCase(mCurrency)) {
                             xOwesSum = xOwesSum + item.getAmount();
                         }
 
@@ -186,10 +184,10 @@ public class PeopleCardItemActivity extends AppCompatActivity {
                             mBalance.setText(getString(R.string.you_are_squared));
                             mRoundBalance.setImageResource(R.drawable.round_blue);
                         } else if (iOweAndXOwesBalance < 0) {
-                            mBalance.setText(getString(R.string.person_owes_me_amount_currency, mPeopleCardFirstName, displayNr, currency));
+                            mBalance.setText(getString(R.string.person_owes_me_amount_currency, mPeopleCardFirstName, displayNr, mCurrency));
                             mRoundBalance.setImageResource(R.drawable.round_green);
                         } else if (iOweAndXOwesBalance > 0) {
-                            mBalance.setText(getString(R.string.i_owe_person_amount_currency, mPeopleCardFirstName, displayNr, currency));
+                            mBalance.setText(getString(R.string.i_owe_person_amount_currency, mPeopleCardFirstName, displayNr, mCurrency));
                             mRoundBalance.setImageResource(R.drawable.round_red);
                         }
 
@@ -291,19 +289,6 @@ public class PeopleCardItemActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    // returns the currency of languages setting (can be filled out with more) balance are calculated on local
-    public String getLocalCurrency() {
-        String localCurrency = null;
-
-        if (Locale.getDefault().toString().equals("en_US")) {
-            localCurrency = "dollar";
-        } else if (Locale.getDefault().toString().equals("sv_SE")) {
-            localCurrency = "kr";
-        } else {
-            localCurrency = "dollar";
-        }
-        return localCurrency;
-    }
 
     // opens swish if it is installed, otherwise show Toast
     public void openSwish(View view) {

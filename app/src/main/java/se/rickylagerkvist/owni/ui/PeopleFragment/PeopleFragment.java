@@ -17,9 +17,6 @@ import se.rickylagerkvist.owni.model.PeopleCard;
 import se.rickylagerkvist.owni.ui.PeopleCardItemActivity.PeopleCardItemActivity;
 import se.rickylagerkvist.owni.utils.Constants;
 
-/**
-
- */
 public class PeopleFragment extends Fragment {
 
     private PeopleCardAdapter mPeopleCardAdapter;

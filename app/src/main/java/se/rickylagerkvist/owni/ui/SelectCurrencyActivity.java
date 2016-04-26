@@ -1,4 +1,4 @@
-package se.rickylagerkvist.owni;
+package se.rickylagerkvist.owni.ui;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -10,10 +10,9 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Spinner;
 
-import se.rickylagerkvist.owni.ui.MainActivity;
+import se.rickylagerkvist.owni.R;
 
 public class SelectCurrencyActivity extends AppCompatActivity {
-    Spinner mSpinner;
     ArrayAdapter<CharSequence> mAdapter;
     boolean mSpinnerSelected;
 
@@ -22,14 +21,15 @@ public class SelectCurrencyActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_select_curreny);
 
+        String[] currency = {"Select your currency", "Dollar", "Euro", "Franc", "Krone", "Kronor", "Lira", "Peso", "Pound", "Rupee", "Ruble", "Won", "Yen"};
+
         // set spinner adapter
-        mSpinner = (Spinner) findViewById(R.id.currency_spinner);
-        mAdapter = ArrayAdapter.createFromResource(this, R.array.currency,
-                R.layout.currency_spinner_item);
+        Spinner mSpinner = (Spinner) findViewById(R.id.currency_spinner);
+        ArrayAdapter<String> mAdapter = new ArrayAdapter<>(this, R.layout.currency_spinner_item, currency);
         mAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         mSpinner.setAdapter(mAdapter);
 
-        mSpinner.setDrawingCacheBackgroundColor(getResources().getColor(android.R.color.white));
+        //mSpinner.setDrawingCacheBackgroundColor(getResources().getColor(android.R.color.white));
 
         // set OnitemSelected
         mSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
