@@ -2,11 +2,8 @@ package se.rickylagerkvist.owni.ui.ActivityCardItemActivity;
 
 import android.app.DialogFragment;
 import android.content.Intent;
-import android.content.pm.PackageManager;
-import android.net.Uri;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
@@ -24,6 +21,7 @@ import com.firebase.client.FirebaseError;
 import com.firebase.client.ValueEventListener;
 
 import se.rickylagerkvist.owni.R;
+import se.rickylagerkvist.owni.Utils;
 import se.rickylagerkvist.owni.model.ActivityCard;
 import se.rickylagerkvist.owni.model.ActivityCardItem;
 import se.rickylagerkvist.owni.ui.loginAndCreateUser.LoginActivity;
@@ -70,7 +68,6 @@ public class ActivitiesCardItemActivity extends AppCompatActivity {
 
         // Round ImageVier mRoundBalance
         mRoundBalance = (ImageView) findViewById(R.id.round_balance_activities);
-        ;
 
         Intent intent = this.getIntent();
         mActivitiesCardId = intent.getStringExtra("ACTIVITIESCARD_ITEM_ID");
@@ -108,12 +105,14 @@ public class ActivitiesCardItemActivity extends AppCompatActivity {
         // I owe List adapter
         mIoweXAdapter = new ActivitiesCardItemAdapter(ActivitiesCardItemActivity.this, ActivityCardItem.class,
                 R.layout.card_activities_item, activitiesCardListItemIOweRef);
+        assert IOweListView != null;
         IOweListView.setAdapter(mIoweXAdapter);
 
 
         // Other list owe adapter
         mXowesMeAdapter = new ActivitiesCardItemAdapter(ActivitiesCardItemActivity.this, ActivityCardItem.class,
                 R.layout.card_activities_item, activitiesCardListItemXOwesRef);
+        assert XOwesListView != null;
         XOwesListView.setAdapter(mXowesMeAdapter);
 
         // set mToolbar titel and textView titel
@@ -291,35 +290,7 @@ public class ActivitiesCardItemActivity extends AppCompatActivity {
         String appName = "Swish";
         String appUrl = "https://play.google.com/store/apps/details?id=se.bankgirot.swish";
 
-        openAppOrOpenSnackbarWithInstallAction(appPackageName, appName, appUrl, view);
-    }
-
-    // generic open app with intent or show snackbar with install action
-    private void openAppOrOpenSnackbarWithInstallAction(String appPackageName, String appName, final String appUrl, View view) {
-
-        PackageManager pm = getBaseContext().getPackageManager();
-        Intent appStartIntent = pm.getLaunchIntentForPackage(appPackageName);
-        if (null != appStartIntent) {
-            getBaseContext().startActivity(appStartIntent);
-        } else {
-            Snackbar snackbar = Snackbar
-                    .make(view, appName + " is not installed.", Snackbar.LENGTH_LONG)
-                    .setAction("INSTALL " + appName.toUpperCase(), new View.OnClickListener() {
-                        @Override
-                        public void onClick(View view) {
-                            goToUrl(appUrl);
-                        }
-                    });
-            snackbar.show();
-        }
-
-    }
-
-    // generic go to Url
-    private void goToUrl(String url) {
-        Uri uriUrl = Uri.parse(url);
-        Intent launchBrowser = new Intent(Intent.ACTION_VIEW, uriUrl);
-        startActivity(launchBrowser);
+        Utils.openAppOrOpenSnackbarWithInstallAction(appPackageName, appName, appUrl, view, getBaseContext());
     }
 
 }

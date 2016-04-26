@@ -2,11 +2,8 @@ package se.rickylagerkvist.owni.ui.PeopleCardItemActivity;
 
 import android.app.DialogFragment;
 import android.content.Intent;
-import android.content.pm.PackageManager;
-import android.net.Uri;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
@@ -24,6 +21,7 @@ import com.firebase.client.FirebaseError;
 import com.firebase.client.ValueEventListener;
 
 import se.rickylagerkvist.owni.R;
+import se.rickylagerkvist.owni.Utils;
 import se.rickylagerkvist.owni.model.PeopleCard;
 import se.rickylagerkvist.owni.model.PeopleCardItem;
 import se.rickylagerkvist.owni.ui.loginAndCreateUser.LoginActivity;
@@ -156,7 +154,7 @@ public class PeopleCardItemActivity extends AppCompatActivity {
                 int iOweSum = 0;
                 int xOwesSum = 0;
                 int iOweAndXOwesBalance = 0;
-                int displayNr = 0;
+                int displayNr;
                 int nrOfItems = 0;
 
                 for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
@@ -296,34 +294,6 @@ public class PeopleCardItemActivity extends AppCompatActivity {
         String appName = "Swish";
         String appUrl = "https://play.google.com/store/apps/details?id=se.bankgirot.swish";
 
-        openAppOrOpenSnackbarWithInstallAction(appPackageName, appName, appUrl, view);
-    }
-
-    // generic open app with intent or show snackbar with install action
-    private void openAppOrOpenSnackbarWithInstallAction(String appPackageName, String appName, final String appUrl, View view) {
-
-        PackageManager pm = getBaseContext().getPackageManager();
-        Intent appStartIntent = pm.getLaunchIntentForPackage(appPackageName);
-        if (null != appStartIntent) {
-            getBaseContext().startActivity(appStartIntent);
-        } else {
-            Snackbar snackbar = Snackbar
-                    .make(view, appName + " is not installed.", Snackbar.LENGTH_LONG)
-                    .setAction("INSTALL " + appName.toUpperCase(), new View.OnClickListener() {
-                        @Override
-                        public void onClick(View view) {
-                            goToUrl(appUrl);
-                        }
-                    });
-            snackbar.show();
-        }
-
-    }
-
-    // generic go to Url
-    private void goToUrl(String url) {
-        Uri uriUrl = Uri.parse(url);
-        Intent launchBrowser = new Intent(Intent.ACTION_VIEW, uriUrl);
-        startActivity(launchBrowser);
+        Utils.openAppOrOpenSnackbarWithInstallAction(appPackageName, appName, appUrl, view, getBaseContext());
     }
 }
