@@ -21,7 +21,7 @@ import com.firebase.client.FirebaseError;
 import com.firebase.client.ValueEventListener;
 
 import se.rickylagerkvist.owni.R;
-import se.rickylagerkvist.owni.Utils;
+import se.rickylagerkvist.owni.OpenOtherAppOrUrl;
 import se.rickylagerkvist.owni.model.PeopleCard;
 import se.rickylagerkvist.owni.model.PeopleCardItem;
 import se.rickylagerkvist.owni.ui.loginAndCreateUser.LoginActivity;
@@ -294,6 +294,6 @@ public class PeopleCardItemActivity extends AppCompatActivity {
         String appName = "Swish";
         String appUrl = "https://play.google.com/store/apps/details?id=se.bankgirot.swish";
 
-        Utils.openAppOrOpenSnackbarWithInstallAction(appPackageName, appName, appUrl, view, getBaseContext());
+        OpenOtherAppOrUrl.openAppOrOpenSnackbarWithInstallAction(appPackageName, appName, appUrl, view, getBaseContext());
     }
 }

@@ -7,7 +7,7 @@ import android.net.Uri;
 import android.support.design.widget.Snackbar;
 import android.view.View;
 
-public class Utils {
+public class OpenOtherAppOrUrl {
 
     // generic open app with intent or show snackbar with install URL action
     static public void openAppOrOpenSnackbarWithInstallAction(String appPackageName, String appName, final String appUrl, View view, final Context context) {
@@ -23,7 +23,7 @@ public class Utils {
                         @Override
                         public void onClick(View view) {
                             //goToUrl(appUrl, getBaseContext());
-                            Utils.goToUrl(appUrl, context);
+                            OpenOtherAppOrUrl.goToUrl(appUrl, context);
                         }
                     });
             snackbar.show();
