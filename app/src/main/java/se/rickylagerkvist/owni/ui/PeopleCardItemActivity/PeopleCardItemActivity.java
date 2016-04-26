@@ -47,7 +47,7 @@ public class PeopleCardItemActivity extends AppCompatActivity {
     private Firebase.AuthStateListener mFirebaseRefAuthListener;
 
     //Strings
-    private String mPeopleCardId, mPeopleCardFirstName;
+    private String mPeopleCardId, mPeopleCardFirstName, currency;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,6 +58,8 @@ public class PeopleCardItemActivity extends AppCompatActivity {
         setSupportActionBar(mToolbar);
 
         String userUid = PreferenceManager.getDefaultSharedPreferences(getApplicationContext()).getString("USERUID", "defaultStringIfNothingFound");
+
+        currency = "kr";
 
         // ListViews
         ListView IOweListView = (ListView) findViewById(R.id.i_owe_people_list);
@@ -138,8 +140,8 @@ public class PeopleCardItemActivity extends AppCompatActivity {
                 mToolbar.setTitle(peopleCard.getName());
 
                 // set title to include name
-                mIoweTitle.setText(getResources().getString(R.string.i_owe_person) + " " + mPeopleCardFirstName);
-                mXOwesTitle.setText(mPeopleCardFirstName + " " + getResources().getString(R.string.person_owes_me));
+                mIoweTitle.setText(getString(R.string.i_owe_person, mPeopleCardFirstName));
+                mXOwesTitle.setText(getString(R.string.person_owes_me,mPeopleCardFirstName));
             }
 
             @Override
@@ -157,7 +159,6 @@ public class PeopleCardItemActivity extends AppCompatActivity {
                 int xOwesSum = 0;
                 int iOweAndXOwesBalance = 0;
                 int displayNr = 0;
-
                 int nrOfItems = 0;
 
                 for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
@@ -182,13 +183,13 @@ public class PeopleCardItemActivity extends AppCompatActivity {
 
                         // set mBalance text and round balance image
                         if (iOweAndXOwesBalance == 0) {
-                            mBalance.setText(getString(R.string.you_are_squared) + " " + 0 + " " + getString(R.string.currency));
+                            mBalance.setText(getString(R.string.you_are_squared));
                             mRoundBalance.setImageResource(R.drawable.round_blue);
                         } else if (iOweAndXOwesBalance < 0) {
-                            mBalance.setText(mPeopleCardFirstName + " " + getString(R.string.owes_you) + " " + displayNr + " " + getString(R.string.currency));
+                            mBalance.setText(getString(R.string.person_owes_me_amount_currency, mPeopleCardFirstName, displayNr, currency));
                             mRoundBalance.setImageResource(R.drawable.round_green);
                         } else if (iOweAndXOwesBalance > 0) {
-                            mBalance.setText(getString(R.string.you_owe) + " " + mPeopleCardFirstName + " " + displayNr + " " + getString(R.string.currency));
+                            mBalance.setText(getString(R.string.i_owe_person_amount_currency, mPeopleCardFirstName, displayNr, currency));
                             mRoundBalance.setImageResource(R.drawable.round_red);
                         }
 

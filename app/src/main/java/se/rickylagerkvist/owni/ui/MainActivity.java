@@ -30,6 +30,7 @@ import com.firebase.client.FirebaseError;
 import com.firebase.client.ValueEventListener;
 
 import se.rickylagerkvist.owni.R;
+import se.rickylagerkvist.owni.SelectCurrencyActivity;
 import se.rickylagerkvist.owni.model.FireBaseUser;
 import se.rickylagerkvist.owni.ui.ActivityFragment.ActivitiesFragment;
 import se.rickylagerkvist.owni.ui.ActivityFragment.AddActivityCardDialog;
@@ -52,10 +53,10 @@ public class MainActivity extends AppCompatActivity {
     // Firebase
     private ValueEventListener mFirebaseRefListener;
     private Firebase mFirebaseRef;
-
     private Firebase.AuthStateListener mFirebaseRefAuthListener;
 
-    String mUserUid;
+    // SharedPreferences strings
+    String mUserUid, mCurrency;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -64,9 +65,17 @@ public class MainActivity extends AppCompatActivity {
 
         // get mUserUid, if it has default value start LoginActivity
         mUserUid = PreferenceManager.getDefaultSharedPreferences(getApplicationContext()).getString("USERUID", "defaultStringIfNothingFound");
+        // get currency
+        mCurrency = PreferenceManager.getDefaultSharedPreferences(getApplicationContext()).getString("CURRENCY", "Select your currency");
+
+        // if mUserUid has default value start LoginActivity, if mCurrency has default value start SelectCurrencyActivity,
         Intent intent;
         if (mUserUid.equals("defaultStringIfNothingFound")) {
             intent = new Intent(this, LoginActivity.class);
+            startActivity(intent);
+            finish();
+        } else if (mCurrency.equals("Select your currency")){
+            intent = new Intent(this, SelectCurrencyActivity.class);
             startActivity(intent);
             finish();
         }

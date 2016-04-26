@@ -49,7 +49,7 @@ public class ActivitiesCardItemActivity extends AppCompatActivity {
 
     //Strings
     private String mActivitiesCardId, mActivitiesCardName;
-    private String mUserUid;
+    private String mUserUid, mCurrency;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -60,6 +60,8 @@ public class ActivitiesCardItemActivity extends AppCompatActivity {
         setSupportActionBar(mToolbar);
 
         mUserUid = PreferenceManager.getDefaultSharedPreferences(getApplicationContext()).getString("USERUID", "defaultStringIfNothingFound");
+        // get currency
+        mCurrency = PreferenceManager.getDefaultSharedPreferences(getApplicationContext()).getString("CURRENCY", "Select your currency");
 
         // ListViews
         mIOweListView = (ListView) findViewById(R.id.i_owe_activities_list);
@@ -137,8 +139,8 @@ public class ActivitiesCardItemActivity extends AppCompatActivity {
                 }
 
                 // set title to include name
-                mIoweTitle.setText(getResources().getString(R.string.i_owe_person) + " other people");
-                mXOwesTitle.setText("Other people owe me" + " " + getResources().getString(R.string.person_owes_me));
+                mIoweTitle.setText(getResources().getString(R.string.i_owe_other_people));
+                mXOwesTitle.setText(getResources().getString(R.string.other_people_owe_me));
             }
 
             @Override
@@ -155,7 +157,7 @@ public class ActivitiesCardItemActivity extends AppCompatActivity {
                 int iOweSum = 0;
                 int xOwesSum = 0;
                 int iOweAndXOwesBalance = 0;
-                int displayNr = 0;
+                String displayNr;
 
                 int nrOfItems = 0;
 
@@ -174,20 +176,21 @@ public class ActivitiesCardItemActivity extends AppCompatActivity {
 
                         // gets the positive value if the number is negative (so the display do not show: "X owes you -500 kr")
                         if (iOweAndXOwesBalance < 0) {
-                            displayNr = -iOweAndXOwesBalance;
+                            displayNr = "" + -iOweAndXOwesBalance;
                         } else {
-                            displayNr = iOweAndXOwesBalance;
+                            displayNr = "" + iOweAndXOwesBalance;
                         }
+
 
                         // set mBalance text and round balance image
                         if (iOweAndXOwesBalance == 0) {
-                            mBalance.setText(getString(R.string.you_are_squared) + " " + 0 + " " + getString(R.string.currency));
+                            mBalance.setText(getString(R.string.you_are_squared));
                             mRoundBalance.setImageResource(R.drawable.round_blue);
                         } else if (iOweAndXOwesBalance < 0) {
-                            mBalance.setText("Other people owe you" + " " + displayNr + " " + getString(R.string.currency));
+                            mBalance.setText(getString(R.string.other_people_owe_me_amount_currency, displayNr, mCurrency));
                             mRoundBalance.setImageResource(R.drawable.round_green);
                         } else if (iOweAndXOwesBalance > 0) {
-                            mBalance.setText("You owe other people" + " " + displayNr + " " + getString(R.string.currency));
+                            mBalance.setText(getString(R.string.i_owe_other_people_amount_currency, displayNr, mCurrency));
                             mRoundBalance.setImageResource(R.drawable.round_red);
                         }
 

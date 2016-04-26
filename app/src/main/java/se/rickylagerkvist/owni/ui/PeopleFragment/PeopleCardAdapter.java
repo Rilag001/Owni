@@ -1,6 +1,7 @@
 package se.rickylagerkvist.owni.ui.PeopleFragment;
 
 import android.app.Activity;
+import android.preference.PreferenceManager;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -16,6 +17,8 @@ import se.rickylagerkvist.owni.model.PeopleCard;
  */
 public class PeopleCardAdapter
         extends FirebaseListAdapter<PeopleCard> {
+
+    String mNumberOfItems, mOwesMeBalance, mIOweBalance, mCurrency;
 
     public PeopleCardAdapter(Activity activity, Class<PeopleCard> modelClass, int modelLayout,
                              Query ref) {
@@ -35,16 +38,22 @@ public class PeopleCardAdapter
         textViewName.setText(peopleCard.getName());
 
         // set nr of items
-        textViewNrOfItems.setText("" + peopleCard.getNumberOfItems());
+        mNumberOfItems = "" + peopleCard.getNumberOfItems();
+        textViewNrOfItems.setText(mNumberOfItems);
+
+        // get mCurrency
+        mCurrency = PreferenceManager.getDefaultSharedPreferences(mActivity.getApplicationContext()).getString("CURRENCY", "Select your currency");
 
         // set balance
         String mFirstName = peopleCard.getName().split(" ", 2)[0];
         if (peopleCard.getBalance() == 0) {
-            textViewBalance.setText(mActivity.getString(R.string.you_are_squared) + " 0 " + mActivity.getString(R.string.currency));
+            textViewBalance.setText(mActivity.getString(R.string.you_are_squared));
         } else if (peopleCard.getBalance() < 0) {
-            textViewBalance.setText(mFirstName + " " + mActivity.getString(R.string.owes_you) + " " + -peopleCard.getBalance() + " " + mActivity.getString(R.string.currency));
+            mOwesMeBalance = "" + -peopleCard.getBalance();
+            textViewBalance.setText(mActivity.getString(R.string.person_owes_me_amount_currency, mFirstName, mOwesMeBalance, mCurrency));
         } else if (peopleCard.getBalance() > 0) {
-            textViewBalance.setText(mActivity.getString(R.string.you_owe) + " " + mFirstName + " " + peopleCard.getBalance() + " " + mActivity.getString(R.string.currency));
+            mIOweBalance = "" + peopleCard.getBalance();
+            textViewBalance.setText(mActivity.getString(R.string.i_owe_person_amount_currency, mFirstName, mIOweBalance, mCurrency));
         }
 
         // set mRound
@@ -57,6 +66,4 @@ public class PeopleCardAdapter
         }
     }
 }
-
-
 

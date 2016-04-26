@@ -69,7 +69,7 @@ public class AddActivitiesCardItemDialog extends DialogFragment {
         mEditTextName = (EditText) rootView.findViewById(R.id.edit_name);
 
         // set text with correct name
-        mRadioButtonIowe.setText(getActivity().getString(R.string.i_owe_person));
+        mRadioButtonIowe.setText(getActivity().getString(R.string.i_owe_someone));
         mRadioButtonSomeoneOwesMe.setText(getActivity().getString(R.string.someone_owe_me));
 
         // Inflate and set the layout for the dialog

@@ -1,6 +1,7 @@
 package se.rickylagerkvist.owni.ui.ActivityFragment;
 
 import android.app.Activity;
+import android.preference.PreferenceManager;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -16,6 +17,8 @@ import se.rickylagerkvist.owni.model.ActivityCard;
  */
 public class ActivityCardAdapter extends
         FirebaseListAdapter<ActivityCard> {
+
+    String mNumberOfItems, mOwesMeBalance, mIOweBalance, mCurrency;
 
     public ActivityCardAdapter(Activity activity, Class<ActivityCard> modelClass, int modelLayout,
                                Query ref) {
@@ -35,15 +38,21 @@ public class ActivityCardAdapter extends
         textViewName.setText(activityCard.getNameOfActivity());
 
         // set nr of items
-        textViewNrOfItems.setText("" + activityCard.getNumberOfItems());
+        mNumberOfItems = "" + activityCard.getNumberOfItems();
+        textViewNrOfItems.setText(mNumberOfItems);
+
+        // get mCurrency
+        mCurrency = PreferenceManager.getDefaultSharedPreferences(mActivity.getApplicationContext()).getString("CURRENCY", "Select your currency");
 
         // set balance
         if (activityCard.getBalance() == 0) {
-            textViewBalance.setText(mActivity.getString(R.string.balance_is_0) + "" + mActivity.getString(R.string.currency));
+            textViewBalance.setText(mActivity.getString(R.string.you_are_squared));
         } else if (activityCard.getBalance() < 0) {
-            textViewBalance.setText("Other people" + " " + mActivity.getString(R.string.owes_you) + " " + -activityCard.getBalance() + " " + mActivity.getString(R.string.currency));
+            mOwesMeBalance = "" + -activityCard.getBalance();
+            textViewBalance.setText(mActivity.getString(R.string.other_people_owe_me_amount_currency, mOwesMeBalance, mCurrency));
         } else if (activityCard.getBalance() > 0) {
-            textViewBalance.setText(mActivity.getString(R.string.you_owe) + " other people " + activityCard.getBalance() + " " + mActivity.getString(R.string.currency));
+            mIOweBalance = "" + activityCard.getBalance();
+            textViewBalance.setText(mActivity.getString(R.string.i_owe_other_people_amount_currency, mIOweBalance, mCurrency));
         }
 
         // set mRound

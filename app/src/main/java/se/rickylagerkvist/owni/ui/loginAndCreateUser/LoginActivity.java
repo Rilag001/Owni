@@ -18,7 +18,7 @@ import com.firebase.client.Firebase;
 import com.firebase.client.FirebaseError;
 
 import se.rickylagerkvist.owni.R;
-import se.rickylagerkvist.owni.ui.MainActivity;
+import se.rickylagerkvist.owni.SelectCurrencyActivity;
 import se.rickylagerkvist.owni.utils.Constants;
 
 /*
@@ -131,7 +131,7 @@ public class LoginActivity extends AppCompatActivity {
                 PreferenceManager.getDefaultSharedPreferences(getApplicationContext()).edit().putString("USERUID", mUserUid).apply();
 
                 // Go to main activity
-                Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+                Intent intent = new Intent(LoginActivity.this, SelectCurrencyActivity.class);
                 intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                 startActivity(intent);
                 finish();
