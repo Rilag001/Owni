@@ -67,4 +67,6 @@
     <string name="new.activitiescard">Skapa ett nytt Aktivitetskort</string>
     <string name="new.peoplecard.item">Skapa en ny post</string>
     <string name="select">Välj</string>
+
+    <string name="select.your.currency">Välj din valuta</string>
 </resources>

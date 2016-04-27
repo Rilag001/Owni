@@ -66,4 +66,6 @@
     <string name="new.activitiescard">Create new Activitiescard</string>
     <string name="new.peoplecard.item">Create new PeopleCard item</string>
     <string name="select">Select</string>
+
+    <string name="select.your.currency">Select your currency</string>
 </resources>

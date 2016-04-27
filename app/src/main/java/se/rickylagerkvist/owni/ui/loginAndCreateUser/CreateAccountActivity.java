@@ -28,7 +28,8 @@ public class CreateAccountActivity extends AppCompatActivity {
     private ProgressDialog mAuthProgressDialog;
     private EditText mEditTextUsernameCreate, mEditTextEmailCreate, mEditTextPasswordCreate;
     private Firebase mFirebaseRef;
-    private String mUserName, mUserEmail, mPassword;
+    private String mUserName;
+    private String mUserEmail;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -68,12 +69,12 @@ public class CreateAccountActivity extends AppCompatActivity {
 
         mUserName = mEditTextUsernameCreate.getText().toString();
         mUserEmail = mEditTextEmailCreate.getText().toString().toLowerCase();
-        mPassword = mEditTextPasswordCreate.getText().toString();
+        String password = mEditTextPasswordCreate.getText().toString();
 
         // Check that email and user name are valid
         boolean validEmail = isEmailValid(mUserEmail);
         boolean validUserName = isUserNameValid(mUserName);
-        boolean validPassword = isPasswordValid(mPassword);
+        boolean validPassword = isPasswordValid(password);
         if (!validEmail || !validUserName || !validPassword) return;
 
         // If everything was valid show the progress dialog to indicate that
@@ -81,7 +82,7 @@ public class CreateAccountActivity extends AppCompatActivity {
         mAuthProgressDialog.show();
 
         // Create new user with specified email and password
-        mFirebaseRef.createUser(mUserEmail, mPassword, new Firebase.ValueResultHandler<Map<String, Object>>() {
+        mFirebaseRef.createUser(mUserEmail, password, new Firebase.ValueResultHandler<Map<String, Object>>() {
             @Override
             public void onSuccess(Map<String, Object> result) {
                 // Dismiss the progress dialog
