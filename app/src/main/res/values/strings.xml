@@ -2,7 +2,7 @@
     <!-- app, activity names and toolbar titles -->
     <string name="app_name">Owni</string>
     <string name="title.activity.people.card.item">PeopleCardItemActivity</string>
-    <string name="title.activity.avtivities.card.item">AvtivitiesCardItemActivity</string>
+    <string name="title.activity.avtivities.card.item">ActivitiesCardItemActivity</string>
     <string name="people">People</string>
     <string name="activities">Activities</string>
 
@@ -66,5 +66,4 @@
     <string name="new.activitiescard">Create new Activitiescard</string>
     <string name="new.peoplecard.item">Create new PeopleCard item</string>
     <string name="select">Select</string>
-
 </resources>

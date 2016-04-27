@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- app, activity names and toolbar titles -->
+    <string name="app_name">Owni</string>
+    <string name="title.activity.people.card.item">PeopleCardItemActivity</string>
+    <string name="title.activity.avtivities.card.item">ActivitiesCardItemActivity</string>
+    <string name="people">Personer</string>
+    <string name="activities">Aktiviteter</string>
+
+    <!-- create account and log in  -->
+    <string name="action.settings">Inställningar</string>
+    <string name="title.activity.create.account">CreateAccountActivity</string>
+    <string name="button.create.account">Skapa konto</string>
+    <string name="button.signin.with.password">Logga in</string>
+    <string name="hint.enter.password">Skriv in password</string>
+    <string name="hint.enter.email">Skriv in email</string>
+    <string name="progress.dialog.loading">Laddar…</string>
+    <string name="progress.dialog.authenticating.with.firebase">Autentiserar med firebase…</string>
+    <string name="error.cannot.be.empty">Får ej vara tom</string>
+    <string name="log.message.auth.successful">Du lyckades logga in </string>
+    <string name="error.message.failed.sign.in.no.network">Ingen internetuppkoppling</string>
+    <string name="error.message.email.issue">Email problem</string>
+    <string name="invalid.email">Fel email</string>
+    <string name="hint.enter.username">Skriv in username…</string>
+    <string name="text.already.have.account">Har du redan ett konto?</string>
+    <string name="button.sign.in">Logga in</string>
+    <string name="progress.dialog.creating.user.with.firebase">Skapar ny användare med Firebase</string>
+    <string name="error.invalid.email.not.valid">Felaktig email</string>
+    <string name="error.invalid.password.not.valid">Lösenordet måste vara minst 6 tecken</string>
+    <string name="log.error.occurred">error</string>
+    <string name="error.email.taken">Email är redan tagen</string>
+    <string name="title.activity.login">Logga in</string>
+    <string name="log.out">Logga ut</string>
+    <string name="dont.have.a.account">Har du ingtet konto?</string>
+
+    <!-- I owe person/person owe me, simple & with amount and currency -->
+    <string name="i.owe.person">Jag är skyldig %1$s</string>
+    <string name="person.owes.me">%1$s är skyldig mig</string>
+    <string name="i.owe.person.amount.currency">Jag är skyldig %1$s %2$s %3$s</string>
+    <string name="person.owes.me.amount.currency">%1$s är skyldig mig %2$s %3$s</string>
+    <string name="you.are.squared">Ni är kvitt</string>
+
+    <!-- I owe others/others owe me, simple & with amount and currency -->
+    <string name="i.owe.other.people.amount.currency">Jag är skyldig andra %1$s %2$s</string>
+    <string name="other.people.owe.me.amount.currency">Andra är skyldiga mig %1$s %2$s</string>
+    <string name="i.owe.someone">Jag är skyldig någon</string>
+    <string name="someone.owe.me">Någon är skyldig mig</string>
+    <string name="i.owe.other.people">Jag är skyldig andra</string>
+    <string name="other.people.owe.me">Andra är skyldiga mig</string>
+
+    <!-- Strings for Buttons and dialogFragment -->
+    <string name="add.item">Lägg till post</string>
+    <string name="open.swish">Öppna Swish</string>
+    <string name="name.of.person">Personens namn</string>
+    <string name="describe.item">Beskriv post</string>
+    <string name="amount">Summa</string>
+    <string name="name.of.activity">Aktivitetens namn</string>
+    <string name="delete.card.and.items">Är du säker att du vill radera detta kort och alla dess poster?</string>
+    <string name="delete">Radera</string>
+    <string name="delete.card">Radera kort</string>
+    <string name="new.peoplecard">Skapa ett nytt Personkort</string>
+    <string name="cancel">Cancel</string>
+    <string name="add">Lägg till</string>
+    <string name="new.activitiescard.item">Skapa en ny post</string>
+    <string name="delete.item">Radera post</string>
+    <string name="do.you.want.to.delete.item">Är du säker att du vill radera denna post?</string>
+    <string name="new.activitiescard">Skapa ett nytt Aktivitetskort</string>
+    <string name="new.peoplecard.item">Skapa en ny post</string>
+    <string name="select">Välj</string>
+</resources>
