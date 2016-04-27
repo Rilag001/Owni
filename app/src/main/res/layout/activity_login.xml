@@ -74,32 +74,26 @@
         android:text="@string/button.signin.with.password"
         android:textColor="@android:color/white" />
 
-    <LinearLayout
-        android:layout_width="match_parent"
+    <TextView
+        android:id="@+id/tv_dont_have_account"
+        android:layout_width="wrap_content"
+        android:textSize="15sp"
+        android:textColor="@android:color/white"
         android:layout_height="wrap_content"
-        android:gravity="center"
-        android:orientation="vertical">
+        android:text="@string/dont.have.a.account"
+        />
 
-        <TextView
-            android:id="@+id/tv_dont_have_account"
-            android:layout_width="wrap_content"
-            android:textSize="15sp"
-            android:textColor="@android:color/white"
-            android:layout_height="wrap_content"
-            android:text="@string/dont.have.a.account"
-            />
+    <TextView
+        android:id="@+id/tv_sign_up"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@android:color/white"
+        android:onClick="onSignUpPressed"
+        android:textSize="15sp"
+        android:textStyle="bold"
+        android:layout_margin="8dp"
+        android:text="@string/button.create.account" />
 
-        <TextView
-            android:id="@+id/tv_sign_up"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textColor="@android:color/white"
-            android:onClick="onSignUpPressed"
-            android:textSize="15sp"
-            android:textStyle="bold"
-            android:layout_margin="8dp"
-            android:text="@string/button.create.account" />
-    </LinearLayout>
 </LinearLayout>
 
 

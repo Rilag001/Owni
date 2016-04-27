@@ -77,7 +77,6 @@
                 android:textSize="15sp" />
         </android.support.design.widget.TextInputLayout>
 
-
     </LinearLayout>
 
 
@@ -94,33 +93,27 @@
         android:textColor="@android:color/white"
         android:textSize="15sp" />
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+    <TextView
+        android:id="@+id/tv_already_have_account"
+        android:layout_width="wrap_content"
         android:layout_marginTop="8dp"
-        android:gravity="center"
-        android:orientation="vertical">
+        android:textColor="@android:color/white"
+        android:layout_height="wrap_content"
+        android:textSize="15sp"
+        android:text="@string/text.already.have.account"
+        />
 
-        <TextView
-            android:id="@+id/tv_already_have_account"
-            android:layout_width="wrap_content"
-            android:textColor="@android:color/white"
-            android:layout_height="wrap_content"
-            android:textSize="15sp"
-            android:text="@string/text.already.have.account"
-            />
+    <TextView
+        android:id="@+id/tv_sign_in"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:onClick="onSignInPressed"
+        android:textStyle="bold"
+        android:textSize="15sp"
+        android:layout_margin="8dp"
+        android:textColor="@android:color/white"
+        android:text="@string/button.sign.in" />
 
-        <TextView
-            android:id="@+id/tv_sign_in"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:onClick="onSignInPressed"
-            android:textStyle="bold"
-            android:textSize="15sp"
-            android:layout_margin="8dp"
-            android:textColor="@android:color/white"
-            android:text="@string/button.sign.in" />
-    </LinearLayout>
 </LinearLayout>
 
 

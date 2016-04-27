@@ -38,6 +38,4 @@
         android:text="@string/select"
         />
 
-
-
 </RelativeLayout>

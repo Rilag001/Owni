@@ -4,10 +4,10 @@
              android:layout_height="match_parent"
              tools:context="se.rickylagerkvist.owni.ui.ActivityFragment.ActivitiesFragment">
 
-    <!-- TODO: Update blank fragment layout -->
     <ListView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:divider="@null"
         android:id="@+id/activitiesCardList"/>
 
 </FrameLayout>
