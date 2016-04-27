@@ -1,4 +1,4 @@
-package se.rickylagerkvist.owni.ui.ActivityCardItemActivity;
+package se.rickylagerkvist.owni.ui.ActivityCardItem;
 
 import android.app.DialogFragment;
 import android.content.Intent;

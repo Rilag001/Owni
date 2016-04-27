@@ -14,7 +14,7 @@ import com.firebase.client.Firebase;
 
 import se.rickylagerkvist.owni.R;
 import se.rickylagerkvist.owni.model.PeopleCard;
-import se.rickylagerkvist.owni.ui.PeopleCardItemActivity.PeopleCardItemActivity;
+import se.rickylagerkvist.owni.ui.PeopleCardItem.PeopleCardItemActivity;
 import se.rickylagerkvist.owni.utils.Constants;
 
 public class PeopleFragment extends Fragment {

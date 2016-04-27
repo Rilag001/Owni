@@ -1,4 +1,4 @@
-package se.rickylagerkvist.owni.ui.PeopleCardItemActivity;
+package se.rickylagerkvist.owni.ui.PeopleCardItem;
 
 import android.app.Dialog;
 import android.app.DialogFragment;
@@ -14,17 +14,19 @@ import se.rickylagerkvist.owni.R;
 import se.rickylagerkvist.owni.utils.Constants;
 
 /**
- * Created by Ricky on 2016-04-13.
+ * Created by Ricky on 2016-04-18.
  */
-public class DeleteCardAndItemsDialog extends DialogFragment {
+public class DeleteCardItemDialog extends DialogFragment {
 
-    public static DeleteCardAndItemsDialog newInstance(String peopleCardAndItemRef) {
-        DeleteCardAndItemsDialog deleteCardAndItemsDialog
-                = new DeleteCardAndItemsDialog();
+    public static DeleteCardItemDialog newInstance(String peopleItemParentRef, String peopleItemIdRef, String iOweOfXOwe) {
+        DeleteCardItemDialog deleteCardItemsDialog
+                = new DeleteCardItemDialog();
         Bundle bundle = new Bundle();
-        bundle.putString("id", peopleCardAndItemRef);
-        deleteCardAndItemsDialog.setArguments(bundle);
-        return deleteCardAndItemsDialog;
+        bundle.putString("idParent", peopleItemParentRef);
+        bundle.putString("id", peopleItemIdRef);
+        bundle.putString("bol", iOweOfXOwe);
+        deleteCardItemsDialog.setArguments(bundle);
+        return deleteCardItemsDialog;
     }
 
     @Override
@@ -39,45 +41,40 @@ public class DeleteCardAndItemsDialog extends DialogFragment {
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
 
         Bundle bundle = this.getArguments();
-        final String peopleCardAndItemId = bundle.getString("id");
+        final String peopleItemParentRef = bundle.getString("idParent");
+        final String peopleItemIdRef = bundle.getString("id");
+        final String iOweOfXOwe = bundle.getString("bol");
 
         // Inflate and set the layout for the dialog
         // Pass null as the parent view because its going in the dialog layout
-        builder.setTitle(getActivity().getString(R.string.delete_card))
-                .setMessage(getActivity().getString(R.string.delete_card_and_items))
-                .setNegativeButton(getActivity().getString(R.string.Cancel), new DialogInterface.OnClickListener() {
+        builder.setTitle("Delete item")
+                .setMessage(getActivity().getString(R.string.do_you_want_to_delete_item))
+                .setNegativeButton(getActivity().getString(R.string.cancel), new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         // Close the dialog
-                        DeleteCardAndItemsDialog.this.getDialog().cancel();
+                        DeleteCardItemDialog.this.getDialog().cancel();
                     }
                 })
-                        // Add action buttons
-                .setPositiveButton(getActivity().getString(R.string.Delete), new DialogInterface.OnClickListener() {
+                // Add action buttons
+                .setPositiveButton(getActivity().getString(R.string.delete_item), new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int id) {
-                        deleteCardAndItems(peopleCardAndItemId);
+                        deleteCardItems(peopleItemParentRef, peopleItemIdRef, iOweOfXOwe);
                     }
                 });
 
         return builder.create();
     }
 
-    // Remove PeopleCard and PeopleCardItems
-    private void deleteCardAndItems(String peopleCardAndItemId) {
+    // Remove PeopleCardItem
+    private void deleteCardItems(String peopleItemParentRef, String peopleItemIdRef, String iOweOfXOwe) {
 
         String userUid = PreferenceManager.getDefaultSharedPreferences(getActivity().getBaseContext()).getString("USERUID", "defaultStringIfNothingFound");
 
-        Firebase peopleCardRef = new Firebase(Constants.FIREBASE_URL_PEOPLE + "/"
-                + userUid).child(peopleCardAndItemId);
         Firebase PeopleCardItemRef = new Firebase(Constants.FIREBASE_URL_PEOPLE_ITEMS + "/"
-                + userUid).child(peopleCardAndItemId);
-
-        peopleCardRef.removeValue();
+                + userUid).child(peopleItemParentRef).child(iOweOfXOwe).child(peopleItemIdRef);
         PeopleCardItemRef.removeValue();
 
-        // returns to this Activity's parent Activity, in this case MainActivity
-        getActivity().finish();
     }
-
 }

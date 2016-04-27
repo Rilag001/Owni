@@ -27,15 +27,15 @@
         </activity>
         <activity
             android:name=".ui.loginAndCreateUser.CreateAccountActivity"
-            android:label="@string/title_activity_create_account"
+            android:label="@string/title.activity.create.account"
             android:theme="@style/AppTheme.NoActionBar">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="se.rickylagerkvist.owni.ui.loginAndCreateUser.LoginActivity"/>
         </activity>
         <activity
-            android:name=".ui.PeopleCardItemActivity.PeopleCardItemActivity"
-            android:label="@string/title_activity_people_card_item"
+            android:name=".ui.PeopleCardItem.PeopleCardItemActivity"
+            android:label="@string/title.activity.people.card.item"
             android:parentActivityName=".ui.MainActivity"
             android:theme="@style/AppTheme.NoActionBar">
             <meta-data
@@ -43,8 +43,8 @@
                 android:value="se.rickylagerkvist.owni.ui.MainActivity"/>
         </activity>
         <activity
-            android:name=".ui.ActivityCardItemActivity.ActivitiesCardItemActivity"
-            android:label="@string/title_activity_avtivities_card_item"
+            android:name=".ui.ActivityCardItem.ActivitiesCardItemActivity"
+            android:label="@string/title.activity.avtivities.card.item"
             android:parentActivityName=".ui.MainActivity"
             android:theme="@style/AppTheme.NoActionBar">
             <meta-data

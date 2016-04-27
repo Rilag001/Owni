@@ -8,7 +8,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fitsSystemWindows="true"
-    tools:context=".ui.ActivityCardItemActivity.ActivitiesCardItemActivity">
+    tools:context=".ui.ActivityCardItem.ActivitiesCardItemActivity">
 
     <android.support.design.widget.AppBarLayout
         android:layout_width="match_parent"
@@ -46,9 +46,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             fab:fab_colorNormal="@color/colorAccent"
-            fab:fab_title="@string/add_item"
             android:onClick="showAddPeopleCardItemDialog"
-            android:src="@drawable/ic_local_dining_white_24dp"/>
+            android:src="@drawable/ic_local_dining_white_24dp"
+            app:fab_title="@string/add.item"/>
 
         <com.getbase.floatingactionbutton.FloatingActionButton
             android:id="@+id/swish_fab"
@@ -57,7 +57,7 @@
             fab:fab_colorNormal="@color/colorAccent"
             android:onClick="openSwish"
             android:src="@drawable/ic_payment_white_24dp"
-            fab:fab_title="@string/open_swish"/>
+            app:fab_title="@string/open.swish"/>
 
     </com.getbase.floatingactionbutton.FloatingActionsMenu>
 

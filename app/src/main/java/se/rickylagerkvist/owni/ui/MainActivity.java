@@ -139,7 +139,7 @@ public class MainActivity extends AppCompatActivity {
                 if (position == 0) {
                     mToolbar.setTitle(R.string.people);
                 } else if (position == 1) {
-                    mToolbar.setTitle(R.string.Activities);
+                    mToolbar.setTitle(R.string.activities);
                 }
             }
 

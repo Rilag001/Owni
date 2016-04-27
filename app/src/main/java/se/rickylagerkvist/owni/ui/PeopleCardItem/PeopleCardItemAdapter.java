@@ -1,4 +1,4 @@
-package se.rickylagerkvist.owni.ui.PeopleCardItemActivity;
+package se.rickylagerkvist.owni.ui.PeopleCardItem;
 
 import android.app.Activity;
 import android.view.View;

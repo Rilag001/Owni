@@ -16,14 +16,14 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:id="@+id/i_owe_radiobutton"
-            android:text="@string/i_owe_person"/>
+            android:text="@string/i.owe.person"/>
 
         <RadioButton
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:id="@+id/someone_owes_me_radiobutton"
-            android:text="@string/someone_owe_me"/>
+            android:text="@string/someone.owe.me"/>
 
     </RadioGroup>
 
@@ -35,7 +35,7 @@
             android:id="@+id/edit_description"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="@string/describe_item"
+            android:hint="@string/describe.item"
             android:textColorHint="@android:color/darker_gray"
             android:textSize="15sp"
             android:inputType="textCapWords"/>

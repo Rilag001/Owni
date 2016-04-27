@@ -1,4 +1,4 @@
-package se.rickylagerkvist.owni.ui.ActivityCardItemActivity;
+package se.rickylagerkvist.owni.ui.ActivityCardItem;
 
 import android.app.Dialog;
 import android.app.DialogFragment;
@@ -45,7 +45,7 @@ public class DeleteActivitiesCardAndItemsDialog extends DialogFragment {
         // Pass null as the parent view because its going in the dialog layout
         builder.setTitle(getActivity().getString(R.string.delete_card))
                 .setMessage(getActivity().getString(R.string.delete_card_and_items))
-                .setNegativeButton(getActivity().getString(R.string.Cancel), new DialogInterface.OnClickListener() {
+                .setNegativeButton(getActivity().getString(R.string.cancel), new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         // Close the dialog
@@ -53,7 +53,7 @@ public class DeleteActivitiesCardAndItemsDialog extends DialogFragment {
                     }
                 })
                 // Add action buttons
-                .setPositiveButton(getActivity().getString(R.string.Delete), new DialogInterface.OnClickListener() {
+                .setPositiveButton(getActivity().getString(R.string.delete), new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int id) {
                         deleteCardAndItems(peopleCardAndItemId);

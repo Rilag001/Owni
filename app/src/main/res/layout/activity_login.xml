@@ -12,7 +12,7 @@
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
     android:fillViewport="true"
-    tools:context=".ui.login.LoginActivity">
+    tools:context=".ui.loginAndCreateUser.LoginActivity">
 
     <LinearLayout
         android:layout_height="wrap_content"
@@ -33,7 +33,7 @@
                 android:layout_width="match_parent"
                 android:background="@android:color/white"
                 android:layout_height="wrap_content"
-                android:hint="@string/hint_enter_email"
+                android:hint="@string/hint.enter.email"
                 android:inputType="textEmailAddress"
                 android:nextFocusDown="@+id/edit_text_password"
                 android:textColor="@android:color/black"
@@ -52,7 +52,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@android:color/white"
-                android:hint="@string/hint_enter_password"
+                android:hint="@string/hint.enter.password"
                 android:imeOptions="actionDone"
                 android:inputType="textPassword"
                 android:textColor="@android:color/black"
@@ -71,7 +71,7 @@
         android:background="@color/colorAccent"
         android:onClick="onSignInPressed"
         android:layout_margin="8dp"
-        android:text="@string/button_signin_with_password"
+        android:text="@string/button.signin.with.password"
         android:textColor="@android:color/white" />
 
     <LinearLayout
@@ -86,7 +86,7 @@
             android:textSize="15sp"
             android:textColor="@android:color/white"
             android:layout_height="wrap_content"
-            android:text="@string/don_t_have_a_account"
+            android:text="@string/dont.have.a.account"
             />
 
         <TextView
@@ -98,7 +98,7 @@
             android:textSize="15sp"
             android:textStyle="bold"
             android:layout_margin="8dp"
-            android:text="@string/button_create_account" />
+            android:text="@string/button.create.account" />
     </LinearLayout>
 </LinearLayout>
 

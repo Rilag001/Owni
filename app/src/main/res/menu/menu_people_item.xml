@@ -4,7 +4,7 @@
     <item
         android:id="@+id/delete_card_and_items"
         android:orderInCategory="100"
-        android:title="@string/log_out"
+        android:title="@string/log.out"
         android:icon="@drawable/ic_delete_white_24dp"
         app:showAsAction="always"/>
 </menu>

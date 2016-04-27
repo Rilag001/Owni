@@ -14,7 +14,7 @@ import com.firebase.client.Firebase;
 
 import se.rickylagerkvist.owni.R;
 import se.rickylagerkvist.owni.model.ActivityCard;
-import se.rickylagerkvist.owni.ui.ActivityCardItemActivity.ActivitiesCardItemActivity;
+import se.rickylagerkvist.owni.ui.ActivityCardItem.ActivitiesCardItemActivity;
 import se.rickylagerkvist.owni.utils.Constants;
 
 public class ActivitiesFragment extends Fragment {
