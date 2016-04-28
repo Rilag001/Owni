@@ -26,7 +26,6 @@ I quickly realised I needed user accounts, otherwise all users would get the sam
 This activity and CreateAccountActivity i built on boilerplate code from the two following sites:
 https://www.firebase.com/docs/web/guide/login/password.html &
 https://www.udacity.com/course/firebase-essentials-for-android--ud009
-
 Background from: https://unsplash.com/photos/8mqOw4DBBSg (licensed under Creative Commons Zero)
 */
 
