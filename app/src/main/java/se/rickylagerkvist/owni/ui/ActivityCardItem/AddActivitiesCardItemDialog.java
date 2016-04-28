@@ -22,9 +22,6 @@ import se.rickylagerkvist.owni.R;
 import se.rickylagerkvist.owni.model.ActivityCardItem;
 import se.rickylagerkvist.owni.utils.Constants;
 
-/**
- * Created by Ricky on 2016-04-22.
- */
 public class AddActivitiesCardItemDialog extends DialogFragment {
 
     EditText mEditTextDescription, mEditTextAmount, mEditTextName;
@@ -67,7 +64,7 @@ public class AddActivitiesCardItemDialog extends DialogFragment {
         // get currency
         String mCurrency = PreferenceManager.getDefaultSharedPreferences(getActivity()).getString("CURRENCY", "Select your currency");
         // set array for Spinner
-        String[] currencyOrItem = {mCurrency, "item"};
+        String[] currencyOrItem = {mCurrency, getActivity().getString(R.string.item)};
 
         // Radiobittons
         mRadioButtonIowe = (RadioButton) rootView.findViewById(R.id.i_owe_radiobutton);

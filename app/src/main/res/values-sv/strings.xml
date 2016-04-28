@@ -38,11 +38,15 @@
     <string name="person.owes.me">%1$s är skyldig mig</string>
     <string name="i.owe.person.amount.currency">Jag är skyldig %1$s %2$s %3$s</string>
     <string name="person.owes.me.amount.currency">%1$s är skyldig mig %2$s %3$s</string>
+    <string name="i.owe.person.amount.currency_linebreak">Jag är skyldig %1$s \r\n%2$s %3$s</string>
+    <string name="person.owes.me.amount.currency_linebreak">%1$s är skyldig mig \r\n%2$s %3$s</string>
     <string name="you.are.squared">Ni är kvitt</string>
 
     <!-- I owe others/others owe me, simple & with amount and currency -->
     <string name="i.owe.other.people.amount.currency">Jag är skyldig andra %1$s %2$s</string>
     <string name="other.people.owe.me.amount.currency">Andra är skyldiga mig %1$s %2$s</string>
+    <string name="i.owe.other.people.amount.currency_linebreak">Jag är skyldig andra \r\n%1$s %2$s</string>
+    <string name="other.people.owe.me.amount.currency_linebreak">Andra är skyldiga mig \r\n%1$s %2$s</string>
     <string name="i.owe.someone">Jag är skyldig någon</string>
     <string name="someone.owe.me">Någon är skyldig mig</string>
     <string name="i.owe.other.people">Jag är skyldig andra</string>
@@ -67,6 +71,7 @@
     <string name="new.activitiescard">Skapa ett nytt Aktivitetskort</string>
     <string name="new.peoplecard.item">Skapa en ny post</string>
     <string name="select">Välj</string>
+    <string name="item">St</string>
 
     <string name="select.your.currency">Välj din valuta</string>
 </resources>

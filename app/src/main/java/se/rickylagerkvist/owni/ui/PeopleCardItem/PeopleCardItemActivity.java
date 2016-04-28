@@ -21,7 +21,7 @@ import com.firebase.client.FirebaseError;
 import com.firebase.client.ValueEventListener;
 
 import se.rickylagerkvist.owni.R;
-import se.rickylagerkvist.owni.OpenOtherAppOrUrl;
+import se.rickylagerkvist.owni.utils.OpenOtherAppOrUrl;
 import se.rickylagerkvist.owni.model.PeopleCard;
 import se.rickylagerkvist.owni.model.PeopleCardItem;
 import se.rickylagerkvist.owni.ui.loginAndCreateUser.LoginActivity;
@@ -182,10 +182,10 @@ public class PeopleCardItemActivity extends AppCompatActivity {
                             mBalance.setText(getString(R.string.you_are_squared));
                             mRoundBalance.setImageResource(R.drawable.round_blue);
                         } else if (iOweAndXOwesBalance < 0) {
-                            mBalance.setText(getString(R.string.person_owes_me_amount_currency, mPeopleCardFirstName, displayNr, mCurrency));
+                            mBalance.setText(getString(R.string.person_owes_me_amount_currency_linebreak, mPeopleCardFirstName, displayNr, mCurrency));
                             mRoundBalance.setImageResource(R.drawable.round_green);
                         } else if (iOweAndXOwesBalance > 0) {
-                            mBalance.setText(getString(R.string.i_owe_person_amount_currency, mPeopleCardFirstName, displayNr, mCurrency));
+                            mBalance.setText(getString(R.string.i_owe_person_amount_currency_linebreak, mPeopleCardFirstName, displayNr, mCurrency));
                             mRoundBalance.setImageResource(R.drawable.round_red);
                         }
 

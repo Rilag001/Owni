@@ -37,11 +37,15 @@
     <string name="person.owes.me">%1$s owe me</string>
     <string name="i.owe.person.amount.currency">I owe %1$s %2$s %3$s</string>
     <string name="person.owes.me.amount.currency">%1$s owe me %2$s %3$s</string>
+    <string name="i.owe.person.amount.currency_linebreak">I owe %1$s \r\n%2$s %3$s</string>
+    <string name="person.owes.me.amount.currency_linebreak">%1$s owe me \r\n%2$s %3$s</string>
     <string name="you.are.squared">You are squared</string>
 
     <!-- I owe others/others owe me, simple & with amount and currency -->
     <string name="i.owe.other.people.amount.currency">I owe other people %1$s %2$s</string>
     <string name="other.people.owe.me.amount.currency">Other people owe me %1$s %2$s</string>
+    <string name="i.owe.other.people.amount.currency_linebreak">I owe other people \r\n%1$s %2$s</string>
+    <string name="other.people.owe.me.amount.currency_linebreak">Other people owe me \r\n%1$s %2$s</string>
     <string name="i.owe.someone">I owe someone</string>
     <string name="someone.owe.me">Someone owes me</string>
     <string name="i.owe.other.people">I owe other people</string>
@@ -66,6 +70,7 @@
     <string name="new.activitiescard">Create new Activitiescard</string>
     <string name="new.peoplecard.item">Create new PeopleCard item</string>
     <string name="select">Select</string>
+    <string name="item">Item</string>
 
     <string name="select.your.currency">Select your currency</string>
 </resources>

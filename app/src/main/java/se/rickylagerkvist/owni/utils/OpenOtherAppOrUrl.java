@@ -1,4 +1,4 @@
-package se.rickylagerkvist.owni;
+package se.rickylagerkvist.owni.utils;
 
 import android.content.Context;
 import android.content.Intent;
