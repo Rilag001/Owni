@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:orientation="vertical"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:padding="16dp">
+
+
+    <RadioGroup
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <RadioButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:textSize="20sp"
+            android:id="@+id/i_owe_radiobutton"
+            android:text="@string/i.owe.someone"/>
+
+        <RadioButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:textSize="20sp"
+            android:id="@+id/someone_owes_me_radiobutton"
+            android:text="@string/someone.owe.me"/>
+
+    </RadioGroup>
+
+    <android.support.design.widget.TextInputLayout
+        android:layout_height="wrap_content"
+        android:layout_width="match_parent">
+
+        <EditText
+            android:id="@+id/edit_name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/name.of.person"
+            android:textColorHint="@android:color/darker_gray"
+            android:textSize="20sp"
+            android:inputType="textCapWords"/>
+
+    </android.support.design.widget.TextInputLayout>
+
+    <android.support.design.widget.TextInputLayout
+        android:layout_height="wrap_content"
+        android:layout_width="match_parent">
+
+        <EditText
+            android:id="@+id/edit_description"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/describe.item"
+            android:textColorHint="@android:color/darker_gray"
+            android:textSize="20sp"
+            android:inputType="textCapWords"/>
+
+    </android.support.design.widget.TextInputLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <android.support.design.widget.TextInputLayout
+            android:layout_height="wrap_content"
+            android:layout_width="match_parent"
+            android:layout_weight="1">
+
+            <EditText
+                android:id="@+id/edit_amount"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/amount"
+                android:textColorHint="@android:color/darker_gray"
+                android:textSize="20sp"
+                android:inputType="number"/>
+
+        </android.support.design.widget.TextInputLayout>
+
+
+        <Spinner
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:textSize="20sp"
+            android:id="@+id/spinner_add_activitycard_item"
+            android:layout_weight="1">
+        </Spinner>
+
+    </LinearLayout>
+
+
+
+</LinearLayout>

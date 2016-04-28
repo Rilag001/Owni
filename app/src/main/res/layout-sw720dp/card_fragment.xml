@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <android.support.v7.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/card_people"
+        android:background="@android:color/white"
+        android:layout_marginLeft="8dp"
+        android:layout_marginRight="8dp"
+        android:layout_marginTop="4dp"
+        android:layout_marginBottom="4dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <RelativeLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <ImageView
+                        android:layout_width="75dp"
+                        android:layout_height="75dp"
+                        android:src="@drawable/round_blue"
+                        android:layout_centerInParent="true"
+                        android:layout_margin="8dp"
+                        android:id="@+id/round"/>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text=""
+                        android:layout_centerInParent="true"
+                        android:textColor="@android:color/white"
+                        android:textSize="35sp"
+                        android:id="@+id/nrOfItems"/>
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="40"
+                    android:layout_marginRight="16dp"
+                    android:layout_marginEnd="16dp">
+
+                    <View
+                        android:layout_width="fill_parent"
+                        android:layout_height="1dp"
+                        android:background="@android:color/black"
+                        android:layout_centerInParent="true"
+                        android:id="@+id/line"/>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/name"
+                        android:text="Ricky Lagerkvist"
+                        android:textSize="20sp"
+                        android:layout_alignBottom="@+id/line"
+                        android:layout_marginBottom="4dp"/>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/balance"
+                        android:text=""
+                        android:textSize="18sp"
+                        android:layout_below="@+id/line"
+                        android:layout_marginTop="4dp"/>
+
+                </RelativeLayout>
+            </LinearLayout>
+
+        </LinearLayout>
+
+
+    </android.support.v7.widget.CardView>
+
+</FrameLayout>
