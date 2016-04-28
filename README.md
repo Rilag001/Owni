@@ -24,7 +24,7 @@ When you click on a card you open a second activity to view its items. Here you 
 Owni works with Android 4.1 and above. It requirements a internet connection.  
 
 ## Known bugs
-No one yet. If you find one, please feel free to fork this project. 
+No one yet.
 
 ## Credits/acknowledgements
 <ul>
