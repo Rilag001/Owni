@@ -27,7 +27,7 @@
             android:layout_height="140dp"
             android:layout_margin="10dp"
             android:layout_gravity="center_horizontal"
-            android:src="@drawable/round_blue"/>
+            android:src="@drawable/owni_big_icon"/>
 
         <Spinner
             android:layout_width="match_parent"

@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<selector xmlns:android="http://schemas.android.com/apk/res/android"
+          android:layout_width="match_parent"
+          android:layout_height="match_parent">
+    <!-- selected state -->
+    <item android:drawable="@drawable/ic_local_dining_white_24dp"
+          android:state_selected="true"
+          android:state_pressed="false"/>
+    <!-- unselected state (default) -->
+    <item android:drawable="@drawable/ic_local_dining_green_24dp" />
+</selector>
