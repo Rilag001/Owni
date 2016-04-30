@@ -12,7 +12,7 @@
     <string name="title.activity.create.account">CreateAccountActivity</string>
     <string name="button.create.account">Skapa konto</string>
     <string name="button.signin.with.password">Logga in</string>
-    <string name="hint.enter.password">Skriv in password</string>
+    <string name="hint.enter.password">Skriv in lösenord</string>
     <string name="hint.enter.email">Skriv in email</string>
     <string name="progress.dialog.loading">Laddar…</string>
     <string name="progress.dialog.authenticating.with.firebase">Autentiserar med firebase…</string>
@@ -27,8 +27,8 @@
     <string name="progress.dialog.creating.user.with.firebase">Skapar ny användare med Firebase</string>
     <string name="error.invalid.email.not.valid">Felaktig email</string>
     <string name="error.invalid.password.not.valid">Lösenordet måste vara minst 6 tecken</string>
-    <string name="log.error.occurred">error</string>
-    <string name="error.email.taken">Email är redan tagen</string>
+    <string name="log.error.occurred">Felmeddelande</string>
+    <string name="error.email.taken">Emailadressen är redan tagen</string>
     <string name="title.activity.login">Logga in</string>
     <string name="log.out">Logga ut</string>
     <string name="dont.have.a.account">Har du ingtet konto?</string>
@@ -63,7 +63,7 @@
     <string name="delete">Radera</string>
     <string name="delete.card">Radera kort</string>
     <string name="new.peoplecard">Skapa ett nytt Personkort</string>
-    <string name="cancel">Cancel</string>
+    <string name="cancel">Avbryt</string>
     <string name="add">Lägg till</string>
     <string name="new.activitiescard.item">Skapa en ny post</string>
     <string name="delete.item">Radera post</string>
