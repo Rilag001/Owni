@@ -34,4 +34,4 @@ No one yet.
   <li>Uses awsome Fab animation from blackcj: http://stackoverflow.com/questions/31415742/how-to-change-floatingactionbutton-between-tabs/31418573</li>
   <li>Uses awsome FabMenu library created by chalup: https://github.com/futuresimple/android-floating-action-button</li>
 </ul>
-And finally a big thank you to my teacher Oskar Björnman and my fellow student at Nackademin (Stockholm, Sweden) for your invaluable feed-back during this project.
+And finally a big thank you to my teacher Oscar Björkman and my fellow students at Nackademin (Stockholm, Sweden) for your invaluable feed-back during this project.
